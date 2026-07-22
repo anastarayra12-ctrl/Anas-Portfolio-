@@ -138,8 +138,8 @@ export const AboutSection = () => {
                   </div>
                   <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
                     {lang === 'ar'
-                      ? 'دراسة متخصصة في هندسة البرمجيات، تتضمن أنماط التصميم (Design Patterns)، خوارزميات قواعد البيانات، وتطوير الأنظمة الرقمية.'
-                      : 'Specialized in Software Engineering methodologies, OOP design patterns, and full-stack system architecture.'}
+                      ? 'سيتم إضافتها قريباً.'
+                      : 'Will be added soon.'}
                   </p>
                 </div>
               </div>
@@ -184,8 +184,8 @@ export const AboutSection = () => {
                   <Quote size={24} style={{ color: 'var(--accent-green)', opacity: 0.3, marginBottom: '8px' }} />
                   <p style={{ fontSize: '0.92rem', color: 'var(--text-primary)', margin: 0, lineHeight: 1.6, fontStyle: 'italic', fontWeight: 500 }}>
                     {lang === 'ar'
-                      ? 'أؤمن بأن التكنولوجيا الحقيقية هي التي تجمع بين دقة الهندسة وجمال الفن البصري. كل سطر كود وكل واجهة أصممها أضع فيها شغفي الكامل لتكون تجربة استثنائية تخدم رؤية مشروعاتكم بنجاح.'
-                      : 'I strongly believe that true technology connects engineering precision with aesthetic visual design. Every line of code and interface I craft is built with passion to deliver exceptional value.'}
+                      ? 'سيتم إضافتها قريباً.'
+                      : 'Will be added soon.'}
                   </p>
                 </div>
               </div>

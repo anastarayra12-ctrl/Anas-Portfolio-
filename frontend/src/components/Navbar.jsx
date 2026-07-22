@@ -103,6 +103,7 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
 
             {/* Project Estimator Button */}
             <button
+              className="hide-on-mobile"
               onClick={onOpenEstimator}
               title={lang === 'ar' ? 'حساب موعد المشروع' : 'Project Estimator'}
               style={{
@@ -127,6 +128,7 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
 
             {/* Direct Project Confirmation Button requested by user */}
             <button
+              className="hide-on-mobile"
               onClick={onOpenDirectModal}
               title={lang === 'ar' ? 'بدء وتأكيد مشروع مباشر' : 'Start Project Directly'}
               style={{
@@ -152,6 +154,7 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
 
             {/* Language Toggle Button */}
             <button
+              className="hide-on-mobile"
               onClick={toggleLanguage}
               title="Toggle Language / تغيير اللغة"
               style={{
@@ -176,6 +179,7 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
 
             {/* Theme Toggle Button */}
             <button
+              className="hide-on-mobile"
               onClick={toggleTheme}
               title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               style={{
@@ -237,6 +241,93 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
             <div style={{ marginBottom: '8px' }}>
               <AmmanClock />
             </div>
+            
+            {/* Action Buttons inside Drawer */}
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '8px' }}>
+              <button
+                onClick={() => { setMobileMenuOpen(false); onOpenEstimator(); }}
+                style={{
+                  background: 'rgba(59, 130, 246, 0.12)',
+                  border: '1px solid rgba(59, 130, 246, 0.35)',
+                  color: 'var(--accent-blue)',
+                  borderRadius: '10px',
+                  padding: '8px 12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontWeight: 700,
+                  fontSize: '0.85rem',
+                  flex: 1,
+                  justifyContent: 'center',
+                }}
+              >
+                <Calculator size={16} />
+                <span>{lang === 'ar' ? 'حساب الموعد' : 'Estimator'}</span>
+              </button>
+              
+              <button
+                onClick={() => { setMobileMenuOpen(false); onOpenDirectModal(); }}
+                style={{
+                  background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                  color: '#FFFFFF',
+                  borderRadius: '10px',
+                  padding: '8px 12px',
+                  border: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontWeight: 800,
+                  fontSize: '0.85rem',
+                  flex: 1,
+                  justifyContent: 'center',
+                }}
+              >
+                <Zap size={16} />
+                <span>{lang === 'ar' ? 'بدء مشروع' : 'Start Project'}</span>
+              </button>
+            </div>
+            
+            <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid var(--border-color)' }}>
+              <button
+                onClick={toggleLanguage}
+                style={{
+                  background: 'var(--bg-primary)',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-primary)',
+                  borderRadius: '10px',
+                  padding: '8px 12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+              >
+                <Globe size={16} />
+                <span>{lang === 'en' ? 'العربية' : 'EN'}</span>
+              </button>
+
+              <button
+                onClick={toggleTheme}
+                style={{
+                  background: 'var(--bg-primary)',
+                  border: '1px solid var(--border-color)',
+                  color: theme === 'dark' ? '#F59E0B' : '#3B82F6',
+                  borderRadius: '10px',
+                  padding: '8px 12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+              >
+                {theme === 'dark' ? <><Sun size={16}/><span>Light</span></> : <><Moon size={16}/><span>Dark</span></>}
+              </button>
+            </div>
+
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -263,6 +354,9 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
           @media (max-width: 1040px) {
             .desktop-nav { display: none !important; }
             .mobile-toggle { display: flex !important; }
+          }
+          @media (max-width: 768px) {
+            .hide-on-mobile { display: none !important; }
           }
         `}</style>
       </header>
