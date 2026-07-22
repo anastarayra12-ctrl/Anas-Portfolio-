@@ -3,9 +3,9 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { AnasLogo } from './AnasLogo';
 import { AmmanClock } from './AmmanClock';
-import { Sun, Moon, Globe, Menu, X, ArrowUp, Calculator, Zap } from 'lucide-react';
+import { Sun, Moon, Globe, Menu, X, ArrowUp, Zap } from 'lucide-react';
 
-export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
+export const Navbar = ({ currentPage, onNavigate }) => {
   const { lang, toggleLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
@@ -34,6 +34,16 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
     { href: '#contact', label: t.nav.contact },
   ];
 
+  const handleNavClick = (e, href) => {
+    if (currentPage !== 'home') {
+      e.preventDefault();
+      onNavigate('home');
+      setTimeout(() => {
+        window.location.hash = href;
+      }, 100);
+    }
+  };
+
   return (
     <>
       <header
@@ -55,102 +65,82 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
       >
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: '16px' }}>
           {/* Left Side: Transparent Vector Logo + Name */}
-          <a href="#home" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+          <a href="#home" onClick={(e) => handleNavClick(e, '#home')} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
             <AnasLogo size="sm" />
           </a>
 
           {/* Center Side: Nav Links Container */}
-          <nav
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              backgroundColor: 'rgba(20, 22, 28, 0.45)',
-              border: '1px solid var(--border-color)',
-              padding: '6px 16px',
-              borderRadius: '30px',
-              backdropFilter: 'blur(12px)',
-              margin: '0 auto',
-            }}
-            className="desktop-nav"
-          >
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                style={{
-                  color: 'var(--text-secondary)',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  fontSize: '0.85rem',
-                  whiteSpace: 'nowrap',
-                  transition: 'color 200ms ease',
-                }}
-                onMouseEnter={(e) => (e.target.style.color = 'var(--accent-blue)')}
-                onMouseLeave={(e) => (e.target.style.color = 'var(--text-secondary)')}
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
+          {currentPage === 'home' && (
+            <nav
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                backgroundColor: 'rgba(20, 22, 28, 0.45)',
+                border: '1px solid var(--border-color)',
+                padding: '6px 16px',
+                borderRadius: '30px',
+                backdropFilter: 'blur(12px)',
+                margin: '0 auto',
+              }}
+              className="desktop-nav"
+            >
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  style={{
+                    color: 'var(--text-secondary)',
+                    textDecoration: 'none',
+                    fontWeight: 600,
+                    fontSize: '0.85rem',
+                    whiteSpace: 'nowrap',
+                    transition: 'color 200ms ease',
+                  }}
+                  onMouseEnter={(e) => (e.target.style.color = 'var(--accent-blue)')}
+                  onMouseLeave={(e) => (e.target.style.color = 'var(--text-secondary)')}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+          )}
 
           {/* Right Side Controls */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, marginLeft: currentPage !== 'home' ? 'auto' : '0' }}>
             {/* Live Amman Time */}
             <div className="desktop-clock">
               <AmmanClock />
             </div>
 
-            {/* Project Estimator Button */}
-            <button
-              className="hide-on-mobile"
-              onClick={onOpenEstimator}
-              title={lang === 'ar' ? 'حساب موعد المشروع' : 'Project Estimator'}
-              style={{
-                background: 'rgba(59, 130, 246, 0.12)',
-                border: '1px solid rgba(59, 130, 246, 0.35)',
-                color: 'var(--accent-blue)',
-                borderRadius: '10px',
-                padding: '6px 12px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                fontWeight: 700,
-                fontSize: '0.8rem',
-                whiteSpace: 'nowrap',
-                transition: 'all 200ms ease',
-              }}
-            >
-              <Calculator size={14} />
-              <span className="desktop-clock">{lang === 'ar' ? 'حساب الموعد' : 'Estimator'}</span>
-            </button>
-
-            {/* Direct Project Confirmation Button requested by user */}
-            <button
-              className="hide-on-mobile"
-              onClick={onOpenDirectModal}
-              title={lang === 'ar' ? 'بدء وتأكيد مشروع مباشر' : 'Start Project Directly'}
-              style={{
-                background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-                color: '#FFFFFF',
-                borderRadius: '10px',
-                padding: '6px 12px',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                fontWeight: 800,
-                fontSize: '0.8rem',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 4px 14px rgba(16, 185, 129, 0.3)',
-                transition: 'all 200ms ease',
-              }}
-            >
-              <Zap size={14} />
-              <span className="desktop-clock">{lang === 'ar' ? 'بدء مشروع' : 'Start Project'}</span>
-            </button>
+            {/* Start Project Button */}
+            {currentPage !== 'start-project' && (
+              <button
+                className="hide-on-mobile"
+                onClick={() => onNavigate('start-project')}
+                title={lang === 'ar' ? 'ابدأ مشروعك الآن' : 'Start Your Project'}
+                style={{
+                  background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
+                  color: '#FFFFFF',
+                  borderRadius: '10px',
+                  padding: '6px 16px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontWeight: 800,
+                  fontSize: '0.85rem',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 14px rgba(59, 130, 246, 0.3)',
+                  transition: 'all 200ms ease',
+                }}
+              >
+                <Zap size={14} />
+                <span className="desktop-clock">{lang === 'ar' ? 'ابدأ مشروعك' : 'Start Project'}</span>
+              </button>
+            )}
 
             {/* Language Toggle Button */}
             <button
@@ -243,49 +233,30 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
             </div>
             
             {/* Action Buttons inside Drawer */}
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '8px' }}>
-              <button
-                onClick={() => { setMobileMenuOpen(false); onOpenEstimator(); }}
-                style={{
-                  background: 'rgba(59, 130, 246, 0.12)',
-                  border: '1px solid rgba(59, 130, 246, 0.35)',
-                  color: 'var(--accent-blue)',
-                  borderRadius: '10px',
-                  padding: '8px 12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  fontWeight: 700,
-                  fontSize: '0.85rem',
-                  flex: 1,
-                  justifyContent: 'center',
-                }}
-              >
-                <Calculator size={16} />
-                <span>{lang === 'ar' ? 'حساب الموعد' : 'Estimator'}</span>
-              </button>
-              
-              <button
-                onClick={() => { setMobileMenuOpen(false); onOpenDirectModal(); }}
-                style={{
-                  background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-                  color: '#FFFFFF',
-                  borderRadius: '10px',
-                  padding: '8px 12px',
-                  border: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  fontWeight: 800,
-                  fontSize: '0.85rem',
-                  flex: 1,
-                  justifyContent: 'center',
-                }}
-              >
-                <Zap size={16} />
-                <span>{lang === 'ar' ? 'بدء مشروع' : 'Start Project'}</span>
-              </button>
-            </div>
+            {currentPage !== 'start-project' && (
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '8px' }}>
+                <button
+                  onClick={() => { setMobileMenuOpen(false); onNavigate('start-project'); }}
+                  style={{
+                    background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
+                    color: '#FFFFFF',
+                    borderRadius: '10px',
+                    padding: '10px 12px',
+                    border: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    fontWeight: 800,
+                    fontSize: '0.9rem',
+                    flex: 1,
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Zap size={16} />
+                  <span>{lang === 'ar' ? 'ابدأ مشروعك الآن' : 'Start Your Project'}</span>
+                </button>
+              </div>
+            )}
             
             <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid var(--border-color)' }}>
               <button
@@ -328,11 +299,11 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
               </button>
             </div>
 
-            {navLinks.map((link) => (
+            {currentPage === 'home' && navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => { setMobileMenuOpen(false); handleNavClick(e, link.href); }}
                 style={{
                   color: 'var(--text-primary)',
                   textDecoration: 'none',
@@ -392,7 +363,3 @@ export const Navbar = ({ onOpenEstimator, onOpenDirectModal }) => {
     </>
   );
 };
-
-
-
-

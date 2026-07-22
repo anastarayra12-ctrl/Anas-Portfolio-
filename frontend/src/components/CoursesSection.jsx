@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { Code2, Palette, Layers, Database, Sparkles, Calculator, CheckCircle2, ArrowRight, Clock, Zap } from 'lucide-react';
 
-export const CoursesSection = ({ onOpenEstimator, onOpenDirectModal }) => {
+export const CoursesSection = ({ onNavigate }) => {
   const { lang } = useLanguage();
 
   const servicesList = [
@@ -156,51 +156,31 @@ export const CoursesSection = ({ onOpenEstimator, onOpenDirectModal }) => {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'center' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', width: '100%' }}>
-              {/* Button 1: Calculate Project Scope */}
+            <div style={{ display: 'flex', width: '100%' }}>
               <motion.button
-                onClick={onOpenEstimator}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="btn-primary"
-                style={{
-                  padding: '16px 20px',
-                  fontSize: '0.95rem',
-                  fontWeight: 800,
-                  borderRadius: '16px',
-                  justifyContent: 'center',
-                  boxShadow: '0 8px 25px rgba(59, 130, 246, 0.3)',
-                  textAlign: 'center',
-                }}
-              >
-                <Calculator size={20} />
-                <span>{lang === 'ar' ? 'حساب موعد المشروع' : 'Calculate Scope'}</span>
-              </motion.button>
-
-              {/* Button 2: Direct Project Confirmation & Detailed Specification Modal */}
-              <motion.button
-                onClick={onOpenDirectModal}
+                onClick={() => onNavigate('start-project')}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 style={{
-                  padding: '16px 20px',
-                  fontSize: '0.95rem',
+                  padding: '16px 24px',
+                  fontSize: '1.05rem',
                   fontWeight: 800,
                   borderRadius: '16px',
-                  background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                  background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
                   color: '#FFFFFF',
                   border: 'none',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px',
-                  boxShadow: '0 8px 25px rgba(16, 185, 129, 0.35)',
+                  gap: '10px',
+                  boxShadow: '0 8px 25px rgba(59, 130, 246, 0.35)',
                   cursor: 'pointer',
                   textAlign: 'center',
+                  width: '100%',
                 }}
               >
-                <Zap size={20} />
-                <span>{lang === 'ar' ? 'بدء وتأكيد مشروع مباشر' : 'Start Project Directly'}</span>
+                <Zap size={22} />
+                <span>{lang === 'ar' ? 'ابدأ مشروعك الآن' : 'Start Your Project'}</span>
               </motion.button>
             </div>
 

@@ -14,19 +14,22 @@ import { CoursesSection } from './components/CoursesSection';
 import { ContactSection } from './components/ContactSection';
 import { FooterSection } from './components/FooterSection';
 import { InteractiveTerminalModal } from './components/InteractiveTerminalModal';
-import { ProjectEstimatorModal } from './components/ProjectEstimatorModal';
-import { DirectProjectModal } from './components/DirectProjectModal';
+import { StartProjectPage } from './components/StartProjectPage';
 import { WhatsAppSuccessModal } from './components/WhatsAppSuccessModal';
 import { CyberCodeBackground } from './components/CyberCodeBackground';
 
 export function AppContent() {
   const [splashFinished, setSplashFinished] = useState(false);
-  const [isEstimatorOpen, setIsEstimatorOpen] = useState(false);
-  const [isDirectModalOpen, setIsDirectModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('home'); // 'home' or 'start-project'
   const [isWhatsAppSuccessOpen, setIsWhatsAppSuccessOpen] = useState(false);
 
   const handleWhatsAppSent = () => {
     setIsWhatsAppSuccessOpen(true);
+  };
+
+  const navigateTo = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -35,36 +38,33 @@ export function AppContent() {
       <CustomCursor />
       <ScrollProgress />
       {!splashFinished && <SplashScreen onComplete={() => setSplashFinished(true)} />}
-      <Navbar
-        onOpenEstimator={() => setIsEstimatorOpen(true)}
-        onOpenDirectModal={() => setIsDirectModalOpen(true)}
-      />
-      <main>
-        <HomeSection />
-        <AboutSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <CoursesSection
-          onOpenEstimator={() => setIsEstimatorOpen(true)}
-          onOpenDirectModal={() => setIsDirectModalOpen(true)}
-        />
-        <ContactSection onWhatsAppSent={handleWhatsAppSent} />
-      </main>
-      <FooterSection
-        onOpenEstimator={() => setIsEstimatorOpen(true)}
-        onOpenDirectModal={() => setIsDirectModalOpen(true)}
-      />
+      
+      {currentPage === 'home' && (
+        <>
+          <Navbar currentPage={currentPage} onNavigate={navigateTo} />
+          <main>
+            <HomeSection />
+            <AboutSection />
+            <SkillsSection />
+            <ProjectsSection />
+            <CoursesSection onNavigate={() => navigateTo('start-project')} />
+            <ContactSection onWhatsAppSent={handleWhatsAppSent} />
+          </main>
+          <FooterSection onNavigate={() => navigateTo('start-project')} />
+        </>
+      )}
+
+      {currentPage === 'start-project' && (
+        <>
+          <Navbar currentPage={currentPage} onNavigate={navigateTo} />
+          <main>
+            <StartProjectPage onBack={() => navigateTo('home')} onWhatsAppSent={handleWhatsAppSent} />
+          </main>
+          <FooterSection onNavigate={() => navigateTo('start-project')} />
+        </>
+      )}
+
       <InteractiveTerminalModal />
-      <ProjectEstimatorModal
-        isOpen={isEstimatorOpen}
-        onClose={() => setIsEstimatorOpen(false)}
-        onWhatsAppSent={handleWhatsAppSent}
-      />
-      <DirectProjectModal
-        isOpen={isDirectModalOpen}
-        onClose={() => setIsDirectModalOpen(false)}
-        onWhatsAppSent={handleWhatsAppSent}
-      />
       <WhatsAppSuccessModal
         isOpen={isWhatsAppSuccessOpen}
         onClose={() => setIsWhatsAppSuccessOpen(false)}
@@ -84,7 +84,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-
-
-
-

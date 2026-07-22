@@ -5,7 +5,7 @@ import { AnasLogo } from './AnasLogo';
 import { AmmanClock } from './AmmanClock';
 import { Mail, Phone, MapPin, Calculator, Zap, MessageSquare, ArrowUp, CheckCircle2, Heart } from 'lucide-react';
 
-export const FooterSection = ({ onOpenEstimator, onOpenDirectModal }) => {
+export const FooterSection = ({ onNavigate }) => {
   const { lang, t } = useLanguage();
 
   const scrollToTop = () => {
@@ -140,22 +140,13 @@ export const FooterSection = ({ onOpenEstimator, onOpenDirectModal }) => {
             {/* Direct Action Buttons */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <button
-                onClick={onOpenEstimator}
-                className="btn-primary"
-                style={{ padding: '10px 16px', fontSize: '0.85rem', justifyContent: 'center', borderRadius: '10px' }}
-              >
-                <Calculator size={16} />
-                <span>{lang === 'ar' ? 'حساب موعد المشروع' : 'Calculate Scope'}</span>
-              </button>
-
-              <button
-                onClick={onOpenDirectModal}
+                onClick={() => onNavigate('start-project')}
                 style={{
-                  padding: '10px 16px',
-                  fontSize: '0.85rem',
+                  padding: '12px 16px',
+                  fontSize: '0.95rem',
                   fontWeight: 800,
-                  borderRadius: '10px',
-                  background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                  borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
                   color: '#FFFFFF',
                   border: 'none',
                   cursor: 'pointer',
@@ -163,10 +154,11 @@ export const FooterSection = ({ onOpenEstimator, onOpenDirectModal }) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
+                  boxShadow: '0 4px 14px rgba(59, 130, 246, 0.3)',
                 }}
               >
-                <Zap size={16} />
-                <span>{lang === 'ar' ? 'بدء وتأكيد مشروع مباشر' : 'Start Project Directly'}</span>
+                <Zap size={18} />
+                <span>{lang === 'ar' ? 'ابدأ مشروعك الآن' : 'Start Your Project'}</span>
               </button>
             </div>
           </div>
