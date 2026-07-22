@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { CheckCircle, Flame, Award, ShieldCheck, Calendar, ExternalLink, FileText, Globe, Layers, Code2, Palette } from 'lucide-react';
 
-// Ultra-Modern 3D Glass & Depth Vector SVG Icon Renderer
+// Official Flat Tech Icons (No background, Latest versions)
 const Modern3DIcon = ({ name, size = 54 }) => {
   const containerStyle = {
     width: `${size}px`,
@@ -11,30 +11,15 @@ const Modern3DIcon = ({ name, size = 54 }) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    filter: 'drop-shadow(0 12px 20px rgba(0, 0, 0, 0.25))',
-    transition: 'transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+    transition: 'transform 300ms ease',
   };
 
   switch (name) {
     case 'html5':
       return (
         <div style={containerStyle}>
-          <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-            <defs>
-              <linearGradient id="html3d_grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FF6B4A" />
-                <stop offset="50%" stopColor="#E44D26" />
-                <stop offset="100%" stopColor="#B32B0B" />
-              </linearGradient>
-              <linearGradient id="html3d_grad2" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#FF8566" />
-                <stop offset="100%" stopColor="#F16529" />
-              </linearGradient>
-            </defs>
-            <path d="M15 10 L85 10 L78 82 L50 92 L22 82 Z" fill="url(#html3d_grad1)" />
-            <path d="M50 15 L80 15 L74 78 L50 86 Z" fill="url(#html3d_grad2)" />
-            <path d="M50 32 H28 L30 46 H50 V32 Z M50 60 H31 L32 70 L50 75 V60 Z" fill="#FFFFFF" opacity="0.9" />
-            <path d="M50 32 H72 L70 46 H50 V32 Z M50 60 H69 L67 70 L50 75 V60 Z" fill="#E6E6E6" />
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="#E34F26">
+            <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/>
           </svg>
         </div>
       );
@@ -42,25 +27,19 @@ const Modern3DIcon = ({ name, size = 54 }) => {
     case 'dotnet':
       return (
         <div style={containerStyle}>
-          <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-            <defs>
-              <linearGradient id="dotnet3d_bg" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#7C3AED" />
-                <stop offset="100%" stopColor="#311B92" />
-              </linearGradient>
-            </defs>
-            <rect x="8" y="8" width="84" height="84" rx="26" fill="url(#dotnet3d_bg)" />
-            <text x="50" y="62" textAnchor="middle" fill="#FFFFFF" fontSize="30" fontWeight="900" fontFamily="Space Grotesk, sans-serif">.NET</text>
-          </svg>
+          <span style={{ fontSize: size * 0.45, fontWeight: 900, color: '#512BD4', fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-1px' }}>
+            .NET
+          </span>
         </div>
       );
 
     case 'angular':
       return (
         <div style={containerStyle}>
-          <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-            <polygon points="50,8 14,24 21,76 50,92 79,76 86,24" fill="#DD0031" />
-            <path d="M50 20 L24 74 H35 L41 60 H59 L65 74 H76 L50 20 Z M50 36 L56 50 H44 L50 36 Z" fill="#FFFFFF" />
+          <svg width={size} height={size} viewBox="0 0 250 250">
+            <path fill="#DD0031" d="M125 30L31.9 63.2l14.2 123.1L125 230l78.9-43.7 14.2-123.1z"/>
+            <path fill="#C3002F" d="M125 30v200l78.9-43.7 14.2-123.1z"/>
+            <path fill="#FFA3B1" d="M125 52.1L66.8 182.6h21.7l11.7-29.2h49.4l11.7 29.2H183L125 52.1zm17 112.2H108l17-42.5 17 42.5z"/>
           </svg>
         </div>
       );
@@ -68,12 +47,12 @@ const Modern3DIcon = ({ name, size = 54 }) => {
     case 'figma':
       return (
         <div style={containerStyle}>
-          <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-            <rect x="24" y="10" width="26" height="26" rx="13" fill="#F24E1E" />
-            <rect x="50" y="10" width="26" height="26" rx="13" fill="#FF7262" />
-            <rect x="24" y="36" width="26" height="26" rx="13" fill="#A259FF" />
-            <circle cx="63" cy="49" r="13" fill="#1ABCFE" />
-            <path d="M24 62 C24 54.8 29.8 49 37 49 H50 V62 C50 69.2 44.2 75 37 75 C29.8 75 24 69.2 24 62 Z" fill="#0ACF83" />
+          <svg width={size} height={size} viewBox="0 0 24 24">
+            <path fill="#F24E1E" d="M12 11.966V5.983c0-1.652-1.343-2.991-3-2.991H6v5.983h3c1.657 0 3 1.339 3 2.991z"/>
+            <path fill="#FF7262" d="M6 5.983C6 4.33 7.343 2.992 9 2.992h3v5.983H9c-1.657 0-3-1.339-3-2.991z"/>
+            <path fill="#A259FF" d="M12 11.966v5.983c0 1.652-1.343 2.992-3 2.992H6v-5.983h3c1.657 0 3-1.339 3-2.992z"/>
+            <path fill="#1ABCFE" d="M15 17.949c-1.657 0-3-1.34-3-2.992V8.974h3c1.657 0 3 1.34 3 2.992 0 1.652-1.343 2.991-3 2.991z"/>
+            <path fill="#0ACF83" d="M9 17.949c-1.657 0-3 1.34-3 2.992 0 1.652 1.343 2.991 3 2.991 1.657 0 3-1.339 3-2.991v-2.992H9z"/>
           </svg>
         </div>
       );
@@ -81,10 +60,8 @@ const Modern3DIcon = ({ name, size = 54 }) => {
     case 'photoshop':
       return (
         <div style={containerStyle}>
-          <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-            <rect x="10" y="10" width="80" height="80" rx="20" fill="#001E36" stroke="#31A8FF" strokeWidth="2.5" />
-            <text x="32" y="65" fill="#31A8FF" fontSize="38" fontWeight="800" fontFamily="Space Grotesk, sans-serif">P</text>
-            <text x="56" y="65" fill="#31A8FF" fontSize="38" fontWeight="800" fontFamily="Space Grotesk, sans-serif">s</text>
+          <svg width={size} height={size} viewBox="0 0 24 24" fill="#31A8FF">
+             <path d="M0 0v24h24V0H0zm6.9 16.5c-2.3 0-3.6-1.5-3.6-3.8 0-2.4 1.4-3.9 3.7-3.9 1 0 1.9.3 2.5.7l-.6 1.4c-.5-.3-1.1-.6-1.8-.6-1.2 0-1.9.8-1.9 2.1 0 1.3.8 2.2 2 2.2.7 0 1.4-.3 1.9-.7l.6 1.4c-.6.5-1.5.8-2.6.8h-.2zm6.6 0c-1 .0-1.8-.3-2.4-.7l.5-1.4c.5.4 1.2.7 1.9.7.8 0 1.3-.4 1.3-1 0-.6-.5-.9-1.5-1.2-1.4-.4-2.3-1-2.3-2.2 0-1.4 1.1-2.2 2.6-2.2.8 0 1.6.3 2.2.7l-.5 1.3c-.5-.3-1.1-.5-1.7-.5-.7 0-1.1.4-1.1.9 0 .6.6.9 1.5 1.2 1.3.4 2.2 1.1 2.2 2.2.1 1.6-1.2 2.2-2.7 2.2z"/>
           </svg>
         </div>
       );
