@@ -71,7 +71,7 @@ export const CoursesSection = ({ onOpenEstimator, onOpenDirectModal }) => {
         </motion.div>
 
         {/* Tall Vertical Side-by-Side Services Grid requested by user */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px', marginBottom: '64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '24px', marginBottom: '64px' }}>
           {servicesList.map((service) => {
             const IconComponent = service.icon;
             return (
@@ -132,7 +132,7 @@ export const CoursesSection = ({ onOpenEstimator, onOpenDirectModal }) => {
             border: '2px solid var(--accent-blue)',
             boxShadow: '0 24px 60px rgba(59, 130, 246, 0.18)',
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
             gap: '36px',
             alignItems: 'center',
           }}

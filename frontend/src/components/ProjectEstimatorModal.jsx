@@ -262,7 +262,7 @@ export const ProjectEstimatorModal = ({ isOpen, onClose, onWhatsAppSent }) => {
                 <label style={{ fontSize: '0.95rem', fontWeight: 800, display: 'block', marginBottom: '14px', color: 'var(--text-primary)' }}>
                   {lang === 'ar' ? '2. المزايا والمتطلبات الإضافية (اختر ما يناسبك):' : '2. Desired Additional Features & Scope:'}
                 </label>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '10px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '10px' }}>
                   {featureOptions.map((opt) => {
                     const isSelected = selectedFeatures.includes(opt.id);
                     return (

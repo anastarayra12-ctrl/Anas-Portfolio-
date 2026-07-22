@@ -34,7 +34,7 @@ export const AboutSection = () => {
             </p>
           </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', alignItems: 'stretch' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '32px', alignItems: 'stretch' }}>
             {/* Left Column: Overview Box (Equal Height) */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}

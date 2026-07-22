@@ -75,7 +75,7 @@ export const ContactSection = ({ onWhatsAppSent }) => {
           </p>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '48px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '48px' }}>
           {/* Contact Details Column */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}

@@ -221,7 +221,7 @@ export const SkillsSection = () => {
         </div>
 
         {/* Mastered & Learning Skills Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px', marginBottom: '64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '32px', marginBottom: '64px' }}>
           {/* Mastered Skills Card */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}

@@ -258,4 +258,30 @@ section {
     padding-top: 90px;
     padding-bottom: 50px;
   }
+
+  /* Center Home Section text on mobile */
+  .hero-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero-content p {
+    text-align: center;
+  }
+  
+  .hero-content .status-badge {
+    margin: 0 auto 20px;
+  }
+  
+  .hero-role {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .hero-ctas {
+    justify-content: center;
+    width: 100%;
+  }
 }

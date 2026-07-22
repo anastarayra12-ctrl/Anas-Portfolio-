@@ -147,13 +147,14 @@ export const HomeSection = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
             gap: '48px',
             alignItems: 'center',
           }}
         >
           {/* Left Column: Bio & CTAs */}
           <motion.div
+            className="hero-content"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -178,6 +179,7 @@ export const HomeSection = () => {
 
             {/* Typewriter Role Title */}
             <div
+              className="hero-role"
               style={{
                 fontSize: 'clamp(1.1rem, 2.3vw, 1.4rem)',
                 fontWeight: 700,
@@ -218,7 +220,7 @@ export const HomeSection = () => {
             </p>
 
             {/* Home CTAs: Button 1 = Download CV, Button 2 = Services & Solutions */}
-            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+            <div className="hero-ctas" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
               {/* Button 1: Download CV */}
               <a
                 href="/cv.pdf"
