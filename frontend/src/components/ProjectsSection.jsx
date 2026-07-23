@@ -91,7 +91,7 @@ export const ProjectsSection = () => {
               {lang === 'ar' ? 'لا يوجد مشاريع مضافة حالياً' : 'No Projects Added Yet'}
             </h3>
             <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', margin: 0, maxWidth: '480px', lineHeight: 1.6 }}>
-              {lang === 'ar' ? 'سيتم توثيق ورفع المشاريع والنماذج قريباً في هذا المعرض بشكل مرتب وتحت بعضها مباشرة.' : 'Projects showcase will be populated and published here soon.'}
+              {lang === 'ar' ? '' : ''}
             </p>
           </div>
         </div>

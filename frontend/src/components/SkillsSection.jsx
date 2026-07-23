@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { CheckCircle, Flame, Award, ShieldCheck, Calendar, ExternalLink, FileText, Globe, Layers, Code2, Palette } from 'lucide-react';
+import { CheckCircle, Flame, Award, ShieldCheck, Calendar, ExternalLink, FileText, Globe, Layers, Code2, Palette, Loader2 } from 'lucide-react';
 
 // Ultra-Modern 3D Glass & Depth Vector SVG Icon Renderer
 const Modern3DIcon = ({ name, size = 54 }) => {
@@ -107,77 +107,93 @@ export const SkillsSection = () => {
     { id: 'graphic', label: lang === 'ar' ? 'دورات Graphic Design' : 'Graphic Design' },
   ];
 
-  const masteredSkills = [
-    { category: 'fullstack', name: 'HTML5 & CSS3 Architecture', level: '100% Mastered', desc: lang === 'ar' ? 'بناء واجهات قياسية متجاوبة وعالية الأداء' : 'Responsive layout & web accessibility standards', iconName: 'html5' },
-    { category: 'uiux', name: 'UI / UX & Figma Wireframes', level: '100% Mastered', desc: lang === 'ar' ? 'تصميم تجارب المستخدم والنماذج التفاعلية' : 'Interactive prototyping & Figma design tokens', iconName: 'figma' },
-    { category: 'graphic', name: 'Adobe Photoshop & Branding', level: 'Mastered', desc: lang === 'ar' ? 'ابتكار الجرافيك والشعارات والهويات البصرية' : 'Graphic design, logo identity & visual collateral', iconName: 'photoshop' },
-  ];
-
-  const learningSkills = [
-    { category: 'fullstack', name: '.NET Full Stack (C# & ASP.NET)', level: 'In Progress', desc: lang === 'ar' ? 'بناء واجهات REST APIs وقواعد بيانات SQL Server' : 'C#, ASP.NET Core Web API, Entity Framework, SQL Server', iconName: 'dotnet' },
-    { category: 'fullstack', name: 'Angular & TypeScript', level: 'In Progress', desc: lang === 'ar' ? 'تطوير واجهات مستخدم تفاعلية للأنظمة المعقدة' : 'TypeScript, RxJS, Component Architecture & Forms', iconName: 'angular' },
-  ];
+  // Certificates and Skills List
 
   // Certifications list with rich redesign requested by user
   const certificationsList = [
     {
       id: 1,
-      category: 'fullstack',
-      date: '2024 - 2026',
-      title: lang === 'ar' ? 'شهادة احتراف تطوير الويب Full Stack (.NET Core)' : '.NET Core Full Stack Professional Certificate',
-      issuer: lang === 'ar' ? 'المجلس الدولي للمراجعة والتدريب البرمجي' : 'Global Tech Certification Authority',
-      reviewer: lang === 'ar' ? 'د. مراجعة هندسة البرمجيات' : 'Senior Software Engineer Reviewer',
-      platform: 'Professional Bootcamp Track',
-      previewImage: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80',
-      fileDetail: lang === 'ar' ? 'تغطي C#، Web API، SQL Server، وأنماط التصميم المعمارية' : 'Curriculum covers C#, ASP.NET Web API, SQL Server, and OOP architecture.',
+      category: 'general',
+      date: 'Completed',
+      title: lang === 'ar' ? 'دورة احتراف الذكاء الاصطناعي Claude' : 'Claude AI Mastery Course',
+      issuer: 'Anthropic',
+      platform: 'Anthropic Official',
+      previewImage: '/courses/claude_mastery.jpg',
+      fileDetail: lang === 'ar' ? 'التعامل مع بيئة Claude من الشركة الأم Anthropic.' : 'Mastering the Claude environment from Anthropic.',
     },
     {
       id: 2,
-      category: 'uiux',
-      date: '2024',
-      title: lang === 'ar' ? 'شهادة التخصص في تصميم تجارب وواجهات المستخدم (UI/UX)' : 'UI/UX Interactive Prototyping & Figma Specialist',
-      issuer: 'Design Academy & UX Association',
-      reviewer: 'Lead UI/UX Architect',
-      platform: 'Figma Design Academy',
-      previewImage: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&q=80',
-      fileDetail: lang === 'ar' ? 'تغطي بناء Wireframes، النماذج التفاعلية، وأنظمة الألوان المتكيفة' : 'Covers Wireframes, Figma components, interactive flows, and dark mode tokens.',
+      category: 'general',
+      date: 'Completed',
+      title: lang === 'ar' ? 'دورة كتابة الأوامر لـ Claude (Prompting)' : 'Claude AI Prompt Engineering',
+      issuer: 'YouTube',
+      platform: 'YouTube',
+      previewImage: '/courses/claude_prompting.jpg',
+      fileDetail: lang === 'ar' ? 'كيفية التعامل مع Claude وكتابة الأوامر (Prompts) المتقدمة.' : 'How to use Claude and write advanced AI prompts.',
     },
     {
       id: 3,
-      category: 'graphic',
-      date: '2023',
-      title: lang === 'ar' ? 'شهادة احتراف تصميم الجرافيك والهوية البصرية' : 'Graphic Design & Visual Brand Identity Certification',
-      issuer: 'Adobe Certified Expert Review',
-      reviewer: 'Senior Graphic Brand Director',
-      platform: 'Adobe Creative Campus',
-      previewImage: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&q=80',
-      fileDetail: lang === 'ar' ? 'تغطي أدوات Photoshop، تصميم الشعارات، والدليل البصري للهويات' : 'Mastery in Adobe Photoshop, logo creation, typography, and brand identity manuals.',
+      category: 'fullstack',
+      date: 'Completed',
+      title: lang === 'ar' ? 'دورة Vibe Coding' : 'Vibe Coding Course',
+      issuer: 'YouTube',
+      platform: 'YouTube',
+      previewImage: '/courses/vibe_coding.jpg',
+      fileDetail: lang === 'ar' ? 'كيفية التعامل مع الـ Vibe Coding لتطوير البرمجيات.' : 'Learning how to utilize Vibe Coding for software development.',
     },
     {
       id: 4,
-      category: 'general',
-      date: '2022 - 2026',
-      title: lang === 'ar' ? 'المؤهل الأكاديمي هندسة البرمجيات' : 'Software Engineering Academic Degree',
-      issuer: lang === 'ar' ? 'جامعة الزيتونة الأردنية' : 'Alzaytoonah University of Jordan',
-      reviewer: lang === 'ar' ? 'عمادة كلية تكنولوجيا المعلومات' : 'IT Faculty Academic Board',
-      platform: 'Alzaytoonah Academic Portal',
-      previewImage: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80',
-      fileDetail: lang === 'ar' ? 'تغطي هندسة البرمجيات، خوارزميات البيانات، وتطوير الأنظمة المعقدة' : 'Comprehensive computer science & software engineering curriculum.',
+      category: 'fullstack',
+      date: 'In Progress (قيد التعلم)',
+      title: lang === 'ar' ? 'دورة مطور Full Stack (.NET & Angular)' : 'Full Stack Developer (.NET & Angular)',
+      issuer: 'Step by Step',
+      reviewer: lang === 'ar' ? 'م. محمد المومني' : 'Eng. Mohammad Al-Momani',
+      platform: 'Step by Step Company',
+      previewImage: '/courses/fullstack_dotnet.jpg',
+      fileDetail: lang === 'ar' ? 'بناء تطبيقات متكاملة باستخدام بيئة دوت نت وانجلر.' : 'Building full-stack apps with .NET and Angular.',
     },
+    {
+      id: 5,
+      category: 'uiux',
+      date: 'Completed',
+      title: lang === 'ar' ? 'دورة تصميم واجهات وتجربة المستخدم UI/UX' : 'UI/UX Design Masterclass',
+      issuer: 'Udemy',
+      reviewer: lang === 'ar' ? 'م. إسلام أمير' : 'Eng. Eslam Ameer',
+      platform: 'Udemy',
+      previewImage: '/courses/uiux_udemy.jpg',
+      fileDetail: lang === 'ar' ? 'مفاهيم تجربة المستخدم وتصميم الواجهات (بناءً على Figma).' : 'UX concepts and modern UI design (Figma based).',
+    },
+    {
+      id: 6,
+      category: 'uiux',
+      date: 'Completed',
+      title: lang === 'ar' ? 'ورشة عمل تصميم وتجربة المستخدم (ZINC)' : 'UI/UX Design Workshop',
+      issuer: 'Zain Innovation Campus (ZINC)',
+      reviewer: lang === 'ar' ? 'أ. علاء علي' : 'Mr. Alaa Ali',
+      platform: 'ZINC - Zain',
+      previewImage: '/courses/uiux_workshop.jpg',
+      fileDetail: lang === 'ar' ? 'ورشة عمل في منصة زين للإبداع (ZINC).' : 'Interactive workshop hosted at Zain Innovation Campus (ZINC).',
+    },
+    {
+      id: 7,
+      category: 'graphic',
+      date: 'Completed',
+      title: lang === 'ar' ? 'دورة Adobe Photoshop' : 'Adobe Photoshop Course',
+      issuer: 'YouTube',
+      platform: 'YouTube',
+      previewImage: '/courses/photoshop_course.jpg',
+      fileDetail: lang === 'ar' ? 'دورة لتعلم الفوتوشوب واستخدامه في التصميم.' : 'Learning Photoshop tools for graphic design.',
+    }
   ];
 
   // Filtering
-  const filteredMastered = activeFilter === 'all'
-    ? masteredSkills
-    : masteredSkills.filter((s) => s.category === activeFilter);
-
-  const filteredLearning = activeFilter === 'all'
-    ? learningSkills
-    : learningSkills.filter((s) => s.category === activeFilter);
 
   const filteredCerts = activeFilter === 'all'
     ? certificationsList
     : certificationsList.filter((c) => c.category === activeFilter);
+
+  const completedCerts = filteredCerts.filter(c => c.date !== 'In Progress (قيد التعلم)');
+  const learningCerts = filteredCerts.filter(c => c.date === 'In Progress (قيد التعلم)');
 
   return (
     <section id="skills">
@@ -196,7 +212,7 @@ export const SkillsSection = () => {
           <div style={{ width: '60px', height: '4px', backgroundColor: 'var(--accent-blue)', margin: '0 auto 24px auto', borderRadius: '2px' }} />
         </motion.div>
 
-        {/* Top Category Filter Bar requested by user */}
+        {/* Top Category Filter Bar */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '52px' }}>
           {filterTabs.map((tab) => (
             <button
@@ -220,149 +236,115 @@ export const SkillsSection = () => {
           ))}
         </div>
 
-        {/* Mastered & Learning Skills Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px', marginBottom: '64px' }}>
-          {/* Mastered Skills Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="glass-card"
-            style={{ padding: '32px' }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px', color: 'var(--accent-green)' }}>
-              <CheckCircle size={24} />
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 700 }}>{t.skills.mastered}</h3>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <AnimatePresence mode="popLayout">
-                {filteredMastered.map((skill, idx) => (
-                  <motion.div
-                    key={idx}
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    style={{
-                      backgroundColor: 'var(--bg-primary)',
-                      padding: '18px',
-                      borderRadius: '16px',
-                      border: '1px solid var(--border-color)',
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                        <Modern3DIcon name={skill.iconName} size={42} />
-                        <span style={{ fontWeight: 700, fontSize: '1.05rem' }}>{skill.name}</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '64px', marginTop: '32px' }}>
+          
+          {/* Completed Courses Section */}
+          {completedCerts.length > 0 && (
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+                <CheckCircle size={28} style={{ color: 'var(--accent-green)' }} />
+                <h3 style={{ fontSize: '1.6rem', fontWeight: 800, margin: 0 }}>
+                  {lang === 'ar' ? 'دورات مكتملة (Completed)' : 'Completed Courses'}
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <AnimatePresence>
+                  {completedCerts.map((cert) => (
+                    <motion.div
+                      key={cert.id}
+                      layout
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.3 }}
+                      className="glass-card"
+                      style={{ overflow: 'hidden', display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+                    >
+                      <div style={{ flex: '1 1 300px', minHeight: '220px', position: 'relative' }}>
+                        <img src={cert.previewImage} alt={cert.title} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
+                        <div style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 2 }}>
+                           <span style={{ backgroundColor: 'rgba(16, 185, 129, 0.95)', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '10px', backdropFilter: 'blur(4px)' }}>
+                             <CheckCircle size={16} />
+                             {cert.date}
+                           </span>
+                        </div>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: 700, padding: '4px 10px', borderRadius: '20px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: 'var(--accent-green)' }}>
-                        {skill.level}
-                      </span>
-                    </div>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: 0 }}>
-                      {skill.desc}
-                    </p>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-          </motion.div>
-
-          {/* Currently Learning Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="glass-card"
-            style={{ padding: '32px' }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px', color: 'var(--accent-blue)' }}>
-              <Flame size={24} />
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 700 }}>{t.skills.learning}</h3>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <AnimatePresence mode="popLayout">
-                {filteredLearning.map((skill, idx) => (
-                  <motion.div
-                    key={idx}
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    style={{
-                      backgroundColor: 'var(--bg-primary)',
-                      padding: '18px',
-                      borderRadius: '16px',
-                      border: '1px solid var(--border-color)',
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                        <Modern3DIcon name={skill.iconName} size={42} />
-                        <span style={{ fontWeight: 700, fontSize: '1.05rem' }}>{skill.name}</span>
+                      <div style={{ flex: '2 1 400px', padding: '32px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <h4 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '16px', color: 'var(--text-primary)' }}>{cert.title}</h4>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '20px', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Globe size={16} style={{ color: 'var(--accent-blue)' }} /> <span style={{ fontWeight: 600 }}>{cert.issuer}</span></div>
+                          {cert.reviewer && (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><ShieldCheck size={16} style={{ color: 'var(--accent-green)' }} /> <span style={{ fontWeight: 600 }}>{cert.reviewer}</span></div>
+                          )}
+                        </div>
+                        <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                          {cert.fileDetail}
+                        </p>
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: 700, padding: '4px 10px', borderRadius: '20px', backgroundColor: 'rgba(59, 130, 246, 0.15)', color: 'var(--accent-blue)' }}>
-                        {skill.level}
-                      </span>
-                    </div>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: 0 }}>
-                      {skill.desc}
-                    </p>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
             </div>
-          </motion.div>
-        </div>
+          )}
 
-        {/* Certifications & Course Credentials Section Empty State requested by user */}
-        <div style={{ marginTop: '64px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '32px' }}>
-            <Award size={28} style={{ color: 'var(--accent-blue)' }} />
-            <h3 style={{ fontSize: '1.75rem', fontWeight: 800, margin: 0 }}>
-              {lang === 'ar' ? 'الشهادات والدورات المعتمدة' : 'Certified Courses & Credentials'}
-            </h3>
-          </div>
-
-          <div
-            className="glass-card"
-            style={{
-              padding: '48px 24px',
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '14px',
-              maxWidth: '640px',
-              margin: '0 auto',
-            }}
-          >
-            <div
-              style={{
-                width: '60px',
-                height: '60px',
-                borderRadius: '50%',
-                backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--accent-blue)',
-              }}
-            >
-              <Award size={30} />
+          {/* Currently Learning Section */}
+          {learningCerts.length > 0 && (
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+                <Flame size={28} style={{ color: 'var(--accent-blue)' }} />
+                <h3 style={{ fontSize: '1.6rem', fontWeight: 800, margin: 0 }}>
+                  {lang === 'ar' ? 'دورات قيد التعلم (In Progress)' : 'Currently Learning'}
+                </h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <AnimatePresence>
+                  {learningCerts.map((cert) => (
+                    <motion.div
+                      key={cert.id}
+                      layout
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.3 }}
+                      className="glass-card"
+                      style={{ overflow: 'hidden', display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+                    >
+                      <div style={{ flex: '1 1 300px', minHeight: '220px', position: 'relative' }}>
+                        <img src={cert.previewImage} alt={cert.title} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
+                        <div style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 2 }}>
+                           <span style={{ backgroundColor: 'rgba(59, 130, 246, 0.95)', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 4px 15px rgba(59,130,246,0.5)', backdropFilter: 'blur(4px)' }}>
+                             <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2, ease: "linear" }} style={{ display: 'flex' }}>
+                               <Loader2 size={16} />
+                             </motion.div>
+                             {cert.date}
+                           </span>
+                        </div>
+                      </div>
+                      <div style={{ flex: '2 1 400px', padding: '32px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <h4 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '16px', color: 'var(--text-primary)' }}>{cert.title}</h4>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '20px', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Globe size={16} style={{ color: 'var(--accent-blue)' }} /> <span style={{ fontWeight: 600 }}>{cert.issuer}</span></div>
+                          {cert.reviewer && (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><ShieldCheck size={16} style={{ color: 'var(--accent-green)' }} /> <span style={{ fontWeight: 600 }}>{cert.reviewer}</span></div>
+                          )}
+                        </div>
+                        <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                          {cert.fileDetail}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
             </div>
-            <h4 style={{ fontSize: '1.2rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>
-              {lang === 'ar' ? 'لا يوجد شهادات مضافة حالياً' : 'No Certifications Added Yet'}
-            </h4>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0, maxWidth: '420px', lineHeight: 1.6 }}>
-              {lang === 'ar' ? 'سيتم إضافة الشهادات والدورات المعتمدة قريباً فور اعتمادها وتحديث السجلات.' : 'Certified credentials and program certificates will be uploaded here soon.'}
-            </p>
-          </div>
+          )}
+
+          {filteredCerts.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
+              {lang === 'ar' ? 'لا يوجد دورات في هذا القسم حالياً' : 'No courses found in this category'}
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -10,7 +10,7 @@ import { HomeSection } from './components/HomeSection';
 import { AboutSection } from './components/AboutSection';
 import { SkillsSection } from './components/SkillsSection';
 import { ProjectsSection } from './components/ProjectsSection';
-import { CoursesSection } from './components/CoursesSection';
+import { ServicesSection } from './components/ServicesSection';
 import { ContactSection } from './components/ContactSection';
 import { FooterSection } from './components/FooterSection';
 import { InteractiveTerminalModal } from './components/InteractiveTerminalModal';
@@ -47,7 +47,7 @@ export function AppContent() {
             <AboutSection />
             <SkillsSection />
             <ProjectsSection />
-            <CoursesSection onNavigate={() => navigateTo('start-project')} />
+            <ServicesSection onNavigate={() => navigateTo('start-project')} />
             <ContactSection onWhatsAppSent={handleWhatsAppSent} />
           </main>
           <FooterSection onNavigate={() => navigateTo('start-project')} />

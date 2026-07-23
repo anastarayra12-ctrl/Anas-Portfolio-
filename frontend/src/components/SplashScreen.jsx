@@ -36,37 +36,53 @@ export const SplashScreen = ({ onComplete }) => {
           }}
         >
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6 }}
+            initial={{ scale: 0.7, opacity: 0, filter: 'blur(15px)' }}
+            animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            <AnasLogo size="xl" animated={true} />
+            <AnasLogo size="xl" animated={true} showText={false} />
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
+            initial={{ opacity: 0, y: 15, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ delay: 0.8, duration: 0.8, ease: 'easeOut' }}
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '1.75rem',
-              fontWeight: 700,
-              letterSpacing: '0.15em',
-              color: 'var(--text-primary)',
+              fontSize: '1.85rem',
+              fontWeight: 800,
+              letterSpacing: '0.2em',
               textTransform: 'uppercase',
+              background: 'linear-gradient(to right, var(--text-primary) 20%, var(--accent-blue) 50%, var(--text-primary) 80%)',
+              backgroundSize: '200% auto',
+              color: 'transparent',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              animation: 'shine 3s linear infinite',
+              textAlign: 'center'
             }}
           >
             Anas Tarayra
+            <style>
+              {`
+                @keyframes shine {
+                  to {
+                    background-position: 200% center;
+                  }
+                }
+              `}
+            </style>
           </motion.div>
 
           <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: '120px' }}
-            transition={{ delay: 1.2, duration: 0.8 }}
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: '140px', opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8, ease: 'easeInOut' }}
             style={{
-              height: '3px',
+              height: '2px',
               borderRadius: '2px',
               background: 'linear-gradient(90deg, transparent, var(--accent-blue), transparent)',
+              boxShadow: '0 0 10px var(--accent-blue-glow)'
             }}
           />
         </motion.div>

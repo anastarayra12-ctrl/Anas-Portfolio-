@@ -69,6 +69,8 @@ export const HomeSection = () => {
         }}
       />
 
+
+
       <div className="container" style={{ width: '100%', position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center' }}>
         <div
           style={{
@@ -100,7 +102,7 @@ export const HomeSection = () => {
                 marginBottom: '20px',
               }}
             >
-              {lang === 'ar' ? 'أنس الطرايرة' : 'Anas Al-Tarayrah'}
+              {lang === 'ar' ? 'أنس طرايرة' : 'Anas Tarayra'}
             </h1>
 
             {/* Typewriter Role Title */}

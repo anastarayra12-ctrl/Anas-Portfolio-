@@ -4,49 +4,10 @@ import jsPDF from 'jspdf';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { 
-  Briefcase, CheckCircle2, MessageCircle, FileText, 
-  User, CreditCard, AlignLeft, Calendar, LayoutTemplate, 
-  Code, PenTool, CheckSquare, ArrowLeft, ArrowRight,
-  ShieldCheck, FileSignature, Clock
+  User, Mail, Phone, LayoutTemplate, Briefcase, 
+  FileText, Link as LinkIcon, CreditCard, Calendar, Target,
+  CheckCircle2, ArrowLeft, ArrowRight, Send, AlertCircle, Edit2, PlayCircle, HelpCircle
 } from 'lucide-react';
-
-// === Official Terms Content (Written by Anas) ===
-const officialTerms = {
-  ar: {
-    development: {
-      title: 'وثيقة شروط التطوير والبرمجة',
-      icon: <Code size={24} />,
-      content: `1. الدفعات المالية: يتم دفع 40% كدفعة أولى لبدء العمل، 30% بعد تسليم النسخة التجريبية (Beta)، و 30% عند التسليم النهائي للمشروع ونقره على السيرفر.\n2. الملكية الفكرية: تعود ملكية الكود المصدري (Source Code) بالكامل للعميل بعد تسديد الدفعة الأخيرة.\n3. الصيانة والدعم: يتضمن المشروع فترة دعم فني مجانية لمدة 30 يوماً من تاريخ التسليم النهائي لتصحيح أي أخطاء برمجية (Bugs). أي إضافات جديدة بعد التسليم تتطلب اتفاقاً مالياً جديداً.\n4. الاستضافة (Hosting): أسعار المشاريع لا تشمل تكاليف الاستضافة أو النطاق (Domain) ما لم يتم الاتفاق على غير ذلك.`
-    },
-    design: {
-      title: 'وثيقة شروط التصميم (UI/UX)',
-      icon: <PenTool size={24} />,
-      content: `1. الدفعات المالية: يتم دفع 50% كدفعة أولى قبل البدء بالبحث ورسم النماذج (Wireframes)، و 50% بعد الموافقة النهائية وقبل تسليم الملفات المفتوحة.\n2. التعديلات: يحق للعميل طلب تعديلات جذرية مرتين (2) خلال مرحلة النماذج المبدئية. التعديلات الطفيفة (تغيير ألوان، نصوص) مسموحة حتى 3 مرات قبل التسليم النهائي.\n3. التسليم: يتم تسليم التصاميم النهائية عبر منصة Figma بصيغة تفاعلية (Prototype) قابلة للتصدير للبرمجة.\n4. الملكية: لا يحق للمصمم إعادة بيع واجهات العميل لأطراف أخرى، ويعتبر التصميم ملكية حصرية للعميل.`
-    },
-    communication: {
-      title: 'قواعد التواصل وإدارة المشروع',
-      icon: <ShieldCheck size={24} />,
-      content: `1. أوقات العمل: أوقات العمل والتواصل الرسمية هي من الأحد إلى الخميس، من الساعة 10 صباحاً وحتى 6 مساءً (بتوقيت عمّان).\n2. آلية التواصل: يتم اعتماد (WhatsApp) للتحديثات السريعة، و (Google Meet / Zoom) للاجتماعات الطويلة ومراجعة النماذج.\n3. الالتزام بالوقت: أي تأخير من العميل في تسليم المحتوى المطلوب (صور، نصوص، ملفات) قد يؤدي إلى تأخير موعد التسليم النهائي للمشروع بنفس مقدار التأخير.\n4. الإلغاء: في حال قرر العميل إيقاف المشروع بعد البدء به، لا يتم استرداد الدفعة الأولى، حيث تعتبر تعويضاً عن الوقت والجهد المبذول في التخطيط والبدء.`
-    }
-  },
-  en: {
-    development: {
-      title: 'Development & Programming Terms',
-      icon: <Code size={24} />,
-      content: `1. Payments: 40% upfront payment, 30% upon Beta delivery, and 30% upon final delivery and deployment.\n2. Intellectual Property: The full source code ownership transfers to the client after the final payment is cleared.\n3. Maintenance: The project includes 30 days of free technical support for bug fixing after final delivery. New features require a separate agreement.\n4. Hosting: Project quotes do not include hosting or domain costs unless explicitly agreed upon.`
-    },
-    design: {
-      title: 'UI/UX Design Terms',
-      icon: <PenTool size={24} />,
-      content: `1. Payments: 50% upfront payment before wireframing, and 50% before delivering the final source files.\n2. Revisions: The client is entitled to 2 major revisions during the wireframe stage, and up to 3 minor revisions before final delivery.\n3. Delivery: Final designs are delivered via Figma as an interactive prototype ready for development.\n4. Ownership: The designer will not resell custom client interfaces. The design is the exclusive property of the client.`
-    },
-    communication: {
-      title: 'Communication & Management Rules',
-      icon: <ShieldCheck size={24} />,
-      content: `1. Working Hours: Official communication hours are Sunday to Thursday, 10 AM to 6 PM (Amman Time).\n2. Communication Channels: WhatsApp for quick updates, and Google Meet/Zoom for detailed reviews.\n3. Deadlines: Any delay by the client in providing required assets (text, images) will correspondingly extend the final delivery deadline.\n4. Cancellation: If the client cancels the project after work has commenced, the upfront payment is non-refundable as compensation for initial planning and time spent.`
-    }
-  }
-};
 
 export const StartProjectPage = ({ onBack, onWhatsAppSent }) => {
   const { lang } = useLanguage();
@@ -56,43 +17,45 @@ export const StartProjectPage = ({ onBack, onWhatsAppSent }) => {
   }, []);
 
   const [step, setStep] = useState(1);
-  const [direction, setDirection] = useState(1); // 1 for forward, -1 for backward
-  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [direction, setDirection] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const contractRef = useRef(null);
-
-  const [termsAccepted, setTermsAccepted] = useState({
-    development: false,
-    design: false,
-    communication: false,
-  });
 
   const [formData, setFormData] = useState({
     clientName: '',
-    companyName: '',
+    email: '',
+    phone: '',
+    projectType: '',
     projectName: '',
-    projectType: 'web',
-    features: [],
+    description: '',
+    references: '',
     budget: '',
-    deadline: '',
-    description: ''
+    timeline: '',
+    stage: '', 
   });
 
   const projectTypes = [
-    { id: 'web', label: lang === 'ar' ? 'تطبيق ويب متكامل (Full-Stack)' : 'Full-Stack Web App' },
-    { id: 'uiux', label: lang === 'ar' ? 'تصميم واجهات وتجربة مستخدم (UI/UX)' : 'UI/UX Design' },
-    { id: 'api', label: lang === 'ar' ? 'تطوير واجهات خلفية (Backend/API)' : 'Backend API Development' },
-    { id: 'ecommerce', label: lang === 'ar' ? 'متجر إلكتروني' : 'E-Commerce Store' },
-    { id: 'landing', label: lang === 'ar' ? 'صفحة هبوط (Landing Page)' : 'Landing Page' },
+    { id: 'web', label: lang === 'ar' ? 'موقع ويب' : 'Website' },
+    { id: 'uiux', label: lang === 'ar' ? 'تصميم واجهات (UI/UX)' : 'UI/UX Design' },
+    { id: 'fullstack', label: lang === 'ar' ? 'نظام ويب متكامل' : 'Full Stack System' },
+    { id: 'graphic', label: lang === 'ar' ? 'تصميم جرافيك' : 'Graphic Design' },
     { id: 'other', label: lang === 'ar' ? 'أخرى' : 'Other' },
   ];
 
-  const featureOptions = [
-    { id: 'auth', label: lang === 'ar' ? 'نظام تسجيل دخول وصلاحيات' : 'Authentication & Roles' },
-    { id: 'db', label: lang === 'ar' ? 'قواعد بيانات متقدمة' : 'Advanced Database' },
-    { id: 'payment', label: lang === 'ar' ? 'بوابات الدفع الإلكتروني' : 'Payment Gateways' },
-    { id: 'dashboard', label: lang === 'ar' ? 'لوحة تحكم للإدارة' : 'Admin Dashboard' },
-    { id: 'multilang', label: lang === 'ar' ? 'دعم لغات متعددة' : 'Multi-Language' },
-    { id: 'ai', label: lang === 'ar' ? 'تكامل مع الذكاء الاصطناعي' : 'AI Integration' },
+  const budgetOptions = [
+    { id: '<500', label: lang === 'ar' ? 'أقل من 500$' : 'Under $500' },
+    { id: '500-1000', label: lang === 'ar' ? '500$ - 1000$' : '$500 - $1000' },
+    { id: '1000-3000', label: lang === 'ar' ? '1000$ - 3000$' : '$1000 - $3000' },
+    { id: '>3000', label: lang === 'ar' ? 'أكثر من 3000$' : 'Above $3000' },
+    { id: 'unknown', label: lang === 'ar' ? 'غير محدد بعد' : 'Not decided yet' },
+  ];
+
+  const timelineOptions = [
+    { id: 'urgent', label: lang === 'ar' ? 'عاجل جداً' : 'Urgent' },
+    { id: '1month', label: lang === 'ar' ? 'خلال شهر' : 'Within 1 month' },
+    { id: '2-3months', label: lang === 'ar' ? 'خلال 2-3 شهور' : '2-3 months' },
+    { id: 'flexible', label: lang === 'ar' ? 'مرن' : 'Flexible' },
   ];
 
   const handleInputChange = (e) => {
@@ -100,17 +63,9 @@ export const StartProjectPage = ({ onBack, onWhatsAppSent }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const toggleFeature = (id) => {
-    if (formData.features.includes(id)) {
-      setFormData((prev) => ({ ...prev, features: prev.features.filter((f) => f !== id) }));
-    } else {
-      setFormData((prev) => ({ ...prev, features: [...prev.features, id] }));
-    }
-  };
-
   const nextStep = () => {
     setDirection(1);
-    setStep(s => Math.min(s + 1, 5));
+    setStep(s => Math.min(s + 1, 6));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -120,13 +75,31 @@ export const StartProjectPage = ({ onBack, onWhatsAppSent }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isStep1Valid = formData.clientName.trim() !== '' && formData.projectName.trim() !== '';
-  const isStep2Valid = formData.projectType !== '';
-  const isStep3Valid = true; // Optional fields
-  const isStep4Valid = termsAccepted.development && termsAccepted.design && termsAccepted.communication;
+  const goToStep = (targetStep) => {
+    setDirection(targetStep > step ? 1 : -1);
+    setStep(targetStep);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Validations
+  const validateEmail = (email) => {
+    if (!email) return false;
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  const isStep1Valid = formData.clientName.trim() !== '' && validateEmail(formData.email) && formData.phone.trim() !== '';
+  const isStep2Valid = formData.projectType !== '' && formData.projectName.trim() !== '';
+  const isStep3Valid = formData.description.trim() !== '';
+  const isStep4Valid = formData.budget !== '' && formData.timeline !== '';
+  const isStep5Valid = formData.stage !== '';
+  const isStep6Valid = true;
 
   const handleSubmit = async () => {
-    setIsGeneratingPdf(true);
+    setIsSubmitting(true);
     
     try {
       if (contractRef.current) {
@@ -137,332 +110,210 @@ export const StartProjectPage = ({ onBack, onWhatsAppSent }) => {
         const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
         
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`Agreement_${formData.clientName || 'Client'}.pdf`);
+        pdf.save(`${lang === 'ar' ? 'طلب مشروع' : 'Project Request'} - ${formData.clientName} - ${new Date().toLocaleDateString('en-CA')}.pdf`);
       }
     } catch (error) {
       console.error("PDF Generation failed", error);
     }
 
-    setIsGeneratingPdf(false);
+    const pTypeLabel = projectTypes.find((p) => p.id === formData.projectType)?.label || formData.projectType;
+    const budgetLabel = budgetOptions.find((p) => p.id === formData.budget)?.label || formData.budget;
+    const timelineLabel = timelineOptions.find((p) => p.id === formData.timeline)?.label || formData.timeline;
 
-    const pLabel = projectTypes.find((p) => p.id === formData.projectType)?.label || '';
-    const fLabels = formData.features
-      .map((fId) => featureOptions.find((opt) => opt.id === fId)?.label)
-      .join('\n• ');
+    let waMessage = `🚀 *${lang === 'ar' ? 'طلب مشروع جديد' : 'New Project Request'}* 🚀\n\n👤 *${lang === 'ar' ? 'الاسم:' : 'Name:'}* ${formData.clientName}\n📧 *${lang === 'ar' ? 'الإيميل:' : 'Email:'}* ${formData.email}\n📱 *${lang === 'ar' ? 'الهاتف:' : 'Phone:'}* ${formData.phone}\n\n💼 *${lang === 'ar' ? 'نوع المشروع:' : 'Type:'}* ${pTypeLabel}\n🏷️ *${lang === 'ar' ? 'اسم/فكرة المشروع:' : 'Idea:'}* ${formData.projectName}\n\n📝 *${lang === 'ar' ? 'وصف المشروع:' : 'Description:'}*\n${formData.description}\n${formData.references ? `\n🔗 *${lang === 'ar' ? 'مراجع:' : 'References:'}*\n${formData.references}` : ''}\n\n💰 *${lang === 'ar' ? 'الميزانية التقريبية:' : 'Budget:'}* ${budgetLabel}\n⏳ *${lang === 'ar' ? 'الوقت المتوقع:' : 'Timeline:'}* ${timelineLabel}\n\n------------------------------------\n`;
 
-    let msg = '';
-    
-    if (lang === 'ar') {
-      msg = `مرحباً أنس الطرايرة 👋
-لقد قرأت جميع وثائق وشروط العمل ووافقت عليها وتم إصدار وثيقة رسمية بذلك.
-سأقوم بإرفاق ملف الـ PDF الخاص بالاتفاقية في هذه المحادثة، وإليك نسخة نصية من موافقتي:
-
-👤 معلومات العميل:
-- الاسم: ${formData.clientName}
-- الشركة: ${formData.companyName || 'لا يوجد'}
-
-📌 معلومات المشروع:
-- اسم المشروع: ${formData.projectName}
-- التصنيف: ${pLabel}
-
-💰 الميزانية المتوقعة: ${formData.budget || 'لم يتم التحديد'}
-⏱️ موعد التسليم المطلوب: ${formData.deadline || 'غير محدد'}
-
-🛠️ المزايا المطلوبة:
-${fLabels ? '• ' + fLabels : 'لا يوجد تفضيلات محددة'}
-
-📝 تفاصيل إضافية:
-${formData.description || 'لا يوجد'}
-
--------------------------
-⚖️ إقرار وشروط العمل المتفق عليها:
-أقر أنا (${formData.clientName}) بموافقتي التامة على الشروط التالية:
-1. ${termsObj.development.title}: موافق
-2. ${termsObj.design.title}: موافق
-3. ${termsObj.communication.title}: موافق
-تاريخ الإقرار: ${new Date().toLocaleString('ar-EG')}
-`;
+    if (formData.stage === 'ready') {
+      waMessage += lang === 'ar' 
+        ? `✅ *جاهز أبدأ بالمشروع فعلياً، بانتظار ردك للتنسيق.*\n\n(سأقوم الآن بإرفاق ملف الـ PDF الذي تم تحميله على جهازي في هذه المحادثة)` 
+        : `✅ *Ready to start the project, awaiting your reply.*\n\n(I will now attach the PDF that was downloaded to my device)`;
     } else {
-      msg = `Hello Anas Tarayra 👋
-I have read and agreed to all the work terms and conditions, and an official document has been generated.
-I will attach the PDF agreement to this chat, and here is a text copy of my agreement:
-
-👤 Client Information:
-- Name: ${formData.clientName}
-- Company: ${formData.companyName || 'None'}
-
-📌 Project Details:
-- Project Name: ${formData.projectName}
-- Category: ${pLabel}
-
-💰 Expected Budget: ${formData.budget || 'Not specified'}
-⏱️ Desired Deadline: ${formData.deadline || 'Not specified'}
-
-🛠️ Required Features:
-${fLabels ? '• ' + fLabels : 'No specific preferences'}
-
-📝 Additional Details:
-${formData.description || 'None'}
-
--------------------------
-⚖️ Official Agreement & Terms:
-I, (${formData.clientName}), hereby fully agree to the following terms:
-1. ${termsObj.development.title}: Agreed
-2. ${termsObj.design.title}: Agreed
-3. ${termsObj.communication.title}: Agreed
-Date of Agreement: ${new Date().toLocaleString('en-US')}
-`;
+      waMessage += lang === 'ar' 
+        ? `📩 *هاد مجرد استفسار مبدئي، بحب أعرف تفاصيل أكتر.*\n\n(سأقوم الآن بإرفاق ملف الـ PDF الذي تم تحميله على جهازي في هذه المحادثة)` 
+        : `📩 *This is just an initial inquiry, I'd like more details.*\n\n(I will now attach the PDF that was downloaded to my device)`;
     }
 
-    window.open(`https://wa.me/962796851497?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/962796851497?text=${encodeURIComponent(waMessage)}`, '_blank');
+    
+    setIsSubmitting(false);
+    setShowConfirmation(true);
+  };
+
+  const closeConfirmation = () => {
+    setShowConfirmation(false);
     if (onWhatsAppSent) onWhatsAppSent();
     onBack();
   };
 
   const pageVariants = {
-    initial: (dir) => ({ opacity: 0, x: dir === 1 ? 50 : -50 }),
-    animate: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
-    exit: (dir) => ({ opacity: 0, x: dir === 1 ? -50 : 50, transition: { duration: 0.3 } })
+    initial: (dir) => ({ opacity: 0, x: dir === 1 ? 40 : -40 }),
+    animate: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
+    exit: (dir) => ({ opacity: 0, x: dir === 1 ? -40 : 40, transition: { duration: 0.2 } })
   };
-
-  const termsObj = officialTerms[lang] || officialTerms.en;
 
   return (
     <div style={{ paddingTop: '100px', paddingBottom: '80px', minHeight: '100vh', position: 'relative' }}>
-      <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <div className="container" style={{ maxWidth: '700px', margin: '0 auto' }}>
         
-        {/* Top Header & Back Button */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px' }}>
-          <button 
-            onClick={onBack}
-            style={{ 
-              background: 'transparent', border: '1px solid var(--border-color)', 
-              color: 'var(--text-secondary)', padding: '8px 16px', 
-              borderRadius: '20px', cursor: 'pointer', display: 'inline-flex', 
-              alignItems: 'center', gap: '8px', transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => { e.currentTarget.style.color = 'var(--accent-blue)'; e.currentTarget.style.borderColor = 'var(--accent-blue)'; }}
-            onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-color)'; }}
-          >
-            <ArrowLeft size={16} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
-            <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>{lang === 'ar' ? 'عودة' : 'Back'}</span>
-          </button>
-        </div>
-
-        {/* Stepper Progress Bar */}
+        {/* Top Header & Progress */}
         <div style={{ marginBottom: '40px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div 
-                key={i}
-                style={{
-                  width: '36px', height: '36px', borderRadius: '50%',
-                  background: step >= i ? 'var(--accent-blue)' : 'var(--bg-secondary)',
-                  color: step >= i ? '#FFF' : 'var(--text-secondary)',
-                  border: step >= i ? 'none' : '2px solid var(--border-color)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontWeight: 800, fontSize: '1rem',
-                  transition: 'all 0.4s ease',
-                  boxShadow: step === i ? '0 0 0 4px rgba(59, 130, 246, 0.2)' : 'none'
-                }}
-              >
-                {step > i ? <CheckCircle2 size={20} /> : i}
-              </div>
-            ))}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
+            <button 
+              onClick={onBack}
+              style={{ 
+                background: 'transparent', border: '1px solid var(--border-color)', 
+                color: 'var(--text-secondary)', padding: '8px 16px', 
+                borderRadius: '20px', cursor: 'pointer', display: 'inline-flex', 
+                alignItems: 'center', gap: '8px', transition: 'all 0.3s ease'
+              }}
+              onMouseOver={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--text-primary)'; }}
+              onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-color)'; }}
+            >
+              <ArrowLeft size={16} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
+              <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>{lang === 'ar' ? 'إلغاء' : 'Cancel'}</span>
+            </button>
+            <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
+              {lang === 'ar' ? `الخطوة ${step} من 6` : `Step ${step} of 6`}
+            </span>
           </div>
-          <div style={{ height: '4px', background: 'var(--bg-secondary)', borderRadius: '2px', overflow: 'hidden' }}>
+
+          <div style={{ height: '6px', background: 'var(--bg-secondary)', borderRadius: '3px', overflow: 'hidden' }}>
             <motion.div 
               initial={false}
-              animate={{ width: `${((step - 1) / 4) * 100}%` }}
-              style={{ height: '100%', background: 'linear-gradient(90deg, var(--accent-blue), var(--accent-green))' }}
+              animate={{ width: `${(step / 6) * 100}%` }}
+              style={{ height: '100%', background: 'var(--text-primary)' }}
               transition={{ duration: 0.4 }}
             />
-          </div>
-          <div style={{ textAlign: 'center', marginTop: '16px', color: 'var(--text-primary)', fontWeight: 800, fontSize: '1.2rem' }}>
-            {step === 1 && (lang === 'ar' ? 'المعلومات الأساسية' : 'Basic Information')}
-            {step === 2 && (lang === 'ar' ? 'نطاق المشروع المبدئي' : 'Initial Project Scope')}
-            {step === 3 && (lang === 'ar' ? 'المتطلبات الإضافية' : 'Additional Requirements')}
-            {step === 4 && (lang === 'ar' ? 'قواعد وشروط العمل الرسمية' : 'Official Terms & Rules')}
-            {step === 5 && (lang === 'ar' ? 'مراجعة واعتماد' : 'Review & Submit')}
           </div>
         </div>
 
         {/* Wizard Steps Container */}
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', minHeight: '400px' }}>
           <AnimatePresence mode="wait" custom={direction}>
             
-            {/* STEP 1: Basic Info */}
+            {/* STEP 1: Personal Info */}
             {step === 1 && (
-              <motion.div
-                key="step1" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit"
-                className="glass-card" style={{ padding: '40px', borderRadius: '24px' }}
-              >
-                <div style={{ marginBottom: '32px' }}>
-                  <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '10px' }}>
-                    {lang === 'ar' ? 'مرحباً بك! لنتعرف عليك' : 'Welcome! Let\'s get to know you'}
-                  </h2>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>
-                    {lang === 'ar' ? 'دعنا نبدأ بأخذ بعض التفاصيل الأساسية عنك وعن مشروعك.' : 'Let\'s start by getting some basic details about you and your project.'}
-                  </p>
-                </div>
+              <motion.div key="step1" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit" className="glass-card" style={{ padding: '40px', borderRadius: '24px' }}>
+                <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '8px' }}>
+                  {lang === 'ar' ? 'معلومات شخصية' : 'Personal Info'}
+                </h2>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '32px' }}>
+                  {lang === 'ar' ? 'خلينا نتعرف عليك بالبداية.' : 'Let\'s get to know you first.'}
+                </p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                   <div>
                     <label style={{ display: 'block', marginBottom: '10px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                      <User size={18} style={{ display: 'inline', marginRight: '8px', color: 'var(--accent-blue)', verticalAlign: 'text-bottom' }} />
+                      <User size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'text-bottom' }} />
                       {lang === 'ar' ? 'الاسم الكامل *' : 'Full Name *'}
                     </label>
-                    <input 
-                      type="text" name="clientName" value={formData.clientName} onChange={handleInputChange}
-                      placeholder={lang === 'ar' ? 'أدخل اسمك الكريم...' : 'Enter your name...'}
-                      style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '1rem', fontFamily: 'inherit' }}
-                    />
-                  </div>
-                  
-                  <div>
-                    <label style={{ display: 'block', marginBottom: '10px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                      <Briefcase size={18} style={{ display: 'inline', marginRight: '8px', color: 'var(--accent-blue)', verticalAlign: 'text-bottom' }} />
-                      {lang === 'ar' ? 'اسم الشركة أو المؤسسة (اختياري)' : 'Company Name (Optional)'}
-                    </label>
-                    <input 
-                      type="text" name="companyName" value={formData.companyName} onChange={handleInputChange}
-                      placeholder={lang === 'ar' ? 'اسم شركتك...' : 'Your company...'}
+                    <input type="text" name="clientName" value={formData.clientName} onChange={handleInputChange}
+                      placeholder={lang === 'ar' ? 'الاسم...' : 'Name...'}
                       style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '1rem', fontFamily: 'inherit' }}
                     />
                   </div>
 
                   <div>
                     <label style={{ display: 'block', marginBottom: '10px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                      <LayoutTemplate size={18} style={{ display: 'inline', marginRight: '8px', color: 'var(--accent-blue)', verticalAlign: 'text-bottom' }} />
-                      {lang === 'ar' ? 'عنوان أو اسم المشروع *' : 'Project Title *'}
+                      <Mail size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'text-bottom' }} />
+                      {lang === 'ar' ? 'البريد الإلكتروني *' : 'Email *'}
                     </label>
-                    <input 
-                      type="text" name="projectName" value={formData.projectName} onChange={handleInputChange}
-                      placeholder={lang === 'ar' ? 'مثال: متجر الكتروني لبيع القهوة' : 'e.g. Coffee E-Commerce'}
-                      style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '1rem', fontFamily: 'inherit' }}
+                    <input type="email" name="email" value={formData.email} onChange={handleInputChange}
+                      placeholder="example@domain.com"
+                      style={{ width: '100%', padding: '16px', borderRadius: '12px', border: !validateEmail(formData.email) && formData.email.length > 0 ? '1px solid #ef4444' : '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '1rem', fontFamily: 'inherit', direction: 'ltr' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '10px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                      <Phone size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'text-bottom' }} />
+                      {lang === 'ar' ? 'رقم الهاتف / واتساب *' : 'Phone / WhatsApp *'}
+                    </label>
+                    <input type="text" name="phone" value={formData.phone} onChange={handleInputChange}
+                      placeholder="+962 7X XXX XXXX"
+                      style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '1rem', fontFamily: 'inherit', direction: 'ltr', textAlign: lang === 'ar' ? 'right' : 'left' }}
                     />
                   </div>
                 </div>
               </motion.div>
             )}
 
-            {/* STEP 2: Project Scope */}
+            {/* STEP 2: Project Type */}
             {step === 2 && (
-              <motion.div
-                key="step2" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit"
-                className="glass-card" style={{ padding: '40px', borderRadius: '24px' }}
-              >
-                <div style={{ marginBottom: '32px' }}>
-                  <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '10px' }}>
-                    {lang === 'ar' ? 'نطاق المشروع والميزانية' : 'Scope & Budget'}
-                  </h2>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>
-                    {lang === 'ar' ? 'حدد نوع العمل الذي تحتاجه وتوقعاتك المالية.' : 'Define the type of work you need and your financial expectations.'}
-                  </p>
-                </div>
+              <motion.div key="step2" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit" className="glass-card" style={{ padding: '40px', borderRadius: '24px' }}>
+                <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '8px' }}>
+                  {lang === 'ar' ? 'نوع المشروع' : 'Project Type'}
+                </h2>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '32px' }}>
+                  {lang === 'ar' ? 'بإيش ممكن أساعدك؟' : 'How can I help you?'}
+                </p>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
                   <div>
                     <label style={{ display: 'block', marginBottom: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                      <FileText size={18} style={{ display: 'inline', marginRight: '8px', color: 'var(--accent-blue)', verticalAlign: 'text-bottom' }} />
-                      {lang === 'ar' ? 'نوع المشروع الأساسي *' : 'Main Project Type *'}
+                      <Briefcase size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'text-bottom' }} />
+                      {lang === 'ar' ? 'نوع الخدمة المطلوبة *' : 'Required Service *'}
                     </label>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px' }}>
                       {projectTypes.map(p => (
-                        <div 
-                          key={p.id}
-                          onClick={() => setFormData({ ...formData, projectType: p.id })}
+                        <div key={p.id} onClick={() => setFormData({ ...formData, projectType: p.id })}
                           style={{
-                            padding: '16px', borderRadius: '14px', border: formData.projectType === p.id ? '2px solid var(--accent-blue)' : '1px solid var(--border-color)',
-                            background: formData.projectType === p.id ? 'rgba(59, 130, 246, 0.08)' : 'var(--bg-primary)', cursor: 'pointer',
-                            transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: 600
+                            padding: '16px', borderRadius: '12px', border: formData.projectType === p.id ? '2px solid #1D4ED8' : '1px solid var(--border-color)',
+                            background: formData.projectType === p.id ? '#1D4ED8' : 'var(--bg-primary)', cursor: 'pointer',
+                            color: formData.projectType === p.id ? '#ffffff' : 'var(--text-primary)',
+                            transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: 600, fontSize: '0.9rem'
                           }}
                         >
-                          <span style={{ color: formData.projectType === p.id ? 'var(--accent-blue)' : 'var(--text-primary)' }}>{p.label}</span>
+                          {p.label}
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
-                    <div>
-                      <label style={{ display: 'block', marginBottom: '10px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                        <CreditCard size={18} style={{ display: 'inline', marginRight: '8px', color: 'var(--accent-blue)', verticalAlign: 'text-bottom' }} />
-                        {lang === 'ar' ? 'الميزانية المتوقعة' : 'Expected Budget'}
-                      </label>
-                      <input 
-                        type="text" name="budget" value={formData.budget} onChange={handleInputChange}
-                        placeholder={lang === 'ar' ? 'مثال: 500$ - 1500$' : 'e.g. $500 - $1500'}
-                        style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '1rem', fontFamily: 'inherit' }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', marginBottom: '10px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                        <Calendar size={18} style={{ display: 'inline', marginRight: '8px', color: 'var(--accent-blue)', verticalAlign: 'text-bottom' }} />
-                        {lang === 'ar' ? 'الوقت المرغوب للتسليم' : 'Desired Deadline'}
-                      </label>
-                      <input 
-                        type="text" name="deadline" value={formData.deadline} onChange={handleInputChange}
-                        placeholder={lang === 'ar' ? 'مثال: خلال شهرين' : 'e.g. Within 2 months'}
-                        style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '1rem', fontFamily: 'inherit' }}
-                      />
-                    </div>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '10px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                      <LayoutTemplate size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'text-bottom' }} />
+                      {lang === 'ar' ? 'اسم المشروع أو الفكرة المبدئية *' : 'Project Name / Idea *'}
+                    </label>
+                    <input type="text" name="projectName" value={formData.projectName} onChange={handleInputChange}
+                      placeholder={lang === 'ar' ? 'أدخل اسم مشروعك...' : 'Enter your project name...'}
+                      style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '1rem', fontFamily: 'inherit' }}
+                    />
                   </div>
                 </div>
               </motion.div>
             )}
 
-            {/* STEP 3: Deep Dive */}
+            {/* STEP 3: Details */}
             {step === 3 && (
-              <motion.div
-                key="step3" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit"
-                className="glass-card" style={{ padding: '40px', borderRadius: '24px' }}
-              >
-                <div style={{ marginBottom: '32px' }}>
-                  <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '10px' }}>
-                    {lang === 'ar' ? 'المتطلبات الإضافية' : 'Additional Requirements'}
-                  </h2>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>
-                    {lang === 'ar' ? 'هل هناك مزايا تقنية معينة تحتاجها؟ وما هي فكرة المشروع التفصيلية؟' : 'Any specific technical features? Please describe your idea in detail.'}
-                  </p>
-                </div>
+              <motion.div key="step3" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit" className="glass-card" style={{ padding: '40px', borderRadius: '24px' }}>
+                <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '8px' }}>
+                  {lang === 'ar' ? 'شرح تفصيلي للمشروع' : 'Project Details'}
+                </h2>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '32px' }}>
+                  {lang === 'ar' ? 'احكيلي أكثر عن مشروعك.' : 'Tell me more about your project.'}
+                </p>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                      {lang === 'ar' ? 'حدد المزايا التقنية الأساسية (اختياري)' : 'Select Core Technical Features (Optional)'}
+                    <label style={{ display: 'block', marginBottom: '10px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                      <FileText size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'text-bottom' }} />
+                      {lang === 'ar' ? 'وصف تفصيلي للمشروع *' : 'Detailed Description *'}
                     </label>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '14px' }}>
-                      {featureOptions.map(opt => {
-                        const isSelected = formData.features.includes(opt.id);
-                        return (
-                          <div 
-                            key={opt.id} onClick={() => toggleFeature(opt.id)}
-                            style={{
-                              padding: '14px 18px', borderRadius: '12px', cursor: 'pointer',
-                              border: isSelected ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
-                              background: isSelected ? 'rgba(59, 130, 246, 0.08)' : 'var(--bg-primary)',
-                              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                              transition: 'all 0.2s ease'
-                            }}
-                          >
-                            <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>{opt.label}</span>
-                            {isSelected && <CheckCircle2 size={18} color="var(--accent-blue)" />}
-                          </div>
-                        )
-                      })}
-                    </div>
+                    <textarea name="description" value={formData.description} onChange={handleInputChange}
+                      placeholder={lang === 'ar' ? "احكيلي عن فكرة مشروعك، المشكلة اللي بيحلها، والمستخدمين المستهدفين..." : "Tell me about your idea, the problem it solves, target audience..."}
+                      rows={5}
+                      style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '1rem', fontFamily: 'inherit', resize: 'vertical' }}
+                    />
                   </div>
 
                   <div>
                     <label style={{ display: 'block', marginBottom: '10px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                      <AlignLeft size={18} style={{ display: 'inline', marginRight: '8px', color: 'var(--accent-blue)', verticalAlign: 'text-bottom' }} />
-                      {lang === 'ar' ? 'شرح تفصيلي للمشروع' : 'Detailed Project Description'}
+                      <LinkIcon size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'text-bottom' }} />
+                      {lang === 'ar' ? 'هل يوجد مراجع أو مشاريع مشابهة يعجبك شكلها؟ (اختياري)' : 'Any references or similar projects you like? (Optional)'}
                     </label>
-                    <textarea 
-                      name="description" value={formData.description} onChange={handleInputChange}
-                      placeholder={lang === 'ar' ? 'اشرح كل ما يخطر ببالك عن وظائف المشروع، الجمهور المستهدف، وأي ملاحظات أخرى...' : 'Describe everything about your project functionality, target audience, etc...'}
-                      rows={6}
+                    <textarea name="references" value={formData.references} onChange={handleInputChange}
+                      placeholder={lang === 'ar' ? "ضع روابط لمواقع، تطبيقات، أو أفكار تعجبك وتود بناء شيء مشابه لها." : "Drop links to websites or apps you like..."}
+                      rows={3}
                       style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', fontSize: '1rem', fontFamily: 'inherit', resize: 'vertical' }}
                     />
                   </div>
@@ -470,133 +321,198 @@ Date of Agreement: ${new Date().toLocaleString('en-US')}
               </motion.div>
             )}
 
-            {/* STEP 4: Official Terms */}
+            {/* STEP 4: Budget & Timeline */}
             {step === 4 && (
-              <motion.div
-                key="step4" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit"
-                className="glass-card" style={{ padding: '40px', borderRadius: '24px' }}
-              >
-                <div style={{ marginBottom: '32px', textAlign: 'center' }}>
-                  <FileSignature size={48} style={{ color: 'var(--accent-blue)', marginBottom: '16px', margin: '0 auto' }} />
-                  <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '10px' }}>
-                    {lang === 'ar' ? 'المواثيق وشروط العمل' : 'Official Work Terms & Agreements'}
-                  </h2>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto' }}>
-                    {lang === 'ar' ? 'لضمان بيئة عمل احترافية تحفظ حقوق الجميع، يرجى قراءة الوثائق التالية والموافقة عليها. هذه الشروط تمثل اتفاقية العمل المبدئية بيننا.' : 'To ensure a professional environment that protects everyone\'s rights, please read and agree to the following documents.'}
-                  </p>
-                </div>
+              <motion.div key="step4" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit" className="glass-card" style={{ padding: '40px', borderRadius: '24px' }}>
+                <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '8px' }}>
+                  {lang === 'ar' ? 'الميزانية والوقت' : 'Budget & Timeline'}
+                </h2>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '32px' }}>
+                  {lang === 'ar' ? 'تحديد الميزانية بيساعدني أقترح عليك أفضل الحلول اللي بتناسبك.' : 'Defining budget helps me suggest the best solutions.'}
+                </p>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  {Object.keys(termsObj).map((key) => {
-                    const doc = termsObj[key];
-                    const isAccepted = termsAccepted[key];
-                    
-                    return (
-                      <div key={key} style={{ 
-                        border: isAccepted ? '1px solid var(--accent-green)' : '1px solid var(--border-color)', 
-                        borderRadius: '16px', overflow: 'hidden', background: 'var(--bg-primary)',
-                        transition: 'all 0.3s ease'
-                      }}>
-                        {/* Document Header */}
-                        <div style={{ 
-                          padding: '16px 20px', background: isAccepted ? 'rgba(16, 185, 129, 0.05)' : 'rgba(0,0,0,0.1)', 
-                          borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '12px'
-                        }}>
-                          <div style={{ color: isAccepted ? 'var(--accent-green)' : 'var(--accent-blue)' }}>{doc.icon}</div>
-                          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0 }}>{doc.title}</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                      <CreditCard size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'text-bottom' }} />
+                      {lang === 'ar' ? 'نطاق الميزانية التقريبي *' : 'Approximate Budget Range *'}
+                    </label>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' }}>
+                      {budgetOptions.map(p => (
+                        <div key={p.id} onClick={() => setFormData({ ...formData, budget: p.id })}
+                          style={{
+                            padding: '16px 12px', borderRadius: '12px', border: formData.budget === p.id ? '2px solid #1D4ED8' : '1px solid var(--border-color)',
+                            background: formData.budget === p.id ? '#1D4ED8' : 'var(--bg-primary)', cursor: 'pointer',
+                            color: formData.budget === p.id ? '#ffffff' : 'var(--text-primary)',
+                            transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: 600, fontSize: '0.9rem'
+                          }}
+                        >
+                          {p.label}
                         </div>
-                        
-                        {/* Document Content */}
-                        <div style={{ padding: '24px', fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}>
-                          {doc.content}
-                        </div>
+                      ))}
+                    </div>
+                  </div>
 
-                        {/* Agreement Checkbox */}
-                        <div style={{ padding: '16px 24px', borderTop: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
-                          <label style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
-                            <div style={{ 
-                              width: '24px', height: '24px', borderRadius: '6px', 
-                              border: isAccepted ? 'none' : '2px solid var(--text-secondary)',
-                              background: isAccepted ? 'var(--accent-green)' : 'transparent',
-                              display: 'flex', alignItems: 'center', justifyContent: 'center'
-                            }}>
-                              {isAccepted && <CheckSquare size={16} color="#fff" />}
-                            </div>
-                            <input 
-                              type="checkbox" 
-                              checked={isAccepted} 
-                              onChange={(e) => setTermsAccepted({ ...termsAccepted, [key]: e.target.checked })} 
-                              style={{ display: 'none' }} 
-                            />
-                            <span style={{ fontWeight: 700, color: isAccepted ? 'var(--accent-green)' : 'var(--text-primary)' }}>
-                              {lang === 'ar' ? `قرأت وأوافق على ${doc.title}` : `I have read and agree to the ${doc.title}`}
-                            </span>
-                          </label>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                      <Calendar size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'text-bottom' }} />
+                      {lang === 'ar' ? 'الوقت المتوقع للتسليم *' : 'Expected Timeline *'}
+                    </label>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' }}>
+                      {timelineOptions.map(p => (
+                        <div key={p.id} onClick={() => setFormData({ ...formData, timeline: p.id })}
+                          style={{
+                            padding: '16px 12px', borderRadius: '12px', border: formData.timeline === p.id ? '2px solid #1D4ED8' : '1px solid var(--border-color)',
+                            background: formData.timeline === p.id ? '#1D4ED8' : 'var(--bg-primary)', cursor: 'pointer',
+                            color: formData.timeline === p.id ? '#ffffff' : 'var(--text-primary)',
+                            transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: 600, fontSize: '0.9rem'
+                          }}
+                        >
+                          {p.label}
                         </div>
-                      </div>
-                    );
-                  })}
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             )}
 
-            {/* STEP 5: Review & Submit */}
+            {/* STEP 5: Stage */}
             {step === 5 && (
-              <motion.div
-                key="step5" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit"
-                className="glass-card" style={{ padding: '40px', borderRadius: '24px', textAlign: 'center' }}
-              >
-                <div style={{ 
-                  width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(37, 211, 102, 0.1)', 
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' 
-                }}>
-                  <MessageCircle size={40} color="#25D366" />
-                </div>
-                
-                <h2 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '16px' }}>
-                  {lang === 'ar' ? 'جاهزون للانطلاق!' : 'Ready to Launch!'}
+              <motion.div key="step5" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit" className="glass-card" style={{ padding: '40px', borderRadius: '24px' }}>
+                <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '8px' }}>
+                  {lang === 'ar' ? 'مرحلة المشروع' : 'Project Stage'}
                 </h2>
-                
-                <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '500px', margin: '0 auto 40px', lineHeight: 1.6 }}>
-                  {lang === 'ar' 
-                    ? 'لقد قمنا بجمع جميع تفاصيل مشروعك وموافقتك على الشروط. اضغط على الزر أدناه لإرسال الملف الكامل لي عبر واتساب لنتواصل فوراً ونبدأ العمل.' 
-                    : 'We have compiled all your project details and agreements. Click the button below to send the complete brief via WhatsApp so we can connect instantly.'}
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '32px' }}>
+                  {lang === 'ar' ? 'أين أنت الآن في قرار بناء مشروعك؟' : 'Where are you currently at in your decision making?'}
                 </p>
 
-                <div style={{ background: 'var(--bg-primary)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left', marginBottom: '40px', maxWidth: '500px', margin: '0 auto 40px' }}>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '8px' }}>
-                    {lang === 'ar' ? 'ملخص سريع:' : 'Quick Summary:'}
-                  </h4>
-                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
-                    <li><strong>{lang === 'ar' ? 'الاسم:' : 'Name:'}</strong> {formData.clientName}</li>
-                    <li><strong>{lang === 'ar' ? 'المشروع:' : 'Project:'}</strong> {formData.projectName}</li>
-                    <li><strong>{lang === 'ar' ? 'النوع:' : 'Type:'}</strong> {projectTypes.find(p => p.id === formData.projectType)?.label}</li>
-                    <li><strong>{lang === 'ar' ? 'الشروط:' : 'Terms:'}</strong> <span style={{ color: 'var(--accent-green)' }}>{lang === 'ar' ? 'تمت الموافقة' : 'Approved'} ✓</span></li>
-                  </ul>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div 
+                    onClick={() => setFormData({ ...formData, stage: 'ready' })}
+                    style={{
+                      padding: '24px', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease',
+                      border: formData.stage === 'ready' ? '2px solid #1D4ED8' : '1px solid var(--border-color)',
+                      background: formData.stage === 'ready' ? '#1D4ED8' : 'var(--bg-primary)',
+                      color: formData.stage === 'ready' ? '#ffffff' : 'var(--text-primary)',
+                      display: 'flex', alignItems: 'center', gap: '20px'
+                    }}
+                  >
+                    <PlayCircle size={36} opacity={0.8} />
+                    <div>
+                      <h3 style={{ fontSize: '1.3rem', fontWeight: 800, margin: '0 0 6px 0' }}>
+                        {lang === 'ar' ? 'جاهز أبدأ بالمشروع فعلياً' : 'Ready to Start'}
+                      </h3>
+                      <p style={{ margin: 0, fontSize: '0.95rem', opacity: 0.8 }}>
+                        {lang === 'ar' ? 'عندي الميزانية والوقت وبدي نبدأ شغل بأقرب فرصة.' : 'I have the budget and time, let\'s start ASAP.'}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div 
+                    onClick={() => setFormData({ ...formData, stage: 'inquiry' })}
+                    style={{
+                      padding: '24px', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease',
+                      border: formData.stage === 'inquiry' ? '2px solid #1D4ED8' : '1px solid var(--border-color)',
+                      background: formData.stage === 'inquiry' ? '#1D4ED8' : 'var(--bg-primary)',
+                      color: formData.stage === 'inquiry' ? '#ffffff' : 'var(--text-primary)',
+                      display: 'flex', alignItems: 'center', gap: '20px'
+                    }}
+                  >
+                    <HelpCircle size={36} opacity={0.8} />
+                    <div>
+                      <h3 style={{ fontSize: '1.3rem', fontWeight: 800, margin: '0 0 6px 0' }}>
+                        {lang === 'ar' ? 'مجرد استفسار حالياً، بدي أعرف أكتر' : 'Just an Inquiry'}
+                      </h3>
+                      <p style={{ margin: 0, fontSize: '0.95rem', opacity: 0.8 }}>
+                        {lang === 'ar' ? 'بدي أعرف التكلفة التقريبية وتفاصيل قبل ما أقرر.' : 'I want to know rough estimates before deciding.'}
+                      </p>
+                    </div>
+                  </div>
                 </div>
+              </motion.div>
+            )}
+
+            {/* STEP 6: Review & Submit */}
+            {step === 6 && (
+              <motion.div key="step6" custom={direction} variants={pageVariants} initial="initial" animate="animate" exit="exit" className="glass-card" style={{ padding: '40px', borderRadius: '24px', textAlign: 'center' }}>
+                <h2 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '8px' }}>
+                  {lang === 'ar' ? 'المراجعة والإرسال' : 'Review & Send'}
+                </h2>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '32px' }}>
+                  {lang === 'ar' ? 'تأكد من البيانات قبل إرسال الطلب.' : 'Verify your details before sending the request.'}
+                </p>
+
+                <div style={{ background: 'var(--bg-primary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left', marginBottom: '32px', direction: lang === 'ar' ? 'rtl' : 'ltr', overflow: 'hidden' }}>
+                  
+                  {/* Summary Block 1 */}
+                  <div style={{ padding: '20px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '8px', textTransform: 'uppercase' }}>{lang === 'ar' ? 'المعلومات الشخصية' : 'Personal Info'}</h4>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{formData.clientName}</div>
+                      <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{formData.email} • {formData.phone}</div>
+                    </div>
+                    <button onClick={() => goToStep(1)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem' }}>
+                      <Edit2 size={14} /> <span>{lang === 'ar' ? 'تعديل' : 'Edit'}</span>
+                    </button>
+                  </div>
+
+                  {/* Summary Block 2 */}
+                  <div style={{ padding: '20px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '8px', textTransform: 'uppercase' }}>{lang === 'ar' ? 'المشروع' : 'Project'}</h4>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{formData.projectName}</div>
+                      <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{projectTypes.find(p => p.id === formData.projectType)?.label}</div>
+                    </div>
+                    <button onClick={() => goToStep(2)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem' }}>
+                      <Edit2 size={14} /> <span>{lang === 'ar' ? 'تعديل' : 'Edit'}</span>
+                    </button>
+                  </div>
+
+                  {/* Summary Block 3 */}
+                  <div style={{ padding: '20px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '8px', textTransform: 'uppercase' }}>{lang === 'ar' ? 'الميزانية والوقت' : 'Budget & Timeline'}</h4>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{budgetOptions.find(p => p.id === formData.budget)?.label}</div>
+                      <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{timelineOptions.find(p => p.id === formData.timeline)?.label}</div>
+                    </div>
+                    <button onClick={() => goToStep(4)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem' }}>
+                      <Edit2 size={14} /> <span>{lang === 'ar' ? 'تعديل' : 'Edit'}</span>
+                    </button>
+                  </div>
+
+                </div>
+
+                {formData.stage === 'ready' && (
+                  <div style={{ marginBottom: '24px', fontSize: '0.9rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                    <FileText size={16} />
+                    <span>{lang === 'ar' ? 'سيتم تحميل ملف PDF بطلبك، الرجاء إرفاقه برسالة الواتساب قبل الإرسال.' : 'A PDF will download, please attach it to the WhatsApp message.'}</span>
+                  </div>
+                )}
 
                 <motion.button
                   onClick={handleSubmit}
-                  disabled={isGeneratingPdf}
-                  whileHover={{ scale: isGeneratingPdf ? 1 : 1.05 }}
-                  whileTap={{ scale: isGeneratingPdf ? 1 : 0.95 }}
+                  disabled={isSubmitting}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.03 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.97 }}
                   style={{
-                    background: isGeneratingPdf ? 'var(--bg-secondary)' : 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
-                    color: isGeneratingPdf ? 'var(--text-secondary)' : '#fff',
+                    background: isSubmitting ? 'var(--bg-secondary)' : 'var(--text-primary)',
+                    color: isSubmitting ? 'var(--text-secondary)' : 'var(--bg-primary)',
                     border: 'none',
-                    padding: '20px 48px',
-                    borderRadius: '20px',
-                    fontSize: '1.2rem',
-                    fontWeight: 900,
-                    cursor: isGeneratingPdf ? 'not-allowed' : 'pointer',
+                    padding: '18px 48px',
+                    borderRadius: '16px',
+                    fontSize: '1.1rem',
+                    fontWeight: 800,
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
                     display: 'inline-flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     gap: '12px',
-                    boxShadow: isGeneratingPdf ? 'none' : '0 10px 30px rgba(37, 211, 102, 0.4)',
+                    width: '100%'
                   }}
                 >
-                  <MessageCircle size={28} />
-                  <span>{isGeneratingPdf ? (lang === 'ar' ? 'جاري إصدار الوثيقة...' : 'Generating Contract...') : (lang === 'ar' ? 'توليد الوثيقة ومراسلتي واتساب' : 'Generate Contract & Message Me')}</span>
+                  <Send size={20} />
+                  <span>{isSubmitting ? (lang === 'ar' ? 'جاري التحضير...' : 'Processing...') : (lang === 'ar' ? 'إرسال الطلب' : 'Send Request')}</span>
                 </motion.button>
               </motion.div>
             )}
@@ -605,127 +521,191 @@ Date of Agreement: ${new Date().toLocaleString('en-US')}
         </div>
 
         {/* Bottom Navigation Buttons */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '40px', borderTop: '1px solid var(--border-color)', paddingTop: '24px' }}>
-          <button
-            onClick={prevStep}
-            style={{
-              padding: '12px 24px', borderRadius: '12px', background: 'var(--bg-primary)',
-              color: 'var(--text-primary)', border: '1px solid var(--border-color)',
-              cursor: step > 1 ? 'pointer' : 'default', opacity: step > 1 ? 1 : 0, pointerEvents: step > 1 ? 'auto' : 'none',
-              display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, transition: 'all 0.2s'
-            }}
-          >
-            <ArrowLeft size={18} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
-            <span>{lang === 'ar' ? 'السابق' : 'Previous'}</span>
-          </button>
+        {step < 6 && (
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '32px', paddingTop: '24px' }}>
+            <button
+              onClick={prevStep}
+              style={{
+                padding: '12px 24px', borderRadius: '12px', background: 'transparent',
+                color: 'var(--text-primary)', border: '1px solid var(--border-color)',
+                cursor: step > 1 ? 'pointer' : 'default', opacity: step > 1 ? 1 : 0, pointerEvents: step > 1 ? 'auto' : 'none',
+                display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, transition: 'all 0.2s'
+              }}
+            >
+              <span>{lang === 'ar' ? 'السابق' : 'Previous'}</span>
+            </button>
 
-          {step < 5 && (
             <button
               onClick={nextStep}
               disabled={
                 (step === 1 && !isStep1Valid) || 
                 (step === 2 && !isStep2Valid) || 
-                (step === 4 && !isStep4Valid)
+                (step === 3 && !isStep3Valid) ||
+                (step === 4 && !isStep4Valid) ||
+                (step === 5 && !isStep5Valid)
               }
               style={{
                 padding: '12px 32px', borderRadius: '12px',
-                background: ((step === 1 && isStep1Valid) || (step === 2 && isStep2Valid) || (step === 3 && isStep3Valid) || (step === 4 && isStep4Valid)) ? 'var(--accent-blue)' : 'var(--bg-secondary)',
-                color: ((step === 1 && isStep1Valid) || (step === 2 && isStep2Valid) || (step === 3 && isStep3Valid) || (step === 4 && isStep4Valid)) ? '#fff' : 'var(--text-secondary)',
-                border: 'none', cursor: ((step === 1 && isStep1Valid) || (step === 2 && isStep2Valid) || (step === 3 && isStep3Valid) || (step === 4 && isStep4Valid)) ? 'pointer' : 'not-allowed',
+                background: ((step === 1 && isStep1Valid) || (step === 2 && isStep2Valid) || (step === 3 && isStep3Valid) || (step === 4 && isStep4Valid) || (step === 5 && isStep5Valid)) ? 'var(--text-primary)' : 'var(--bg-secondary)',
+                color: ((step === 1 && isStep1Valid) || (step === 2 && isStep2Valid) || (step === 3 && isStep3Valid) || (step === 4 && isStep4Valid) || (step === 5 && isStep5Valid)) ? 'var(--bg-primary)' : 'var(--text-secondary)',
+                border: 'none', 
+                cursor: ((step === 1 && isStep1Valid) || (step === 2 && isStep2Valid) || (step === 3 && isStep3Valid) || (step === 4 && isStep4Valid) || (step === 5 && isStep5Valid)) ? 'pointer' : 'not-allowed',
                 display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, transition: 'all 0.2s'
               }}
             >
               <span>{lang === 'ar' ? 'التالي' : 'Next'}</span>
-              <ArrowRight size={18} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
       </div>
+
+      {/* Confirmation Modal */}
+      <AnimatePresence>
+        {showConfirmation && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
+              style={{ background: 'var(--bg-primary)', padding: '40px', borderRadius: '24px', maxWidth: '400px', width: '100%', textAlign: 'center', border: '1px solid var(--border-color)' }}
+            >
+              <CheckCircle2 size={64} style={{ color: 'var(--accent-green)', margin: '0 auto 20px' }} />
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '16px' }}>
+                {lang === 'ar' ? 'تم تحضير طلبك بنجاح!' : 'Request Prepared!'}
+              </h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6, marginBottom: '16px' }}>
+                {lang === 'ar' 
+                  ? 'تم تحميل ملف PDF بمعلومات مشروعك، وتم فتح الواتساب برسالة جاهزة، فقط قم بإرسالها.'
+                  : 'A PDF with your details has been downloaded, and WhatsApp has been opened with a ready message.'}
+              </p>
+              {formData.stage === 'ready' && (
+                <div style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--accent-green)', padding: '12px', borderRadius: '12px', fontSize: '0.9rem', fontWeight: 600, marginBottom: '24px' }}>
+                  {lang === 'ar' ? '⚠️ ولا تنسَ إرفاق ملف الـ PDF قبل الإرسال.' : '⚠️ Don\'t forget to attach the PDF before sending.'}
+                </div>
+              )}
+              <button onClick={closeConfirmation} style={{ width: '100%', padding: '14px', borderRadius: '12px', background: 'var(--text-primary)', color: 'var(--bg-primary)', fontWeight: 700, border: 'none', cursor: 'pointer' }}>
+                {lang === 'ar' ? 'إغلاق' : 'Close'}
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hidden PDF Contract Template */}
       <div style={{ position: 'absolute', top: '-10000px', left: '-10000px', zIndex: -1000 }}>
         <div ref={contractRef} style={{
           width: '794px', 
+          minHeight: '1123px', // A4 aspect ratio height
           backgroundColor: '#ffffff', 
-          color: '#000000', 
-          padding: '60px', 
+          color: '#1a1a1a', 
+          padding: '60px 70px', 
           fontFamily: 'Arial, sans-serif',
           direction: lang === 'ar' ? 'rtl' : 'ltr',
-          textAlign: lang === 'ar' ? 'right' : 'left'
+          textAlign: lang === 'ar' ? 'right' : 'left',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column'
         }}>
           {/* Header */}
-          <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ borderBottom: '3px solid #1D4ED8', paddingBottom: '20px', marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
-              <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold' }}>
-                {lang === 'ar' ? 'وثيقة اتفاقية عمل رسمية' : 'Official Work Agreement'}
+              <h1 style={{ margin: 0, fontSize: '32px', fontWeight: '900', color: '#1D4ED8' }}>
+                {lang === 'ar' ? 'وثيقة طلب مشروع' : 'Project Request Document'}
               </h1>
-              <p style={{ margin: '5px 0 0 0', fontSize: '14px', color: '#555' }}>
-                {lang === 'ar' ? 'تاريخ الإصدار: ' : 'Issue Date: '} 
-                {new Date().toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US')}
+              <p style={{ margin: '8px 0 0 0', fontSize: '14px', color: '#555' }}>
+                {lang === 'ar' ? 'رقم الطلب: ' : 'Ref No: '} #{Math.floor(Math.random() * 90000) + 10000}
+                <br/>
+                {lang === 'ar' ? 'تاريخ الإصدار: ' : 'Date: '} {new Date().toLocaleString(lang === 'ar' ? 'ar-EG' : 'en-US')}
               </p>
             </div>
             <div style={{ textAlign: lang === 'ar' ? 'left' : 'right' }}>
-              <h2 style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#1D4ED8' }}>
+              <h2 style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#111' }}>
                 {lang === 'ar' ? 'أنس الطرايرة' : 'Anas Tarayra'}
               </h2>
-              <p style={{ margin: '5px 0 0 0', fontSize: '14px', color: '#555' }}>Anas Tarayra | Full-Stack Developer</p>
+              <p style={{ margin: '5px 0 0 0', fontSize: '14px', color: '#555', lineHeight: '1.5' }}>
+                Full-Stack Developer<br/>
+                Phone: +962 79 685 1497
+              </p>
             </div>
           </div>
 
-          {/* Client Details */}
+          {/* Section 1: Client Info */}
+          <div style={{ marginBottom: '40px' }}>
+             <h3 style={{ fontSize: '18px', color: '#1D4ED8', borderBottom: '1px solid #e5e7eb', paddingBottom: '8px', marginBottom: '20px', fontWeight: 800 }}>
+                {lang === 'ar' ? 'معلومات العميل الأساسية' : 'Client Information'}
+             </h3>
+             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', fontSize: '15px' }}>
+               <div><strong style={{ color: '#111' }}>{lang === 'ar' ? 'الاسم:' : 'Name:'}</strong> <span style={{color:'#444'}}>{formData.clientName}</span></div>
+               <div><strong style={{ color: '#111' }}>{lang === 'ar' ? 'الإيميل:' : 'Email:'}</strong> <span style={{color:'#444'}}>{formData.email}</span></div>
+               <div><strong style={{ color: '#111' }}>{lang === 'ar' ? 'رقم الهاتف / واتساب:' : 'Phone / WhatsApp:'}</strong> <span style={{color:'#444'}}>{formData.phone}</span></div>
+               <div><strong style={{ color: '#111' }}>{lang === 'ar' ? 'حالة الطلب:' : 'Request Stage:'}</strong> <span style={{color: formData.stage === 'ready' ? '#10B981' : '#F59E0B', fontWeight: 'bold'}}>
+                 {formData.stage === 'ready' ? (lang === 'ar' ? 'جاهز للبدء فعلياً' : 'Ready to Start') : (lang === 'ar' ? 'مجرد استفسار مبدئي' : 'Initial Inquiry')}
+               </span></div>
+             </div>
+          </div>
+
+          {/* Section 2: Project Scope */}
+          <div style={{ marginBottom: '40px' }}>
+             <h3 style={{ fontSize: '18px', color: '#1D4ED8', borderBottom: '1px solid #e5e7eb', paddingBottom: '8px', marginBottom: '20px', fontWeight: 800 }}>
+                {lang === 'ar' ? 'نطاق المشروع والتفاصيل' : 'Project Scope & Details'}
+             </h3>
+             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', fontSize: '15px', marginBottom: '25px' }}>
+               <div><strong style={{ color: '#111' }}>{lang === 'ar' ? 'اسم المشروع / الفكرة:' : 'Project Name:'}</strong> <span style={{color:'#444'}}>{formData.projectName}</span></div>
+               <div><strong style={{ color: '#111' }}>{lang === 'ar' ? 'الخدمة المطلوبة:' : 'Service:'}</strong> <span style={{color:'#444'}}>{projectTypes.find(p => p.id === formData.projectType)?.label}</span></div>
+               <div><strong style={{ color: '#111' }}>{lang === 'ar' ? 'الميزانية المتوقعة:' : 'Budget:'}</strong> <span style={{color:'#444'}}>{budgetOptions.find(p => p.id === formData.budget)?.label}</span></div>
+               <div><strong style={{ color: '#111' }}>{lang === 'ar' ? 'الوقت المتوقع للتسليم:' : 'Timeline:'}</strong> <span style={{color:'#444'}}>{timelineOptions.find(p => p.id === formData.timeline)?.label}</span></div>
+             </div>
+             
+             <div style={{ background: '#f8fafc', padding: '24px', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: formData.references ? '20px' : '0' }}>
+               <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', color: '#334155', fontWeight: 800 }}>{lang === 'ar' ? 'الوصف التفصيلي:' : 'Detailed Description:'}</h4>
+               <p style={{ margin: 0, fontSize: '14px', lineHeight: 1.8, color: '#475569', whiteSpace: 'pre-wrap' }}>
+                 {formData.description}
+               </p>
+             </div>
+             
+             {formData.references && (
+               <div style={{ background: '#f8fafc', padding: '24px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                 <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', color: '#334155', fontWeight: 800 }}>{lang === 'ar' ? 'المراجع والمشاريع المشابهة:' : 'References:'}</h4>
+                 <p style={{ margin: 0, fontSize: '14px', lineHeight: 1.8, color: '#475569', whiteSpace: 'pre-wrap' }}>
+                   {formData.references}
+                 </p>
+               </div>
+             )}
+          </div>
+
+          {/* Section 3: Terms & Conditions */}
           <div style={{ marginBottom: '30px' }}>
-            <h3 style={{ fontSize: '18px', borderBottom: '1px solid #ccc', paddingBottom: '5px', marginBottom: '15px' }}>
-              {lang === 'ar' ? 'بيانات الطرفين' : 'Parties Details'}
-            </h3>
-            <p><strong>{lang === 'ar' ? 'مقدم الخدمة (الطرف الأول):' : 'Service Provider (First Party):'}</strong> {lang === 'ar' ? 'أنس الطرايرة' : 'Anas Tarayra'}</p>
-            <p><strong>{lang === 'ar' ? 'العميل (الطرف الثاني):' : 'Client (Second Party):'}</strong> {formData.clientName} {formData.companyName ? `(${formData.companyName})` : ''}</p>
-            <p><strong>{lang === 'ar' ? 'اسم المشروع:' : 'Project Name:'}</strong> {formData.projectName}</p>
+             <h3 style={{ fontSize: '18px', color: '#1D4ED8', borderBottom: '1px solid #e5e7eb', paddingBottom: '8px', marginBottom: '15px', fontWeight: 800 }}>
+                {lang === 'ar' ? 'الشروط والأحكام القياسية (Terms & Conditions)' : 'Standard Terms & Conditions'}
+             </h3>
+             <ul style={{ margin: 0, paddingLeft: lang === 'ar' ? '0' : '20px', paddingRight: lang === 'ar' ? '20px' : '0', fontSize: '12px', lineHeight: 1.8, color: '#444' }}>
+               <li style={{ marginBottom: '6px' }}><strong>{lang === 'ar' ? 'مراحل الدفع:' : 'Payment Terms:'}</strong> {lang === 'ar' ? 'يتم سداد 25% كدفعة مقدمة لجدولة وبدء العمل، و 75% المتبقية تُسدد عند تسليم المشروع النهائي والموافقة عليه.' : 'A 25% upfront payment is required to commence work. The remaining 75% is due upon final delivery.'}</li>
+               <li style={{ marginBottom: '6px' }}><strong>{lang === 'ar' ? 'سياسة الإلغاء:' : 'Cancellation Policy:'}</strong> {lang === 'ar' ? 'لا يحق للعميل الإلغاء أو استرداد الدفعة المقدمة بعد تسليم النسخة المبدئية (Draft) للمشروع، وذلك ضماناً للجهد والوقت المبذول.' : 'No cancellation or refund of the upfront payment is allowed after the initial draft is delivered.'}</li>
+               <li style={{ marginBottom: '6px' }}><strong>{lang === 'ar' ? 'نطاق التعديلات:' : 'Revisions & Scope:'}</strong> {lang === 'ar' ? 'يحق للعميل طلب تعديلات ضمن النطاق المتفق عليه بالوثيقة. الميزات الجذرية الإضافية خارج النطاق تخضع لتقييم وتكلفة منفصلة.' : 'Revisions are allowed within the agreed scope. Radical features outside this scope will incur extra costs.'}</li>
+               <li style={{ marginBottom: '6px' }}><strong>{lang === 'ar' ? 'المحتوى:' : 'Content Responsibility:'}</strong> {lang === 'ar' ? 'يلتزم العميل بتوفير كافة النصوص، الصور، والشعارات المطلوبة للمشروع في الوقت المحدد لتجنب تأخير التسليم.' : 'The client is responsible for providing all content (text, images, logos) timely to avoid delays.'}</li>
+               <li style={{ marginBottom: '6px' }}><strong>{lang === 'ar' ? 'الجدول الزمني:' : 'Timeline:'}</strong> {lang === 'ar' ? 'يبدأ احتساب وقت التسليم المتوقع فور استلام الدفعة المقدمة وتوفر جميع متطلبات المشروع الأساسية من العميل.' : 'The timeline starts immediately after the upfront payment is received and all project requirements are provided.'}</li>
+             </ul>
           </div>
 
-          {/* Terms Section */}
-          <div style={{ marginBottom: '30px' }}>
-            <h3 style={{ fontSize: '18px', borderBottom: '1px solid #ccc', paddingBottom: '5px', marginBottom: '15px' }}>
-              {lang === 'ar' ? 'الشروط والأحكام المتفق عليها' : 'Agreed Terms and Conditions'}
-            </h3>
-            <div style={{ fontSize: '12px', lineHeight: '1.8' }}>
-              <h4 style={{ margin: '10px 0 5px 0' }}>{termsObj.development.title}</h4>
-              <p style={{ margin: 0, whiteSpace: 'pre-wrap' }}>{termsObj.development.content}</p>
-              
-              <h4 style={{ margin: '15px 0 5px 0' }}>{termsObj.design.title}</h4>
-              <p style={{ margin: 0, whiteSpace: 'pre-wrap' }}>{termsObj.design.content}</p>
-              
-              <h4 style={{ margin: '15px 0 5px 0' }}>{termsObj.communication.title}</h4>
-              <p style={{ margin: 0, whiteSpace: 'pre-wrap' }}>{termsObj.communication.content}</p>
-            </div>
-          </div>
+          {/* Spacer to push footer down */}
+          <div style={{ flexGrow: 1 }}></div>
 
-          {/* Digital Signature */}
-          <div style={{ marginTop: '50px', backgroundColor: '#f9f9f9', padding: '20px', borderLeft: lang === 'ar' ? 'none' : '4px solid #10B981', borderRight: lang === 'ar' ? '4px solid #10B981' : 'none', borderRadius: '8px' }}>
-            <h3 style={{ margin: '0 0 10px 0', fontSize: '16px', color: '#10B981' }}>
-              {lang === 'ar' ? 'إقرار إلكتروني وتوقيع رقمي' : 'Electronic Declaration & Digital Signature'}
-            </h3>
-            <p style={{ margin: '0 0 10px 0', fontSize: '13px' }}>
-              {lang === 'ar' 
-                ? <>أقر أنا <strong>{formData.clientName}</strong> بموجب هذا المستند الرقمي، بأنني قد قرأت كافة الشروط والمواثيق المذكورة أعلاه، وأوافق عليها موافقة تامة ونهائية للبدء بالعمل على مشروع (<strong>{formData.projectName}</strong>).</>
-                : <>I, <strong>{formData.clientName}</strong>, hereby declare through this digital document that I have read all the terms and rules stated above, and I fully and finally agree to them to commence work on the project (<strong>{formData.projectName}</strong>).</>
-              }
-            </p>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-              <div>
-                <p style={{ margin: '0 0 5px 0', fontSize: '12px', color: '#777' }}>
-                  {lang === 'ar' ? 'توقيع العميل (مُصادق رقمياً):' : 'Client Signature (Digitally Authenticated):'}
-                </p>
-                <p style={{ margin: 0, fontSize: '18px', fontWeight: 'bold', fontStyle: 'italic' }}>{formData.clientName}</p>
-              </div>
-              <div>
-                <p style={{ margin: '0 0 5px 0', fontSize: '12px', color: '#777' }}>
-                  {lang === 'ar' ? 'وقت وتاريخ المصادقة:' : 'Time and Date of Authentication:'}
-                </p>
-                <p style={{ margin: 0, fontSize: '14px', fontWeight: 'bold' }}>{new Date().toLocaleString(lang === 'ar' ? 'ar-EG' : 'en-US')}</p>
-              </div>
-            </div>
+          {/* Footer / Signature block */}
+          <div style={{ paddingTop: '30px', borderTop: '2px dashed #cbd5e1', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: '40px' }}>
+             <div>
+               <p style={{ margin: '0 0 8px 0', fontSize: '13px', color: '#64748b' }}>{lang === 'ar' ? 'توقيع العميل (إلكتروني)' : 'Client Signature (Digital)'}</p>
+               <p style={{ margin: 0, fontSize: '22px', fontWeight: 'bold', fontFamily: 'serif', fontStyle: 'italic', color: '#0f172a' }}>{formData.clientName}</p>
+             </div>
+             <div style={{ textAlign: lang === 'ar' ? 'left' : 'right' }}>
+               <p style={{ margin: '0 0 8px 0', fontSize: '13px', color: '#64748b' }}>{lang === 'ar' ? 'توثيق النظام والمطابقة' : 'System Auth & Validation'}</p>
+               <p style={{ margin: 0, fontSize: '12px', fontFamily: 'monospace', color: '#94a3b8', letterSpacing: '1px' }}>
+                 {Date.now().toString(16).toUpperCase()}-{Math.floor(Math.random() * 9000)}
+               </p>
+             </div>
           </div>
+          
         </div>
       </div>
     </div>

@@ -30,7 +30,7 @@ export const Navbar = ({ currentPage, onNavigate }) => {
     { href: '#about', label: t.nav.about },
     { href: '#skills', label: t.nav.skills },
     { href: '#projects', label: t.nav.projects || (lang === 'ar' ? 'بروجيكتس' : 'Projects') },
-    { href: '#courses', label: t.nav.services || (lang === 'ar' ? 'خدمتي' : 'Services') },
+    { href: '#services', label: t.nav.services || (lang === 'ar' ? 'خدماتي' : 'Services') },
     { href: '#contact', label: t.nav.contact },
   ];
 

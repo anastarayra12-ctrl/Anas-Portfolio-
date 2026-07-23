@@ -1,18 +1,53 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { GraduationCap, MessageSquareHeart, Download, Sparkles, Terminal, CheckCircle2, Eye, Quote } from 'lucide-react';
+import { GraduationCap, MessageSquareHeart, Download, Sparkles, Terminal, CheckCircle2, Eye, Quote, ArrowRight } from 'lucide-react';
 import { CvModal } from './CvModal';
 
 export const AboutSection = () => {
   const { t, lang } = useLanguage();
   const [isCvModalOpen, setIsCvModalOpen] = useState(false);
 
+  const personalMessages = [
+    'مهما تعبت بتعلّم شي جديد، تذكر إنه طلب العلم عبادة قبل ما يكون مهارة — "وَقُلْ رَبِّ زِدْنِي عِلْمًا" (طه: 114).',
+    'إذا حاسس إنك وقفت بمكانك ومش قادر تتقدم، تذكر إنه الله وعدك: "إِنَّ مَعَ الْعُسْرِ يُسْرًا" (الشرح: 6).',
+    'النتيجة اللي بتوصلها ما بتجي صدفة، هي ثمرة سعيك — "وَأَن لَّيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ" (النجم: 39).',
+    'إذا خايف تاخد قرار مصيري، اعرف إنه التقوى بتفتحلك أبواب ما كنت متوقعها — "وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا" (الطلاق: 2).',
+    'بعد ما تاخد بكل الأسباب، سيب الباقي لله، لأنه هو خير وكيل — "وَتَوَكَّلْ عَلَى اللَّهِ وَكَفَىٰ بِاللَّهِ وَكِيلًا" (الأحزاب: 3).',
+    'قبل ما تبدأ أي شي صعب بحياتك، ادعي بهاي الدعوة، لأنه أصعب شي مش الطريق، هو ثقتك إنك رح توصل — "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي" (طه: 25-26).',
+    'لما تاخد قرارك وتبلش بمشروعك، اعتمد على الله وامشي، لأنه هيك علّمنا القرآن — "فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى اللَّهِ" (آل عمران: 159).',
+    'إذا بتحس إنه رزقك تأخر، اعرف إنه ربنا وعدك برضا أكبر من اللي تتخيله — "وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ" (الضحى: 5).',
+    'لا تتردد تتعلم شي جديد، مهما كان تعبك، لأنه طلب العلم طريق للجنة — "من سلك طريقًا يلتمس فيه علمًا سهّل الله له به طريقًا إلى الجنة" (رواه مسلم).',
+    'أي شي بتشتغل عليه، أتقنه، لأنه النبي ﷺ قال: "إن الله يحب إذا عمل أحدكم عملاً أن يتقنه" (رواه الطبراني).',
+    'لا تعجز قدام أي تحدي، خذ بالأسباب واستعن بالله — "احرص على ما ينفعك واستعن بالله ولا تعجز" (رواه مسلم).',
+    'لو حد ساعدك أو علّمك شي، اشكره صراحة، لأنه "من لا يشكر الناس لا يشكر الله" (رواه أبو داود والترمذي).',
+    'إذا قدرت تعلّم حد شي تعرفه، افعلها، لأنه "الدال على الخير كفاعله" (رواه مسلم).',
+    'لا تقيس نجاحك بس بالنتيجة، قيسه كمان بطمأنينة قلبك إنه رزقك من عند الله.',
+    'أي مهارة عندك هي أمانة، فاستخدمها بطريقة ترضي ربك قبل ما ترضي أي حد تاني.',
+    'اجتهد قد ما تقدر، بس لا تنسى الدعاء، لأنه ما بين السعي والتوفيق خيط لازم يكون فيه دعاء صادق.',
+    'قبل ما تفتخر بأي إنجاز قدام الناس، اسأل حالك: هل شكرت الله عليه أول؟',
+    'إذا بتحب شغلك، اشكر الله عليها بعملك مش بس بكلامك.',
+    'كل باب انفتحلك بحياتك، اعرف إنه قبله كان في دعاء استجاب الله له، حتى لو مش متذكر مين دعاه.',
+    'لا تكتفي بالعلم اللي بيفتحلك أبواب رزق بس، دور على العلم اللي بيقربك من ربك أكتر — "وَقُلْ رَبِّ زِدْنِي عِلْمًا" (طه: 114).'
+  ];
+
+  const [messageIndex, setMessageIndex] = useState(() => Math.floor(Math.random() * personalMessages.length));
+
+  const nextMessage = () => {
+    setMessageIndex((prev) => {
+      let nextIdx;
+      do {
+        nextIdx = Math.floor(Math.random() * personalMessages.length);
+      } while (nextIdx === prev);
+      return nextIdx;
+    });
+  };
+
   const highlights = [
-    lang === 'ar' ? 'تخصص هندسة برمجيات في جامعة الزيتونة الأردنية' : 'Software Engineering Major @ Alzaytoonah University',
-    lang === 'ar' ? 'تصميم واجهات وتجارب مستخدم متكاملة (UI/UX & Figma Systems)' : 'UI/UX Architecture & Interactive Figma Systems',
-    lang === 'ar' ? 'تطوير خلفي متقدم C# و ASP.NET Core Web API' : 'Advanced Backend Dev C# & ASP.NET Core Web API',
-    lang === 'ar' ? 'بناء تطبيقات تفاعلية متجاوبة وعالية الأداء' : 'Responsive High-Performance Full-Stack Apps',
+    lang === 'ar' ? 'طالب هندسة برمجيات - سنة ثالثة في جامعة الزيتونة' : 'Third Year Software Engineering Student @ Alzaytoonah University',
+    lang === 'ar' ? 'مطور Full-Stack (C# و ASP.NET و Angular)' : 'Full-Stack Developer (C#, ASP.NET, Angular)',
+    lang === 'ar' ? 'مصمم واجهات وتجربة مستخدم (UI/UX) ومصمم جرافيك' : 'UI/UX & Graphic Designer',
+    lang === 'ar' ? 'تقديم حلول برمجية مبتكرة لمعالجة المشكلات المعقدة' : 'Delivering innovative software solutions for complex problems',
   ];
 
   return (
@@ -138,8 +173,8 @@ export const AboutSection = () => {
                   </div>
                   <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
                     {lang === 'ar'
-                      ? 'سيتم إضافتها قريباً.'
-                      : 'Will be added soon.'}
+                      ? 'طالب هندسة برمجيات في جامعة الزيتونة الأردنية. أدرس حالياً في السنة الثالثة، ومن المتوقع تخرجي في عام 2028.'
+                      : 'Software Engineering Student at Alzaytoonah University of Jordan. Currently in my third year, with an expected graduation in 2028.'}
                   </p>
                 </div>
               </div>
@@ -182,11 +217,32 @@ export const AboutSection = () => {
                   }}
                 >
                   <Quote size={24} style={{ color: 'var(--accent-green)', opacity: 0.3, marginBottom: '8px' }} />
-                  <p style={{ fontSize: '0.92rem', color: 'var(--text-primary)', margin: 0, lineHeight: 1.6, fontStyle: 'italic', fontWeight: 500 }}>
-                    {lang === 'ar'
-                      ? 'سيتم إضافتها قريباً.'
-                      : 'Will be added soon.'}
-                  </p>
+                  <motion.p 
+                    key={messageIndex}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ fontSize: '0.92rem', color: 'var(--text-primary)', margin: 0, lineHeight: 1.6, fontStyle: 'italic', fontWeight: 500, minHeight: '80px', direction: 'rtl', textAlign: 'right' }}
+                  >
+                    {personalMessages[messageIndex]}
+                  </motion.p>
+                  
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
+                    <button 
+                      onClick={nextMessage}
+                      style={{ 
+                        background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', cursor: 'pointer', 
+                        color: 'var(--accent-green)', display: 'flex', alignItems: 'center', gap: '8px',
+                        fontSize: '0.85rem', fontWeight: 600, padding: '6px 12px', borderRadius: '8px',
+                        transition: 'all 0.2s'
+                      }}
+                      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(16, 185, 129, 0.2)'}
+                      onMouseOut={(e) => e.currentTarget.style.background = 'rgba(16, 185, 129, 0.1)'}
+                    >
+                      {lang === 'ar' ? 'الرسالة التالية' : 'Next Message'}
+                      <ArrowRight size={14} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.div>
