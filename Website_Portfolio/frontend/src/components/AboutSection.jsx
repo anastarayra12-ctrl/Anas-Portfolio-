@@ -113,8 +113,8 @@ export const AboutSection = () => {
                 </a>
 
                 <a
-                  href="/Anas_Al_Tarayrah_CV.pdf?v=5"
-                  download="Anas_Al_Tarayrah_CV.pdf"
+                  href="/Anas_AL-Tarayra-CV.pdf?v=1"
+                  download="Anas_AL-Tarayra-CV.pdf"
                   className="btn-outline"
                   style={{ flex: 1, justifyContent: 'center', textDecoration: 'none' }}
                 >
