@@ -150,20 +150,22 @@ export const HomeSection = () => {
               {/* Home CTAs */}
               <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <a
-                  href="#skills"
+                  href="/Anas_AL-Tarayra-CV.pdf?v=2"
+                  download="Anas_AL-Tarayra-CV.pdf"
                   className="btn-primary"
                   style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', fontSize: '1rem', textDecoration: 'none' }}
                 >
-                  <ArrowRight size={20} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
-                  <span>{lang === 'ar' ? 'تصفح مهاراتي ودوراتي' : 'View Skills & Courses'}</span>
+                  <Download size={20} />
+                  <span>{lang === 'ar' ? 'تحميل السيرة الذاتية (CV)' : 'Download CV'}</span>
                 </a>
 
                 <a
-                  href="#contact"
+                  href="#skills"
                   className="btn-outline"
                   style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', fontSize: '1rem', textDecoration: 'none' }}
                 >
-                  <span>{lang === 'ar' ? 'تواصل معي' : 'Contact Me'}</span>
+                  <span>{lang === 'ar' ? 'تصفح مهاراتي ودوراتي' : 'View Skills & Courses'}</span>
+                  <ArrowRight size={20} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
                 </a>
               </div>
           </motion.div>
