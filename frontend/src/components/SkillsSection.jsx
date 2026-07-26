@@ -258,29 +258,24 @@ export const SkillsSection = () => {
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.3 }}
                       className="glass-card"
-                      style={{ overflow: 'hidden', display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+                      style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px' }}
                     >
-                      <div style={{ flex: '1 1 300px', minHeight: '220px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.2)' }}>
-                        <Modern3DIcon name={cert.iconName} size={120} />
-                        <div style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 2 }}>
-                           <span style={{ backgroundColor: 'rgba(16, 185, 129, 0.95)', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '10px', backdropFilter: 'blur(4px)' }}>
-                             <CheckCircle size={16} />
-                             {cert.date}
-                           </span>
-                        </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
+                        <h4 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>{cert.title}</h4>
+                        <span style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: 'var(--accent-green)', border: '1px solid rgba(16, 185, 129, 0.2)', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <CheckCircle size={16} />
+                          {cert.date}
+                        </span>
                       </div>
-                      <div style={{ flex: '2 1 400px', padding: '32px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <h4 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '16px', color: 'var(--text-primary)' }}>{cert.title}</h4>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '20px', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Globe size={16} style={{ color: 'var(--accent-blue)' }} /> <span style={{ fontWeight: 600 }}>{cert.issuer}</span></div>
-                          {cert.reviewer && (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><ShieldCheck size={16} style={{ color: 'var(--accent-green)' }} /> <span style={{ fontWeight: 600 }}>{cert.reviewer}</span></div>
-                          )}
-                        </div>
-                        <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-                          {cert.fileDetail}
-                        </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Globe size={16} style={{ color: 'var(--accent-blue)' }} /> <span style={{ fontWeight: 600 }}>{cert.issuer}</span></div>
+                        {cert.reviewer && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><ShieldCheck size={16} style={{ color: 'var(--accent-green)' }} /> <span style={{ fontWeight: 600 }}>{cert.reviewer}</span></div>
+                        )}
                       </div>
+                      <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                        {cert.fileDetail}
+                      </p>
                     </motion.div>
                   ))}
                 </AnimatePresence>
@@ -308,31 +303,26 @@ export const SkillsSection = () => {
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.3 }}
                       className="glass-card"
-                      style={{ overflow: 'hidden', display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+                      style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '16px' }}
                     >
-                      <div style={{ flex: '1 1 300px', minHeight: '220px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.2)' }}>
-                        <Modern3DIcon name={cert.iconName} size={120} />
-                        <div style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 2 }}>
-                           <span style={{ backgroundColor: 'rgba(59, 130, 246, 0.95)', color: '#fff', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 4px 15px rgba(59,130,246,0.5)', backdropFilter: 'blur(4px)' }}>
-                             <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2, ease: "linear" }} style={{ display: 'flex' }}>
-                               <Loader2 size={16} />
-                             </motion.div>
-                             {cert.date}
-                           </span>
-                        </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
+                        <h4 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>{cert.title}</h4>
+                        <span style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', color: 'var(--accent-blue)', border: '1px solid rgba(59, 130, 246, 0.2)', fontSize: '0.85rem', fontWeight: 700, padding: '8px 16px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2, ease: "linear" }} style={{ display: 'flex' }}>
+                            <Loader2 size={16} />
+                          </motion.div>
+                          {cert.date}
+                        </span>
                       </div>
-                      <div style={{ flex: '2 1 400px', padding: '32px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <h4 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '16px', color: 'var(--text-primary)' }}>{cert.title}</h4>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '20px', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Globe size={16} style={{ color: 'var(--accent-blue)' }} /> <span style={{ fontWeight: 600 }}>{cert.issuer}</span></div>
-                          {cert.reviewer && (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><ShieldCheck size={16} style={{ color: 'var(--accent-green)' }} /> <span style={{ fontWeight: 600 }}>{cert.reviewer}</span></div>
-                          )}
-                        </div>
-                        <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-                          {cert.fileDetail}
-                        </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Globe size={16} style={{ color: 'var(--accent-blue)' }} /> <span style={{ fontWeight: 600 }}>{cert.issuer}</span></div>
+                        {cert.reviewer && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><ShieldCheck size={16} style={{ color: 'var(--accent-green)' }} /> <span style={{ fontWeight: 600 }}>{cert.reviewer}</span></div>
+                        )}
                       </div>
+                      <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                        {cert.fileDetail}
+                      </p>
                     </motion.div>
                   ))}
                 </AnimatePresence>
