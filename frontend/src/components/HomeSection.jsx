@@ -147,27 +147,25 @@ export const HomeSection = () => {
               {t.hero.intro}
             </p>
 
-            {/* Home CTAs */}
-            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <a
-                href="/cv.pdf"
-                download="Anas_Tarayrah_CV.pdf"
-                className="btn-primary"
-                style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', fontSize: '1rem' }}
-              >
-                <Download size={20} />
-                <span>{lang === 'ar' ? 'تحميل السيرة الذاتية (CV)' : 'Download CV'}</span>
-              </a>
+              {/* Home CTAs */}
+              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <a
+                  href="#skills"
+                  className="btn-primary"
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', fontSize: '1rem', textDecoration: 'none' }}
+                >
+                  <ArrowRight size={20} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
+                  <span>{lang === 'ar' ? 'تصفح مهاراتي ودوراتي' : 'View Skills & Courses'}</span>
+                </a>
 
-              <a
-                href="#courses"
-                className="btn-outline"
-                style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', fontSize: '1rem' }}
-              >
-                <span>{lang === 'ar' ? 'الخدمات والحلول' : 'Services & Solutions'}</span>
-                <ArrowRight size={20} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
-              </a>
-            </div>
+                <a
+                  href="#contact"
+                  className="btn-outline"
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', fontSize: '1rem', textDecoration: 'none' }}
+                >
+                  <span>{lang === 'ar' ? 'تواصل معي' : 'Contact Me'}</span>
+                </a>
+              </div>
           </motion.div>
         </div>
       </div>
