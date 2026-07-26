@@ -1,0 +1,326 @@
+/* Custom Fonts */
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/SpaceGrotesk-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/SpaceGrotesk-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/SpaceGrotesk-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/SpaceGrotesk-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Changa';
+  src: url('/fonts/Changa-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Changa';
+  src: url('/fonts/Changa-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Changa';
+  src: url('/fonts/Changa-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Changa';
+  src: url('/fonts/Changa-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Changa';
+  src: url('/fonts/Changa-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lalezar';
+  src: url('/fonts/Lalezar-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Custom Theme Tokens & Design System */
+:root {
+  /* Brand Palette */
+  --brand-black: #0B0B0B;
+  --brand-blue-900: #042C53;
+  --brand-blue-600: #185FA5;
+  --brand-blue-200: #85B7EB;
+  --brand-off: #F5F4F1;
+  --brand-line: #E4E2DD;
+
+  /* App Theme (Dark Mode Default) */
+  --bg-primary: var(--brand-black);
+  --bg-secondary: #18181B;
+  --bg-tertiary: #27272A;
+  --accent-blue: var(--brand-blue-600);
+  --accent-blue-glow: rgba(24, 95, 165, 0.25);
+  --accent-green: #10B981; /* Keep for success badges */
+  --text-primary: var(--brand-off);
+  --text-secondary: #A0A0A0;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --navbar-bg: rgba(9, 9, 11, 0.85);
+  --card-bg: rgba(24, 24, 27, 0.7);
+  --code-bg: #000000;
+  
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'Space Grotesk', monospace;
+  
+  --transition-speed: 250ms;
+}
+
+[data-theme='light'] {
+  --bg-primary: var(--brand-off);
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: var(--brand-line);
+  --accent-blue: var(--brand-blue-600);
+  --accent-blue-glow: rgba(24, 95, 165, 0.15);
+  --text-primary: var(--brand-black);
+  --text-secondary: #555555;
+  --border-color: var(--brand-line);
+  --navbar-bg: rgba(245, 244, 241, 0.85);
+  --card-bg: #FFFFFF;
+  --code-bg: #EAE8E2;
+}
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* Removed noise for cleaner look */
+
+/* Typography Rules */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+body[dir="rtl"] h1,
+body[dir="rtl"] h2,
+body[dir="rtl"] h3,
+body[dir="rtl"] h4,
+body[dir="rtl"] h5,
+body[dir="rtl"] h6 {
+  font-family: 'Lalezar', 'Changa', sans-serif;
+  font-weight: 400;
+}
+
+body[dir="rtl"] p,
+body[dir="rtl"] span,
+body[dir="rtl"] button,
+body[dir="rtl"] a,
+body[dir="rtl"] div {
+  font-family: 'Changa', sans-serif;
+}
+
+code, pre, .font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Fixed Navbar Clearance & Section Padding Rules */
+section {
+  padding-top: 100px;
+  padding-bottom: 80px;
+  min-height: 80vh;
+  position: relative;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  transition: transform var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.glass-card:hover {
+  border-color: var(--accent-blue);
+  box-shadow: 0 10px 30px -10px var(--accent-blue-glow);
+}
+
+/* Buttons System with Smooth Hover Sweep Animation */
+.btn-primary {
+  position: relative;
+  background-color: var(--accent-blue);
+  color: #F8FAFC;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  text-decoration: none;
+  box-shadow: 0 4px 14px var(--accent-blue-glow);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: left 400ms ease;
+  z-index: -1;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--accent-blue-glow);
+}
+
+.btn-outline {
+  position: relative;
+  background-color: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px var(--accent-blue-glow);
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 30px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: var(--accent-green);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-ring 1.8s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* Accessibility: Reduced Motion Media Query */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  section {
+    padding-top: 90px;
+    padding-bottom: 50px;
+  }
+}

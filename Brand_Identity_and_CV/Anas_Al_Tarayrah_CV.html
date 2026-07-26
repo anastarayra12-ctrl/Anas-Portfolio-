@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anas Tarayra - CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0B0E14;
+            --bg-secondary: #151A23;
+            --accent-blue: #38BDF8;
+            --accent-blue-dark: #0EA5E9;
+            --accent-green: #10B981;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --border-color: #334155;
+            --card-bg: rgba(30, 41, 59, 0.5);
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        a:hover {
+            color: var(--accent-blue-dark);
+            text-decoration: underline;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 38px;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+        }
+        
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-blue);
+            display: inline-block;
+            letter-spacing: 1px;
+        }
+
+        .section-content {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .summary-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: justify;
+            margin: 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .skill-category {
+            font-size: 14px;
+        }
+
+        .skill-category strong {
+            color: var(--accent-blue);
+            font-weight: 600;
+            display: inline-block;
+            width: 170px;
+        }
+
+        .skill-category span {
+            color: var(--text-secondary);
+        }
+
+        .item {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        
+        .item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .item-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .item-date {
+            font-size: 13px;
+            color: var(--accent-green);
+            font-weight: 600;
+            background-color: rgba(16, 185, 129, 0.1);
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        .item-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 6px 0 0 0;
+        }
+
+        .compact-list {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .compact-list li {
+            margin-bottom: 4px;
+        }
+
+        /* Print optimizations for A4 */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Anas Tarayra</h1>
+        <div class="subtitle">Full-Stack Developer & UI/UX Designer</div>
+        <div class="contact-info">
+            <span>Jordan, Amman</span>
+            <span>•</span>
+            <span>+962 79 685 1497</span>
+            <span>•</span>
+            <span><a href="mailto:anastarayra12@gmail.com">anastarayra12@gmail.com</a></span>
+        </div>
+        <div class="contact-info" style="margin-top: 8px;">
+            <a href="https://www.linkedin.com/in/anastarayra12">LinkedIn</a>
+            <span>•</span>
+            <a href="https://github.com/anastarayra12">GitHub</a>
+            <span>•</span>
+            <a href="https://anas-portfolio-rose-nine.vercel.app/">Anas Tarayra Portfolio</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">PROFESSIONAL SUMMARY</div>
+        <div class="section-content">
+            <p class="summary-text">
+                I am a third-year Software Engineering student at Al-Zaytoonah University of Jordan and a Full-Stack Developer specializing in .NET and Angular, with a strong passion for UI/UX and Graphic Design. I believe the best digital products are created when design and development work together from the very beginning, so I enjoy building ideas and designing them simultaneously rather than treating them as separate phases. Driven by genuine passion for technology, I continuously learn, explore emerging tools and modern technologies, and refine my skills in both software development and design. I am committed to delivering clean, practical, and high-quality solutions that combine strong functionality with outstanding user experience, aiming to be recognized for the quality of my work before any job title.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">TECHNICAL SKILLS</div>
+        <div class="section-content">
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <strong>Languages:</strong>
+                    <span>HTML5, C++</span>
+                </div>
+                <div class="skill-category">
+                    <strong>Frameworks & Libraries:</strong>
+                    <span>ASP.NET, Angular</span>
+                </div>
+                <div class="skill-category">
+                    <strong>AI Tools:</strong>
+                    <span>Vibe Coding, Claude (Claude Code), AI Prompt Engineering, Any AI Tools for Development & Design</span>
+                </div>
+                <div class="skill-category">
+                    <strong>Design:</strong>
+                    <span>Figma (Wireframing & Prototyping), Adobe Photoshop</span>
+                </div>
+                <div class="skill-category">
+                    <strong>Other:</strong>
+                    <span>Git & GitHub</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">CERTIFICATIONS</div>
+        <div class="section-content">
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <span class="item-title">Adobe Photoshop Course</span>
+                        <span class="item-subtitle"> — YouTube</span>
+                    </div>
+                    <div class="item-date">2025</div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <span class="item-title">UI/UX Design Masterclass</span>
+                        <span class="item-subtitle"> — Udemy, Reviewed by: Eng. Eslam Ameer</span>
+                    </div>
+                    <div class="item-date">2026</div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <span class="item-title">UI/UX Design Workshop</span>
+                        <span class="item-subtitle"> — Zain Innovation Campus (ZINC), Reviewed by: Mr. Alaa Ali</span>
+                    </div>
+                    <div class="item-date">2026</div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <span class="item-title">Claude AI Mastery Course</span>
+                        <span class="item-subtitle"> — Anthropic</span>
+                    </div>
+                    <div class="item-date">2026</div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <span class="item-title">Claude AI Prompt Engineering</span>
+                        <span class="item-subtitle"> — YouTube</span>
+                    </div>
+                    <div class="item-date">2026</div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <span class="item-title">Vibe Coding Course</span>
+                        <span class="item-subtitle"> — YouTube</span>
+                    </div>
+                    <div class="item-date">2026</div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <span class="item-title">Full Stack Developer (.NET & Angular)</span>
+                        <span class="item-subtitle"> — Step by Step Company, Reviewed by: Eng. Mohammad Al-Momani</span>
+                    </div>
+                    <div class="item-date">In Progress</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">PROJECTS</div>
+        <div class="section-content">
+            <div class="item">
+                <span class="item-title" style="color: var(--accent-blue);">SOON</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">EDUCATION</div>
+        <div class="section-content">
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <span class="item-title">Software Engineering Student</span>
+                        <span class="item-subtitle"> — Alzaytoonah University of Jordan</span>
+                    </div>
+                    <div class="item-date">2028 (Expected)</div>
+                </div>
+                <p class="item-desc">Currently in my third year.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">LANGUAGES & INVOLVEMENT</div>
+        <div class="section-content">
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <span class="item-title">Languages</span>
+                    </div>
+                </div>
+                <p class="item-desc">Arabic (Native), English (Professional Working Proficiency)</p>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div>
+                        <span class="item-title">Academic & Technical Leader | Student Team</span>
+                        <span class="item-subtitle"> — Al-Zaytoonah University of Jordan</span>
+                    </div>
+                    <div class="item-date">2025 - Present</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

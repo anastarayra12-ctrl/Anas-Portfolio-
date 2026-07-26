@@ -1,0 +1,26 @@
+# 🚀 Portfolio Architecture V2
+
+## The Challenge
+Building a portfolio that stands out in 2026 requires more than just a clean UI. It demands absolute performance, fluid state transitions, and a Vibe Coder aesthetic that instantly tells visitors they are looking at high-tier engineering.
+
+## The Solution
+We implemented a robust architecture using:
+- **Zustand** for global state.
+- **Framer Motion** for buttery smooth page transitions.
+- **React Three Fiber** for a lightweight 3D cyber-aesthetic background.
+
+### Code Sneak Peek
+Here is how we initialized our global store:
+
+```javascript
+import { create } from 'zustand';
+
+const useAppStore = create((set) => ({
+  theme: 'dark',
+  lang: 'en',
+  toggleTheme: () => set((state) => ({ theme: state.theme === 'dark' ? 'light' : 'dark' }))
+}));
+```
+
+## The Result
+A Lighthouse score of 100/100 across Performance, Accessibility, and Best Practices, while still delivering a highly interactive 3D and animated experience.
