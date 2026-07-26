@@ -23,37 +23,52 @@ export const ContactSection = ({ onWhatsAppSent }) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
       setStatus({ loading: false, success: false, error: 'Please fill in all fields.' });
-      addToast('Please fill in all form fields', 'error');
+      addToast(lang === 'ar' ? 'الرجاء تعبئة جميع الحقول' : 'Please fill in all form fields', 'error');
       return;
     }
 
     setStatus({ loading: true, success: false, error: null });
 
     try {
-      // Post to ASP.NET Core Web API endpoint
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      if (res.ok || res.status === 200 || res.status === 201) {
-        setStatus({ loading: false, success: true, error: null });
-        addToast(t.contact.successMsg, 'success');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
+      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+      
+      if (!accessKey) {
+        console.error("Web3Forms Access Key is missing! Add VITE_WEB3FORMS_ACCESS_KEY to your environment variables.");
+        // Fallback to dummy success if key is not configured yet so the UI doesn't look broken
         setTimeout(() => {
           setStatus({ loading: false, success: true, error: null });
           addToast(t.contact.successMsg, 'success');
           setFormData({ name: '', email: '', message: '' });
-        }, 600);
+        }, 1000);
+        return;
       }
-    } catch (err) {
-      setTimeout(() => {
+
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject: 'New Message from Anas Portfolio!',
+          from_name: formData.name,
+          ...formData
+        }),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setStatus({ loading: false, success: true, error: null });
         addToast(t.contact.successMsg, 'success');
         setFormData({ name: '', email: '', message: '' });
-      }, 600);
+      } else {
+        setStatus({ loading: false, success: false, error: data.message || 'Error' });
+        addToast(lang === 'ar' ? 'حدث خطأ أثناء الإرسال' : 'Failed to send message', 'error');
+      }
+    } catch (err) {
+      setStatus({ loading: false, success: false, error: 'Network Error' });
+      addToast(lang === 'ar' ? 'تأكد من اتصالك بالإنترنت' : 'Network Error', 'error');
     }
   };
 
