@@ -7,15 +7,4 @@ export default defineConfig({
     { enforce: 'pre', ...mdx() },
     react()
   ],
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router-dom', 'zustand'],
-          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
-          'vendor-motion': ['framer-motion'],
-        }
-      }
-    }
-  }
 })
