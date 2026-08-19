@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { GraduationCap, MessageSquareHeart, Download, Sparkles, Terminal, CheckCircle2, Eye, Quote, ArrowRight } from 'lucide-react';
 import { CvModal } from './CvModal';
+import { GitHubActivity } from './GitHubActivity';
 
 export const AboutSection = () => {
   const { t, lang } = useLanguage();
@@ -52,14 +53,14 @@ export const AboutSection = () => {
 
   return (
     <>
-      <section id="about" style={{ backgroundColor: 'var(--bg-secondary)', transition: 'background-color 250ms ease' }}>
+      <section id="about" style={{ backgroundColor: 'transparent', transition: 'background-color 250ms ease' }}>
         <div className="container">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            style={{ textAlign: 'center', marginBottom: '64px' }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+            style={{ textAlign: 'center', marginBottom: '40px' }}
           >
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: 800, marginBottom: '12px' }}>
               {t.about.title}
@@ -69,15 +70,15 @@ export const AboutSection = () => {
             </p>
           </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', alignItems: 'stretch' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', alignItems: 'stretch' }}>
             {/* Left Column: Overview Box (Equal Height) */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
               className="glass-card"
-              style={{ padding: '36px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}
+              style={{ padding: '32px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}
             >
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px', color: 'var(--accent-blue)' }}>
@@ -250,6 +251,9 @@ export const AboutSection = () => {
               </div>
             </motion.div>
           </div>
+
+          {/* GitHub Live REST API Activity Widget */}
+          <GitHubActivity />
         </div>
       </section>
 

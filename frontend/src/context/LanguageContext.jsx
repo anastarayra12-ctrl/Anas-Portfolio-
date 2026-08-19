@@ -142,7 +142,37 @@ export const LanguageProvider = ({ children }) => {
   }, [lang]);
 
   const toggleLanguage = () => {
-    setLang(lang === 'en' ? 'ar' : 'en');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nextLang = lang === 'en' ? 'ar' : 'en';
+
+    const performToggle = () => {
+      document.documentElement.setAttribute('lang', nextLang);
+      document.body.setAttribute('dir', nextLang === 'ar' ? 'rtl' : 'ltr');
+      localStorage.setItem('anas_portfolio_lang', nextLang);
+      setLang(nextLang);
+    };
+
+    if (!prefersReducedMotion && document.startViewTransition) {
+      document.startViewTransition(() => {
+        performToggle();
+      });
+    } else if (!prefersReducedMotion) {
+      // Fallback for browsers without View Transitions API:
+      // Subtle opacity fade-out before direction switch to eliminate visual layout jumps
+      document.body.style.transition = 'opacity 150ms cubic-bezier(0.4, 0, 0.2, 1)';
+      document.body.style.opacity = '0.7';
+      setTimeout(() => {
+        performToggle();
+        setTimeout(() => {
+          document.body.style.opacity = '1';
+          setTimeout(() => {
+            document.body.style.transition = '';
+          }, 150);
+        }, 50);
+      }, 150);
+    } else {
+      performToggle();
+    }
   };
 
   const t = translations[lang] || translations.en;

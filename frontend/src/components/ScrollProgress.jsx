@@ -33,8 +33,8 @@ export const ScrollProgress = () => {
         style={{
           height: '100%',
           width: `${scrollProgress}%`,
-          backgroundColor: 'var(--accent-blue)',
-          boxShadow: '0 0 10px var(--accent-blue-glow)',
+          background: 'linear-gradient(90deg, #2563EB 0%, #38BDF8 50%, #06B6D4 100%)',
+          boxShadow: '0 0 14px rgba(56, 189, 248, 0.8), 0 0 6px rgba(37, 99, 235, 0.5)',
           transition: 'width 100ms ease-out',
         }}
       />

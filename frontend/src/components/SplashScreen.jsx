@@ -6,12 +6,13 @@ export const SplashScreen = ({ onComplete }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    // Total splash screen time
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(() => {
         if (onComplete) onComplete();
       }, 500); // Allow fade out animation to finish
-    }, 2200);
+    }, 2500); 
 
     return () => clearTimeout(timer);
   }, [onComplete]);
@@ -38,7 +39,7 @@ export const SplashScreen = ({ onComplete }) => {
           <motion.div
             initial={{ scale: 0.7, opacity: 0, filter: 'blur(15px)' }}
             animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
           >
             <AnasLogo size="xl" animated={true} showText={false} />
           </motion.div>
@@ -49,7 +50,7 @@ export const SplashScreen = ({ onComplete }) => {
             transition={{ delay: 0.8, duration: 0.8, ease: 'easeOut' }}
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '1.85rem',
+              fontSize: '2rem',
               fontWeight: 800,
               letterSpacing: '0.2em',
               textTransform: 'uppercase',
@@ -59,7 +60,8 @@ export const SplashScreen = ({ onComplete }) => {
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
               animation: 'shine 3s linear infinite',
-              textAlign: 'center'
+              textAlign: 'center',
+              marginBottom: '10px'
             }}
           >
             Anas Tarayra

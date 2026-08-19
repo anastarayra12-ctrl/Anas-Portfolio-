@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { Sparkles, Download, ArrowRight } from 'lucide-react';
+import { AnasLogo } from './AnasLogo';
+import { MagneticElement } from './MagneticElement';
+import { AvailabilityBadge } from './AvailabilityBadge';
+import { CountUpNumber } from './CountUpNumber';
 
 export const HomeSection = () => {
   const { t, lang } = useLanguage();
+  const shouldReduceMotion = useReducedMotion();
 
   const rolesList = lang === 'ar' ? [
     'Full-Stack Developer (.NET & Angular)',
@@ -51,25 +56,23 @@ export const HomeSection = () => {
   }, [roleText, isDeletingRole, roleIndex, lang]);
 
   return (
-    <section id="home" style={{ minHeight: '90vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', justifyContent: 'center' }}>
-      {/* Ambient Glow */}
+    <section id="home" style={{ display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', justifyContent: 'center', paddingTop: '100px', paddingBottom: '60px' }}>
+      {/* Ambient Glows */}
       <div
         style={{
           position: 'absolute',
-          top: '10%',
+          top: '5%',
           right: '5%',
-          width: '500px',
-          height: '500px',
+          width: '450px',
+          height: '450px',
           borderRadius: '50%',
           background: 'radial-gradient(circle, var(--accent-blue-glow) 0%, transparent 70%)',
           pointerEvents: 'none',
-          filter: 'blur(60px)',
-          opacity: 0.6,
+          filter: 'blur(70px)',
+          opacity: 0.5,
           zIndex: 0,
         }}
       />
-
-
 
       <div className="container" style={{ width: '100%', position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center' }}>
         <div
@@ -78,48 +81,60 @@ export const HomeSection = () => {
             flexDirection: 'column',
             alignItems: 'center',
             textAlign: 'center',
-            maxWidth: '800px',
+            maxWidth: '850px',
           }}
         >
+          {/* Main Hero Elements Above the Fold */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
           >
-            {/* Status Badge */}
-            <div className="status-badge" style={{ marginBottom: '24px' }}>
-              <span className="pulse-dot" />
-              <span>{t.hero.status}</span>
+            {/* Availability Status Badge */}
+            <div style={{ marginBottom: '20px' }}>
+              <AvailabilityBadge status="available" />
             </div>
 
             {/* Main Name */}
             <h1
               style={{
-                fontSize: 'clamp(2.8rem, 6vw, 4.5rem)',
+                fontSize: 'clamp(2.6rem, 5.8vw, 4.6rem)',
                 fontWeight: 800,
                 lineHeight: 1.15,
-                marginBottom: '20px',
+                marginBottom: '16px',
+                background: 'linear-gradient(135deg, var(--text-primary) 30%, var(--accent-blue) 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0px',
+                flexWrap: 'wrap',
               }}
             >
-              {lang === 'ar' ? 'أنس الطرايرة' : 'Anas Al-Tarayrah'}
+              {lang === 'ar' ? (
+                'أنس الطرايرة'
+              ) : (
+                <AnasLogo inlineWord={true} />
+              )}
             </h1>
 
             {/* Typewriter Role Title */}
             <div
               style={{
-                fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
+                fontSize: 'clamp(1.1rem, 2.2vw, 1.5rem)',
                 fontWeight: 700,
                 color: 'var(--accent-blue)',
-                marginBottom: '24px',
+                marginBottom: '20px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '10px',
-                minHeight: '2.5rem',
+                gap: '8px',
+                minHeight: '2.4rem',
               }}
             >
-              <Sparkles size={24} style={{ flexShrink: 0, color: '#38BDF8' }} />
+              <Sparkles size={22} style={{ flexShrink: 0, color: '#38BDF8' }} />
               <span style={{ fontFamily: 'var(--font-heading)' }}>{roleText}</span>
               <span
                 style={{
@@ -134,40 +149,77 @@ export const HomeSection = () => {
               />
             </div>
 
-            {/* Intro Paragraph */}
+            {/* Concise Intro Paragraph */}
             <p
+              className="line-clamp-2"
               style={{
-                fontSize: '1.15rem',
+                fontSize: '1.1rem',
                 color: 'var(--text-secondary)',
-                maxWidth: '640px',
-                marginBottom: '40px',
-                lineHeight: 1.7,
+                maxWidth: '660px',
+                marginBottom: '28px',
+                lineHeight: 1.6,
               }}
             >
               {t.hero.intro}
             </p>
 
-              {/* Home CTAs */}
-              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {/* Clear Primary & Secondary CTAs Above Fold */}
+            <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '36px' }}>
+              <MagneticElement strength={0.3}>
                 <a
                   href="/Anas_AL-Tarayra-CV.pdf?v=2"
                   download="Anas_AL-Tarayra-CV.pdf"
                   className="btn-primary"
                   style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', fontSize: '1rem', textDecoration: 'none' }}
                 >
-                  <Download size={20} />
+                  <Download size={18} />
                   <span>{lang === 'ar' ? 'تحميل السيرة الذاتية (CV)' : 'Download CV'}</span>
                 </a>
+              </MagneticElement>
 
+              <MagneticElement strength={0.3}>
                 <a
-                  href="#skills"
+                  href="#projects"
                   className="btn-outline"
                   style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', fontSize: '1rem', textDecoration: 'none' }}
                 >
-                  <span>{lang === 'ar' ? 'تصفح مهاراتي ودوراتي' : 'View Skills & Courses'}</span>
-                  <ArrowRight size={20} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
+                  <span>{lang === 'ar' ? 'استكشف مشاريعي' : 'Explore Projects'}</span>
+                  <ArrowRight size={18} style={{ transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
                 </a>
-              </div>
+              </MagneticElement>
+            </div>
+          </motion.div>
+
+          {/* Tech Chips Horizontal Scroll Container (Animates in via whileInView) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            style={{ width: '100%', marginBottom: '32px' }}
+          >
+            <div
+              className="no-scrollbar"
+              style={{
+                display: 'flex',
+                gap: '10px',
+                overflowX: 'auto',
+                scrollSnapType: 'x mandatory',
+                padding: '4px 8px',
+                maxWidth: '100%',
+                justifyContent: 'center',
+              }}
+            >
+              {['.NET 9 & C#', 'Angular', 'TypeScript', 'SQL Server', 'Figma UI/UX', 'Vibe Coding', 'REST APIs', 'Photoshop'].map((tech) => (
+                <span
+                  key={tech}
+                  className="tech-pill"
+                  style={{ scrollSnapAlign: 'start', flexShrink: 0, minHeight: '36px' }}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
@@ -181,4 +233,3 @@ export const HomeSection = () => {
     </section>
   );
 };
-
