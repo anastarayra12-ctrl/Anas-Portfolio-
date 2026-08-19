@@ -435,7 +435,7 @@ section {
 
 .contact-dual-grid {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
+  grid-template-columns: 1fr 1.25fr;
   gap: 28px;
   align-items: start;
 }
@@ -443,7 +443,8 @@ section {
 @media (max-width: 900px) {
   .contact-grid,
   .contact-dual-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
   }
 }
 
@@ -460,6 +461,7 @@ section {
   text-decoration: none;
   transition: all 250ms ease;
   cursor: pointer;
+  word-break: break-word;
 }
 
 .contact-quick-action:hover {
@@ -486,13 +488,27 @@ section {
   flex-direction: column;
   min-height: 350px;
   justify-content: space-between;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
   .chat-window {
-    padding: 24px 18px;
-    border-radius: 20px;
-    width: 96%;
+    padding: 16px 14px !important;
+    border-radius: 18px !important;
+    width: 100% !important;
+    min-height: auto !important;
+    box-sizing: border-box !important;
+  }
+  .chat-bubble-bot,
+  .chat-bubble-user {
+    max-width: 94% !important;
+    font-size: 0.9rem !important;
+    padding: 10px 14px !important;
+    border-radius: 14px !important;
+  }
+  .chat-underline-input {
+    font-size: 0.95rem !important;
+    padding: 8px 2px !important;
   }
 }
 

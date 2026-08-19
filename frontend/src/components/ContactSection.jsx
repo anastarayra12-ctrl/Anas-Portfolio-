@@ -257,7 +257,7 @@ export const ContactSection = ({ onWhatsAppSent }) => {
                     <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: 600, display: 'block' }}>
                       {isRTL ? 'البريد الإلكتروني (Email)' : 'Email Address'}
                     </span>
-                    <span style={{ fontSize: '0.92rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                    <span style={{ fontSize: 'clamp(0.78rem, 3.2vw, 0.92rem)', fontWeight: 800, color: 'var(--text-primary)', wordBreak: 'break-all' }}>
                       {emailAddress}
                     </span>
                   </div>
