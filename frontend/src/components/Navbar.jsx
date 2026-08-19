@@ -112,7 +112,7 @@ export const Navbar = ({ currentPage, onNavigate }) => {
             </a>
           </div>
 
-          <div style={{ width: '1px', height: '24px', backgroundColor: 'var(--border-color)' }}></div>
+          <div className="desktop-nav" style={{ width: '1px', height: '24px', backgroundColor: 'var(--border-color)' }}></div>
 
           {/* Desktop Nav Links */}
           {currentPage === 'home' && (
