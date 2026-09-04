@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { Sparkles, Download, ArrowRight } from 'lucide-react';
@@ -10,6 +10,7 @@ import { CountUpNumber } from './CountUpNumber';
 export const HomeSection = () => {
   const { t, lang } = useLanguage();
   const shouldReduceMotion = useReducedMotion();
+  const glowRef = useRef(null);
 
   const rolesList = lang === 'ar' ? [
     'Full-Stack Developer (.NET & Angular)',
@@ -55,10 +56,30 @@ export const HomeSection = () => {
     return () => clearTimeout(timer);
   }, [roleText, isDeletingRole, roleIndex, lang]);
 
+  useEffect(() => {
+    // Don't add on touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    
+    const handleMouseMove = (e) => {
+      if (!glowRef.current) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      const moveX = x * 30; // max ±15px
+      const moveY = y * 30;
+      glowRef.current.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    };
+    
+    const section = document.getElementById('home');
+    if (section) section.addEventListener('mousemove', handleMouseMove);
+    return () => { if (section) section.removeEventListener('mousemove', handleMouseMove); };
+  }, []);
+
   return (
     <section id="home" style={{ display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', justifyContent: 'center', paddingTop: '100px', paddingBottom: '60px' }}>
       {/* Ambient Glows */}
       <div
+        ref={glowRef}
         style={{
           position: 'absolute',
           top: '5%',
@@ -71,6 +92,8 @@ export const HomeSection = () => {
           filter: 'blur(70px)',
           opacity: 0.5,
           zIndex: 0,
+          transition: 'transform 0.1s ease-out',
+          willChange: 'transform'
         }}
       />
 
@@ -190,33 +213,39 @@ export const HomeSection = () => {
             </div>
           </motion.div>
 
-          {/* Tech Chips Horizontal Scroll Container (Animates in via whileInView) */}
+          {/* Tech Stack Pills — Glass Style, Equal Height, Responsive Wrap */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            style={{ width: '100%', marginBottom: '32px' }}
+            style={{ width: '100%', marginBottom: '40px' }}
           >
             <div
-              className="no-scrollbar"
               style={{
                 display: 'flex',
                 gap: '10px',
-                overflowX: 'auto',
-                scrollSnapType: 'x mandatory',
+                flexWrap: 'wrap',
                 padding: '4px 8px',
                 maxWidth: '100%',
                 justifyContent: 'center',
               }}
             >
-              {['.NET 9 & C#', 'Angular', 'TypeScript', 'SQL Server', 'Figma UI/UX', 'Vibe Coding', 'REST APIs', 'Photoshop'].map((tech) => (
+              {[
+                { label: '.NET 9 & C#' },
+                { label: 'Angular 17+' },
+                { label: 'TypeScript' },
+                { label: 'SQL Server' },
+                { label: 'Figma / UI·UX' },
+                { label: 'Vibe Coding' },
+                { label: 'REST APIs' },
+                { label: 'Photoshop' },
+              ].map((tech) => (
                 <span
-                  key={tech}
+                  key={tech.label}
                   className="tech-pill"
-                  style={{ scrollSnapAlign: 'start', flexShrink: 0, minHeight: '36px' }}
                 >
-                  {tech}
+                  {tech.label}
                 </span>
               ))}
             </div>

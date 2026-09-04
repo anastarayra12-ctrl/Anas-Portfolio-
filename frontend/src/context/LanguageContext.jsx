@@ -128,11 +128,21 @@ export const LanguageProvider = ({ children }) => {
   const { lang, setLang } = useAppStore();
 
   useEffect(() => {
-    // Initialize from local storage if available
+    // Check manual override in localStorage first
     const savedLang = localStorage.getItem('anas_portfolio_lang');
-    if (savedLang && savedLang !== lang) {
+    if (savedLang) {
       setLang(savedLang);
+      document.documentElement.setAttribute('lang', savedLang);
+      document.body.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+      return;
     }
+
+    // Auto-detect browser locale (if Arabic region -> 'ar', else 'en')
+    const browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+    const detected = browserLang.startsWith('ar') ? 'ar' : 'en';
+    setLang(detected);
+    document.documentElement.setAttribute('lang', detected);
+    document.body.setAttribute('dir', detected === 'ar' ? 'rtl' : 'ltr');
   }, []);
 
   useEffect(() => {

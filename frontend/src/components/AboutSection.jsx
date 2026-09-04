@@ -4,10 +4,13 @@ import { useLanguage } from '../context/LanguageContext';
 import { GraduationCap, MessageSquareHeart, Download, Sparkles, Terminal, CheckCircle2, Eye, Quote, ArrowRight } from 'lucide-react';
 import { CvModal } from './CvModal';
 import { GitHubActivity } from './GitHubActivity';
+import { CompareWidget } from './CompareWidget';
+import { ResumeBuilderModal } from './ResumeBuilderModal';
 
 export const AboutSection = () => {
   const { t, lang } = useLanguage();
   const [isCvModalOpen, setIsCvModalOpen] = useState(false);
+  const [isResumeBuilderOpen, setIsResumeBuilderOpen] = useState(false);
 
   const personalMessages = [
     'مهما تعبت بتعلّم شي جديد، تذكر إنه طلب العلم عبادة قبل ما يكون مهارة — "وَقُلْ رَبِّ زِدْنِي عِلْمًا" (طه: 114).',
@@ -70,7 +73,7 @@ export const AboutSection = () => {
             </p>
           </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', alignItems: 'stretch' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '28px', alignItems: 'stretch' }}>
             {/* Left Column: Overview Box (Equal Height) */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -78,7 +81,7 @@ export const AboutSection = () => {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
               className="glass-card"
-              style={{ padding: '32px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}
+              style={{ padding: '36px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}
             >
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px', color: 'var(--accent-blue)' }}>
@@ -101,26 +104,35 @@ export const AboutSection = () => {
               </div>
 
               {/* CV Action Buttons */}
-              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: 'auto' }}>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: 'auto' }}>
+                <button
+                  onClick={() => setIsResumeBuilderOpen(true)}
+                  className="btn-primary"
+                  style={{ flex: 1, justifyContent: 'center', minWidth: '160px' }}
+                >
+                  <Sparkles size={18} />
+                  <span>{lang === 'ar' ? 'سيرة ذاتية مخصصة' : 'Tailored CV Builder'}</span>
+                </button>
+
                 <a
                   href="/Anas_Al_Tarayrah_CV.html?v=1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary"
-                  style={{ flex: 1, justifyContent: 'center', textDecoration: 'none' }}
+                  className="btn-outline"
+                  style={{ flex: 1, justifyContent: 'center', textDecoration: 'none', minWidth: '140px' }}
                 >
                   <Eye size={18} />
-                  <span>{lang === 'ar' ? 'عرض السيرة الذاتية (Web)' : 'View Web CV'}</span>
+                  <span>{lang === 'ar' ? 'عرض الويب' : 'Web View'}</span>
                 </a>
 
                 <a
                   href="/Anas_AL-Tarayra-CV.pdf?v=2"
                   download="Anas_AL-Tarayra-CV.pdf"
                   className="btn-outline"
-                  style={{ flex: 1, justifyContent: 'center', textDecoration: 'none' }}
+                  style={{ flex: 1, justifyContent: 'center', textDecoration: 'none', minWidth: '140px' }}
                 >
                   <Download size={18} />
-                  <span>{lang === 'ar' ? 'تنزيل PDF' : 'Download PDF'}</span>
+                  <span>{lang === 'ar' ? 'تنزيل PDF' : 'PDF Download'}</span>
                 </a>
               </div>
             </motion.div>
@@ -157,15 +169,15 @@ export const AboutSection = () => {
                     <h4 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0 }}>
                       {lang === 'ar' ? 'التعليم والأكاديميا (Education)' : 'Education & Degree'}
                     </h4>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Alzaytoonah University of Jordan</span>
+                    <span style={{ fontSize: 'var(--text-caption)', color: 'var(--text-secondary)', fontWeight: 500 }}>Alzaytoonah University of Jordan</span>
                   </div>
                 </div>
 
                 <div
                   style={{
                     backgroundColor: 'var(--bg-primary)',
-                    padding: '16px 18px',
-                    borderRadius: '12px',
+                    padding: '18px 20px',
+                    borderRadius: '14px',
                     border: '1px solid var(--border-color)',
                   }}
                 >
@@ -175,7 +187,7 @@ export const AboutSection = () => {
                       {t.about.university}
                     </h5>
                   </div>
-                  <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.65 }}>
                     {lang === 'ar'
                       ? 'طالب هندسة برمجيات في جامعة الزيتونة الأردنية. أدرس حالياً في السنة الثالثة، ومن المتوقع تخرجي في عام 2028.'
                       : 'Software Engineering Student at Alzaytoonah University of Jordan. Currently in my third year, with an expected graduation in 2028.'}
@@ -226,7 +238,17 @@ export const AboutSection = () => {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3 }}
-                    style={{ fontSize: '0.92rem', color: 'var(--text-primary)', margin: 0, lineHeight: 1.6, fontStyle: 'italic', fontWeight: 500, minHeight: '80px', direction: 'rtl', textAlign: 'right' }}
+                    style={{
+                      fontSize: '0.94rem',
+                      color: 'var(--text-primary)',
+                      margin: 0,
+                      lineHeight: 1.75,
+                      fontWeight: 500,
+                      minHeight: '80px',
+                      direction: 'rtl',
+                      textAlign: 'right',
+                      fontFamily: "'Changa', 'Lalezar', sans-serif",
+                    }}
                   >
                     {personalMessages[messageIndex]}
                   </motion.p>
@@ -254,8 +276,14 @@ export const AboutSection = () => {
 
           {/* GitHub Live REST API Activity Widget */}
           <GitHubActivity />
+
+          {/* Compare Me Widget */}
+          <CompareWidget />
         </div>
       </section>
+
+      {/* Dynamic Targeted Resume Builder Modal */}
+      <ResumeBuilderModal isOpen={isResumeBuilderOpen} onClose={() => setIsResumeBuilderOpen(false)} />
 
       {/* Interactive Live CV Preview Modal */}
       <CvModal isOpen={isCvModalOpen} onClose={() => setIsCvModalOpen(false)} />

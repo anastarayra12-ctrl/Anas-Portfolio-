@@ -87,17 +87,47 @@
   --space-md: 24px;
   --space-lg: 32px;
   --space-xl: 48px;
+  --space-2xl: 80px;
+  --space-3xl: 120px;
 
-  /* Category Color Tokens */
+  /* Gap Scale */
+  --gap-xs: 8px;
+  --gap-sm: 12px;
+  --gap-md: 16px;
+  --gap-lg: 24px;
+  --gap-xl: 32px;
+
+  /* Semantic Category Color Tokens */
+  --cat-work: #3B82F6;        /* Work Experience → blue */
+  --cat-work-glow: rgba(59, 130, 246, 0.25);
+  --cat-education: #8B5CF6;   /* Education → purple */
+  --cat-education-glow: rgba(139, 92, 246, 0.25);
+  --cat-cert: #10B981;        /* Certifications → teal/green */
+  --cat-cert-glow: rgba(16, 185, 129, 0.25);
+  --cat-ai: #7C3AED;          /* AI-related → violet */
+  --cat-ai-glow: rgba(124, 58, 237, 0.25);
+  --cat-design: #EC4899;      /* Design → pink */
+  --cat-design-glow: rgba(236, 72, 153, 0.25);
+
+  /* Legacy Category Tokens (kept for compatibility) */
   --cat-fullstack: #3B82F6;
   --cat-uiux: #06B6D4;
   --cat-general: #8c63eb;
   --cat-graphic: #EC4899;
 
+  /* Typography Scale */
+  --text-h1: clamp(2.5rem, 5.8vw, 3.5rem);
+  --text-h2: clamp(1.75rem, 3.5vw, 2rem);
+  --text-h3: clamp(1.1rem, 2vw, 1.25rem);
+  --text-body: 1rem;
+  --text-caption: 0.8125rem; /* 13px minimum */
+
   /* App Theme (Dark Mode Default) */
   --bg-primary: var(--brand-black);
   --bg-secondary: #121318;
   --bg-tertiary: #1E2028;
+  --surface: rgba(24, 24, 27, 0.8);
+  --surface-2: rgba(30, 32, 40, 0.9);
   --accent-blue: #3B82F6;
   --accent-blue-glow: rgba(59, 130, 246, 0.35);
   --accent-cyan: #06B6D4;
@@ -105,7 +135,9 @@
   --accent-green: #10B981;
   --text-primary: var(--brand-off);
   --text-secondary: #A1A1AA;
+  --text-muted: #6B7280;
   --border-color: rgba(255, 255, 255, 0.12);
+  --border-subtle: rgba(255, 255, 255, 0.06);
   --navbar-bg: rgba(11, 11, 11, 0.85);
   --card-bg: rgba(24, 24, 27, 0.65);
   --code-bg: #000000;
@@ -113,21 +145,33 @@
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'Space Grotesk', sans-serif;
   --font-mono: 'Space Grotesk', monospace;
+  --font-arabic: 'Changa', 'Lalezar', sans-serif;
 
   --transition-speed: 250ms;
+  --transition-fast: 150ms;
+  --transition-slow: 400ms;
+
+  /* Button Standard Size */
+  --btn-height: 48px;
+  --btn-padding: 14px 28px;
+  --btn-radius: 14px;
 }
 
 [data-theme='light'] {
   --bg-primary: var(--brand-off);
   --bg-secondary: #FFFFFF;
   --bg-tertiary: var(--brand-line);
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-2: #F0EEE8;
   --accent-blue: #2563EB;
   --accent-blue-glow: rgba(37, 99, 235, 0.2);
   --accent-cyan: #0891B2;
   --accent-purple: #7C3AED;
   --text-primary: var(--brand-black);
   --text-secondary: #4B5563;
+  --text-muted: #9CA3AF;
   --border-color: var(--brand-line);
+  --border-subtle: rgba(0, 0, 0, 0.06);
   --navbar-bg: rgba(245, 244, 241, 0.85);
   --card-bg: #FFFFFF;
   --code-bg: #EAE8E2;
@@ -193,15 +237,22 @@ pre,
 
 /* Fixed Navbar Clearance & Section Padding Rules */
 section {
-  padding-top: 80px;
-  padding-bottom: 60px;
+  padding-top: 100px;
+  padding-bottom: 100px;
   position: relative;
+}
+
+@media (max-width: 1024px) {
+  section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
 }
 
 @media (max-width: 768px) {
   section {
-    padding-top: 50px !important;
-    padding-bottom: 40px !important;
+    padding-top: 60px !important;
+    padding-bottom: 56px !important;
     min-height: auto !important;
   }
 }
@@ -388,25 +439,39 @@ section {
   box-shadow: 0 16px 40px -10px var(--accent-blue-glow);
 }
 
-/* Tech Pill Badges */
+/* Tech Pill Badges — Glass Style, Equal Height */
 .tech-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
+  padding: 8px 16px;
+  min-height: 38px;
   border-radius: 100px;
-  background: rgba(59, 130, 246, 0.08);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  color: var(--accent-blue);
-  font-size: 0.825rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  font-size: 0.875rem;
   font-weight: 600;
-  transition: all 0.25s ease;
+  transition: border-color 200ms ease, transform 200ms ease, background 200ms ease;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
 }
 
 .tech-pill:hover {
-  background: rgba(59, 130, 246, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.03) translateY(-1px);
+}
+
+[data-theme='light'] .tech-pill {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: var(--text-primary);
+}
+
+[data-theme='light'] .tech-pill:hover {
+  background: rgba(37, 99, 235, 0.08);
   border-color: var(--accent-blue);
-  transform: translateY(-1px);
 }
 
 /* Availability Badge Pulsing Animation */
@@ -582,25 +647,29 @@ section {
   animation-delay: 0.4s;
 }
 
-/* Buttons System with Smooth Hover Sweep Animation */
+/* Buttons System — Standardized Height, Padding, Border-radius */
 .btn-primary {
   position: relative;
   background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
   color: #FFFFFF;
   font-family: var(--font-heading);
+  font-size: 0.9375rem;
   font-weight: 600;
-  padding: 14px 28px;
-  border-radius: 14px;
+  min-height: var(--btn-height);
+  padding: var(--btn-padding);
+  border-radius: var(--btn-radius);
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
   text-decoration: none;
   box-shadow: 0 6px 20px var(--accent-blue-glow);
   overflow: hidden;
   z-index: 1;
+  letter-spacing: -0.01em;
 }
 
 .btn-primary::before {
@@ -610,7 +679,7 @@ section {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
   transition: left 450ms ease;
   z-index: -1;
 }
@@ -621,7 +690,7 @@ section {
 
 .btn-primary:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 10px 28px var(--accent-blue-glow);
+  box-shadow: 0 12px 32px var(--accent-blue-glow);
 }
 
 .btn-outline {
@@ -629,23 +698,31 @@ section {
   background-color: rgba(255, 255, 255, 0.03);
   color: var(--text-primary);
   font-family: var(--font-heading);
+  font-size: 0.9375rem;
   font-weight: 600;
-  padding: 14px 28px;
-  border-radius: 14px;
+  min-height: var(--btn-height);
+  padding: var(--btn-padding);
+  border-radius: var(--btn-radius);
   border: 1px solid var(--border-color);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  transition: transform var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease;
+  transition: transform var(--transition-speed) ease,
+    border-color var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease,
+    background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
   text-decoration: none;
+  letter-spacing: -0.01em;
 }
 
 .btn-outline:hover {
   border-color: var(--accent-blue);
   color: var(--accent-blue);
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 0 20px var(--accent-blue-glow);
+  box-shadow: 0 0 24px var(--accent-blue-glow);
   background-color: rgba(59, 130, 246, 0.08);
 }
 
@@ -708,10 +785,11 @@ section {
 .skill-bar-fill {
   height: 100%;
   border-radius: 100px;
-  background: linear-gradient(90deg, #2563EB 0%, #06B6D4 100%);
-  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(90deg, #2563EB 0%, #06B6D4 60%, #8B5CF6 100%);
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  width: 0%; /* starts at 0, animated via JS */
 }
 
 .skill-bar-fill::after {
@@ -721,18 +799,72 @@ section {
   left: 0;
   bottom: 0;
   right: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  animation: shimmerBar 2.5s infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  animation: shimmerBar 2s infinite;
 }
 
 @keyframes shimmerBar {
-  0% {
-    transform: translateX(-100%);
-  }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
 
-  100% {
-    transform: translateX(100%);
-  }
+/* Timeline Gradient Line */
+.timeline-line {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--accent-blue) 0%,
+    var(--accent-purple) 40%,
+    var(--border-color) 100%
+  );
+  border-radius: 2px;
+  z-index: 0;
+}
+
+/* Timeline Filter Tab Active Glow */
+.filter-tab-active {
+  background: var(--accent-blue) !important;
+  border-color: var(--accent-blue) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px var(--accent-blue-glow) !important;
+}
+
+.filter-tab-inactive {
+  background: transparent !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Project Arrow Button Pulse */
+@keyframes arrowPulse {
+  0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 0 0 rgba(255,255,255,0.2); }
+  50% { box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 0 6px rgba(255,255,255,0); }
+}
+
+.project-arrow-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: transform 250ms ease, box-shadow 250ms ease;
+  animation: arrowPulse 3s ease-in-out infinite;
+  cursor: pointer;
+  border: none;
+  flex-shrink: 0;
+}
+
+.project-arrow-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  animation: none;
 }
 
 /* Smooth Theme & View Transitions System */
@@ -800,8 +932,8 @@ section {
   }
 
   section {
-    padding-top: 100px !important;
-    padding-bottom: 50px !important;
+    padding-top: 72px !important;
+    padding-bottom: 64px !important;
     overflow-x: hidden !important;
   }
 

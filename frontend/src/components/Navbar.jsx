@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import { AnasLogo } from './AnasLogo';
 import { AmmanClock } from './AmmanClock';
 import { AvailabilityBadge } from './AvailabilityBadge';
+import { AmbientAudioPlayer } from './AmbientAudioPlayer';
 import { Sun, Moon, Globe, Menu, X, ArrowUp, Zap } from 'lucide-react';
 import useAppStore from '../store/useAppStore';
 
@@ -181,6 +182,11 @@ export const Navbar = ({ currentPage, onNavigate }) => {
               <Zap size={14} style={{ color: '#38BDF8' }} />
               <span>{lang === 'ar' ? 'Ctrl+K' : 'Ctrl+K'}</span>
             </button>
+
+            {/* Ambient Audio Player */}
+            <div className="hide-on-mobile">
+              <AmbientAudioPlayer />
+            </div>
 
             {/* Amman Time */}
             <div className="desktop-clock" style={{ padding: '0 12px', opacity: 0.8, fontSize: '0.85rem' }}>

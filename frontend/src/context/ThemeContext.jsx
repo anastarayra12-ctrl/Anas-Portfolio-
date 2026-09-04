@@ -7,11 +7,10 @@ export const ThemeProvider = ({ children }) => {
   const { theme, toggleTheme: storeToggleTheme, setTheme } = useAppStore();
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('anas_portfolio_theme');
-    if (savedTheme && savedTheme !== theme) {
-      setTheme(savedTheme);
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    }
+    // Always reset to dark mode on every page load/refresh
+    setTheme('dark');
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('anas_portfolio_theme', 'dark');
   }, []);
 
   useEffect(() => {

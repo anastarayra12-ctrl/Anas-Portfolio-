@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { Briefcase, GraduationCap, Award, Calendar, Sparkles } from 'lucide-react';
 
@@ -8,6 +8,16 @@ export const ExperienceTimeline = () => {
   const [filter, setFilter] = useState('all');
   const shouldReduceMotion = useReducedMotion();
   const isRTL = lang === 'ar';
+
+  const timelineContainerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineContainerRef,
+    offset: ["start 80%", "end 20%"]
+  });
+  const lineHeight = useSpring(useTransform(scrollYProgress, [0, 1], ['0%', '100%']), {
+    stiffness: 80,
+    damping: 25,
+  });
 
   const filterTabs = [
     { id: 'all', label: lang === 'ar' ? 'الكل' : 'All' },
@@ -111,23 +121,23 @@ export const ExperienceTimeline = () => {
           </p>
         </motion.div>
 
-        {/* Filter Tabs with layout animation */}
+        {/* Filter Tabs — Active glow, inactive muted */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '48px' }}>
           {filterTabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setFilter(tab.id)}
+              className={filter === tab.id ? 'filter-tab-active' : 'filter-tab-inactive'}
               style={{
-                padding: '8px 20px',
+                padding: '10px 22px',
                 borderRadius: '100px',
-                fontSize: '0.88rem',
+                fontSize: '0.875rem',
                 fontWeight: 700,
-                border: filter === tab.id ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
-                backgroundColor: filter === tab.id ? 'var(--accent-blue)' : 'var(--bg-secondary)',
-                color: filter === tab.id ? '#FFFFFF' : 'var(--text-primary)',
+                border: '1px solid',
                 cursor: 'pointer',
-                transition: 'all 200ms ease',
+                transition: 'all 180ms ease',
                 minHeight: '44px',
+                fontFamily: 'var(--font-heading)',
               }}
             >
               {tab.label}
@@ -136,9 +146,9 @@ export const ExperienceTimeline = () => {
         </div>
 
         {/* Vertical Timeline Wrapper */}
-        <div style={{ position: 'relative', paddingLeft: isRTL ? 0 : '24px', paddingRight: isRTL ? '24px' : 0 }}>
+        <div ref={timelineContainerRef} style={{ position: 'relative', paddingLeft: isRTL ? 0 : '24px', paddingRight: isRTL ? '24px' : 0 }}>
           
-          {/* Main Continuous Vertical Line */}
+          {/* Animated Timeline Line — draws itself as user scrolls */}
           <div
             style={{
               position: 'absolute',
@@ -146,11 +156,25 @@ export const ExperienceTimeline = () => {
               bottom: '10px',
               right: isRTL ? '11px' : 'auto',
               left: isRTL ? 'auto' : '11px',
-              width: '2px',
-              backgroundColor: 'var(--border-color)',
+              width: '3px',
+              background: 'var(--border-color)',
+              borderRadius: '2px',
               zIndex: 0,
+              overflow: 'hidden',
             }}
-          />
+          >
+            <motion.div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: lineHeight,
+                background: 'linear-gradient(to bottom, var(--accent-blue) 0%, var(--accent-purple) 50%, var(--border-color) 100%)',
+                borderRadius: '2px',
+              }}
+            />
+          </div>
 
           {/* Milestones List */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
@@ -166,7 +190,7 @@ export const ExperienceTimeline = () => {
                   transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
                   style={{ position: 'relative', zIndex: 1 }}
                 >
-                  {/* Indicator Dot on the Line */}
+                  {/* Indicator Dot on the Line — category colored, glowing ring on current */}
                   <motion.div
                     whileInView={{ scale: [1, 1.3, 1] }}
                     viewport={{ once: true, amount: 0.5 }}
@@ -174,14 +198,18 @@ export const ExperienceTimeline = () => {
                     style={{
                       position: 'absolute',
                       top: '20px',
-                      right: isRTL ? '-19px' : 'auto',
-                      left: isRTL ? 'auto' : '-19px',
-                      width: '18px',
-                      height: '18px',
+                      right: isRTL ? '-21px' : 'auto',
+                      left: isRTL ? 'auto' : '-21px',
+                      width: item.id === 1 ? '22px' : '18px',
+                      height: item.id === 1 ? '22px' : '18px',
                       borderRadius: '50%',
-                      backgroundColor: 'var(--accent-blue)',
+                      backgroundColor: item.type === 'work' ? 'var(--cat-work)' : item.type === 'education' ? 'var(--cat-education)' : 'var(--cat-cert)',
                       border: '3px solid var(--bg-primary)',
-                      boxShadow: '0 0 12px var(--accent-blue-glow)',
+                      boxShadow: item.id === 1
+                        ? '0 0 0 4px rgba(59,130,246,0.3), 0 0 20px rgba(59,130,246,0.5)'
+                        : item.type === 'work' ? '0 0 12px var(--cat-work-glow)'
+                        : item.type === 'education' ? '0 0 12px var(--cat-education-glow)'
+                        : '0 0 12px var(--cat-cert-glow)',
                       zIndex: 2,
                     }}
                   />
@@ -200,18 +228,18 @@ export const ExperienceTimeline = () => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '12px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <div style={{
-                          width: '32px',
-                          height: '32px',
-                          borderRadius: '8px',
-                          backgroundColor: 'rgba(59, 130, 246, 0.12)',
-                          color: 'var(--accent-blue)',
+                          width: '34px',
+                          height: '34px',
+                          borderRadius: '10px',
+                          backgroundColor: item.type === 'work' ? 'rgba(59,130,246,0.14)' : item.type === 'education' ? 'rgba(139,92,246,0.14)' : 'rgba(16,185,129,0.14)',
+                          color: item.type === 'work' ? 'var(--cat-work)' : item.type === 'education' ? 'var(--cat-education)' : 'var(--cat-cert)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                         }}>
                           <Icon size={18} />
                         </div>
-                        <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--accent-blue)', textTransform: 'uppercase' }}>
+                        <span style={{ fontSize: 'var(--text-caption)', fontWeight: 700, color: item.type === 'work' ? 'var(--cat-work)' : item.type === 'education' ? 'var(--cat-education)' : 'var(--cat-cert)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                           {item.categoryLabel}
                         </span>
                       </div>

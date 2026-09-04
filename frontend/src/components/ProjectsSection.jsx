@@ -187,12 +187,12 @@ export const ProjectsSection = () => {
                       }}
                     />
 
-                    {/* Dark Overlay Gradient for text readability */}
+                    {/* Dark Overlay Gradient for text readability — WCAG AA compliant */}
                     <div
                       style={{
                         position: 'absolute',
                         inset: 0,
-                        background: 'linear-gradient(to top, rgba(9, 9, 11, 0.92) 0%, rgba(9, 9, 11, 0.55) 50%, rgba(9, 9, 11, 0.25) 100%)',
+                        background: 'linear-gradient(to top, rgba(6,6,10,0.97) 0%, rgba(6,6,10,0.72) 45%, rgba(6,6,10,0.3) 75%, transparent 100%)',
                         zIndex: 2,
                       }}
                     />
@@ -213,17 +213,7 @@ export const ProjectsSection = () => {
                       }}>
                         {project.category}
                       </div>
-                      <div style={{
-                        width: '44px',
-                        height: '44px',
-                        borderRadius: '50%',
-                        backgroundColor: '#FFFFFF',
-                        color: '#000000',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                      }}>
+                      <div className="project-arrow-btn">
                         <ArrowUpRight size={22} />
                       </div>
                     </div>
@@ -233,7 +223,7 @@ export const ProjectsSection = () => {
                       <h3 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 800, color: '#FFFFFF', marginBottom: '12px', lineHeight: 1.2 }}>
                         {project.title}
                       </h3>
-                      <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '1.05rem', maxWidth: '640px', lineHeight: 1.6 }}>
+                      <p style={{ color: 'rgba(255, 255, 255, 0.95)', fontSize: '1.05rem', maxWidth: '640px', lineHeight: 1.65, fontWeight: 400 }}>
                         {project.description}
                       </p>
                     </div>

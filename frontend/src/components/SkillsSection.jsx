@@ -1,8 +1,141 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { CheckCircle, ShieldCheck, Globe, Loader2, Sparkles, Award, Tag } from 'lucide-react';
+import { CheckCircle, ShieldCheck, Globe, Loader2, Sparkles, Award, Tag, Code2 } from 'lucide-react';
 import { MagneticElement } from './MagneticElement';
+
+const SkillBarsGrid = () => {
+  const [animated, setAnimated] = useState(false);
+  const ref = useRef(null);
+
+  // Skill endorsements state
+  const [endorsements, setEndorsements] = useState(() => {
+    const saved = localStorage.getItem('anas_skill_endorsements');
+    return saved ? JSON.parse(saved) : { 0: 14, 1: 22, 2: 18, 3: 31, 4: 12, 5: 15 };
+  });
+  const [endorsedSet, setEndorsedSet] = useState(() => {
+    const saved = localStorage.getItem('anas_endorsed_keys');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const handleEndorse = (idx) => {
+    if (endorsedSet.includes(idx)) return;
+    const nextCount = (endorsements[idx] || 0) + 1;
+    const newEndorsements = { ...endorsements, [idx]: nextCount };
+    const newSet = [...endorsedSet, idx];
+    setEndorsements(newEndorsements);
+    setEndorsedSet(newSet);
+    localStorage.setItem('anas_skill_endorsements', JSON.stringify(newEndorsements));
+    localStorage.setItem('anas_endorsed_keys', JSON.stringify(newSet));
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setAnimated(true); },
+      { threshold: 0.2 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const skills = [
+    { skill: '.NET 9 & C# Architecture', level: 92, codeLink: 'https://github.com/anastarayra12' },
+    { skill: 'UI/UX Design & Figma', level: 95, codeLink: 'https://github.com/anastarayra12' },
+    { skill: 'Angular & TypeScript', level: 88, codeLink: 'https://github.com/anastarayra12' },
+    { skill: 'Vibe Coding & AI Prompting', level: 96, codeLink: 'https://github.com/anastarayra12' },
+    { skill: 'SQL Server & Databases', level: 85, codeLink: 'https://github.com/anastarayra12' },
+    { skill: 'Graphic Design & Photoshop', level: 87, codeLink: 'https://github.com/anastarayra12' },
+  ];
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+        gap: 'var(--space-sm)',
+        maxWidth: '900px',
+        margin: '0 auto var(--space-lg) auto',
+        textAlign: 'left',
+      }}
+    >
+      {skills.map((item, idx) => {
+        const isEndorsed = endorsedSet.includes(idx);
+        const count = endorsements[idx] || 0;
+
+        return (
+          <div
+            key={idx}
+            style={{
+              backgroundColor: 'var(--bg-secondary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '16px',
+              padding: '18px 20px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--text-primary)' }}>{item.skill}</span>
+                <a
+                  href={item.codeLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="View Source Code"
+                  style={{ color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', transition: 'color 150ms' }}
+                  onMouseOver={(e) => e.currentTarget.style.color = 'var(--accent-blue)'}
+                  onMouseOut={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
+                >
+                  <Code2 size={13} />
+                </a>
+              </div>
+              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-blue)' }}>{item.level}%</span>
+            </div>
+
+            <div style={{ width: '100%', height: '8px', backgroundColor: 'var(--bg-tertiary)', borderRadius: '100px', overflow: 'hidden', marginBottom: '10px' }}>
+              <div
+                className="skill-bar-fill"
+                style={{
+                  width: animated ? `${item.level}%` : '0%',
+                  transitionDelay: `${idx * 80}ms`,
+                }}
+              />
+            </div>
+
+            {/* Skill Endorsement Button */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <button
+                onClick={() => handleEndorse(idx)}
+                disabled={isEndorsed}
+                style={{
+                  background: isEndorsed ? 'rgba(16, 185, 129, 0.12)' : 'rgba(255, 255, 255, 0.04)',
+                  border: isEndorsed ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border-color)',
+                  color: isEndorsed ? 'var(--accent-green)' : 'var(--text-secondary)',
+                  borderRadius: '20px',
+                  padding: '3px 10px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  cursor: isEndorsed ? 'default' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  transition: 'all 200ms ease',
+                }}
+              >
+                <span>{isEndorsed ? '✓ Endorsed' : '+ Endorse'}</span>
+                <span style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '1px 6px', borderRadius: '100px', fontSize: '0.7rem' }}>
+                  {count}
+                </span>
+              </button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 export const SkillsSection = () => {
   const { t, lang } = useLanguage();
@@ -19,10 +152,10 @@ export const SkillsSection = () => {
 
   const getCategoryColor = (category) => {
     switch (category) {
-      case 'fullstack': return 'var(--cat-fullstack)';
-      case 'uiux': return 'var(--cat-uiux)';
-      case 'general': return 'var(--cat-general)';
-      case 'graphic': return 'var(--cat-graphic)';
+      case 'fullstack': return 'var(--cat-work)';     /* blue */
+      case 'uiux': return 'var(--cat-design)';        /* pink */
+      case 'general': return 'var(--cat-ai)';         /* violet */
+      case 'graphic': return 'var(--cat-design)';     /* pink */
       default: return 'var(--accent-blue)';
     }
   };
@@ -134,35 +267,8 @@ export const SkillsSection = () => {
               : 'Software Engineering student at Alzaytoonah University, Full-Stack (.NET & Angular) Developer, and UI/UX Designer.'}
           </p>
 
-          {/* Skill Mastery Levels Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--space-sm)', maxWidth: '900px', margin: '0 auto var(--space-lg) auto', textAlign: 'left' }}>
-            {[
-              { skill: '.NET 9 & C# Architecture', level: 92 },
-              { skill: 'UI/UX Design & Figma', level: 95 },
-              { skill: 'Angular & TypeScript', level: 88 },
-              { skill: 'Vibe Coding & AI Prompting', level: 96 },
-              { skill: 'SQL Server & Databases', level: 85 },
-              { skill: 'Graphic Design & Photoshop', level: 87 },
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                style={{
-                  backgroundColor: 'var(--bg-secondary)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '16px',
-                  padding: 'var(--space-sm) var(--space-md)',
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-primary)' }}>{item.skill}</span>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-blue)' }}>{item.level}%</span>
-                </div>
-                <div style={{ width: '100%', height: '7px', backgroundColor: 'var(--bg-tertiary)', borderRadius: '100px', overflow: 'hidden' }}>
-                  <div className="skill-bar-fill" style={{ width: `${item.level}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
+          {/* Skill Mastery Levels Grid — Animated on scroll */}
+          <SkillBarsGrid />
 
           {/* Category Color Legend Bar */}
           <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: 'var(--space-md)', padding: '12px 20px', borderRadius: '100px', backgroundColor: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--border-color)', width: 'max-content', margin: '0 auto var(--space-md) auto' }}>
@@ -175,29 +281,29 @@ export const SkillsSection = () => {
           </div>
         </motion.div>
 
-        {/* Filter Tabs */}
+        {/* Filter Tabs — Active glow, inactive muted */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: 'var(--space-lg)' }}>
           {filterTabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveFilter(tab.id)}
+              className={activeFilter === tab.id ? 'filter-tab-active' : 'filter-tab-inactive'}
               style={{
                 padding: '10px 22px',
-                borderRadius: '30px',
-                fontSize: '0.88rem',
+                borderRadius: '100px',
+                fontSize: '0.875rem',
                 fontWeight: 700,
-                border: activeFilter === tab.id ? '1px solid var(--accent-blue)' : '1px solid var(--border-color)',
-                backgroundColor: activeFilter === tab.id ? 'var(--accent-blue)' : 'var(--bg-secondary)',
-                color: activeFilter === tab.id ? '#FFFFFF' : 'var(--text-primary)',
+                border: '1px solid',
                 cursor: 'pointer',
-                transition: 'all 200ms ease',
+                transition: 'all 180ms ease',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
                 minHeight: '44px',
+                fontFamily: 'var(--font-heading)',
               }}
             >
-              <Award size={15} style={{ opacity: activeFilter === tab.id ? 1 : 0.6 }} />
+              <Award size={15} />
               <span>{tab.label}</span>
             </button>
           ))}
