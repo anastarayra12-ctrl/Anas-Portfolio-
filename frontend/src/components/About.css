@@ -1,0 +1,149 @@
+.about__grid { display: grid; gap: clamp(2.5rem, 6vw, 4rem); }
+@media (min-width: 64rem) {
+  .about__grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(3rem, 7vw, 7rem); align-items: start; }
+}
+
+/* ---------- Story ---------- */
+.about__story { display: grid; gap: var(--s-5); max-width: 40rem; }
+.about__lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.375rem);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: var(--s-3);
+}
+:root[lang='ar'] .about__lead { font-family: var(--font-sans); font-weight: 600; letter-spacing: 0; line-height: 1.5; }
+.about__body { color: var(--text-2); font-size: var(--fs-md); }
+.about__quote {
+  display: flex;
+  gap: var(--s-4);
+  align-items: baseline;
+  margin: var(--s-4) 0 0;
+  padding: var(--s-5) 0 0;
+  border-top: var(--hairline) solid var(--line);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* ---------- Lens ---------- */
+.lens {
+  position: relative;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--bg-raised);
+}
+.lens__label {
+  margin-bottom: var(--s-4);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.lens__tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--bg);
+}
+.lens__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  border-radius: var(--r-sm);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-3);
+  transition: color var(--dur-fast);
+}
+.lens__tab > :not(.lens__thumb) { position: relative; }
+.lens__tab:hover,
+.lens__tab.is-active { color: var(--text); }
+.lens__tab.is-active svg { color: var(--accent); }
+.lens__thumb {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--surface-hover);
+  box-shadow: 0 0 0 1px var(--line-strong);
+}
+
+.lens__panel { min-height: 17rem; padding-top: var(--s-8); border-radius: var(--r-sm); }
+.lens__question {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+:root[lang='ar'] .lens__question { font-weight: 400; letter-spacing: 0; line-height: 1.35; }
+.lens__points { display: grid; gap: var(--s-3); margin-top: var(--s-6); }
+.lens__points li {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr;
+  align-items: baseline;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  line-height: 1.55;
+  padding-bottom: var(--s-3);
+  border-bottom: var(--hairline) solid var(--line);
+}
+.lens__points li:last-child { border-bottom: 0; }
+.lens__num { font-family: var(--font-mono); font-size: var(--fs-2xs); color: var(--accent); }
+
+/* Meter: engineering ←◆→ design; the diamond slides to show the lens */
+.lens__meter {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-6);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.lens__track { position: relative; height: 1px; background: var(--line-strong); }
+.lens__fill {
+  position: absolute;
+  top: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 500ms var(--ease-out);
+}
+.lens__fill--a { inset-inline-start: 0; }
+.lens__fill--b { inset-inline-end: 0; }
+.lens__dot {
+  position: absolute;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: -0.275rem;
+  margin-inline-start: -0.275rem;
+  background: var(--spark);
+  transform: rotate(45deg) scaleY(1.15);
+  transition: inset-inline-start 500ms var(--ease-out);
+}
+.lens__meter--engineer .lens__dot { inset-inline-start: 0%; }
+.lens__meter--designer .lens__dot { inset-inline-start: 100%; }
+.lens__meter--product .lens__dot { inset-inline-start: 50%; }
+.lens__meter--engineer .lens__fill--a { width: 0; }
+.lens__meter--engineer .lens__fill--b { width: 0; }
+.lens__meter--designer .lens__fill--a,
+.lens__meter--designer .lens__fill--b { width: 0; }
+.lens__meter--product .lens__fill--a,
+.lens__meter--product .lens__fill--b { width: 50%; }
+.lens__meter--engineer .lens__side:first-child,
+.lens__meter--designer .lens__side:last-child,
+.lens__meter--product .lens__side { color: var(--text); }

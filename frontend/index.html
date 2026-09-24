@@ -1,14 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Anas Tarayra — Full-Stack Developer & UI/UX Designer</title>
+    <meta
+      name="description"
+      content="Software Engineering student, full-stack developer and UI/UX designer in Amman, Jordan — turning ideas into designs and designs into digital products."
+    />
+    <meta name="author" content="Anas Tarayra" />
+    <meta name="theme-color" content="#0B0B0B" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="canonical" href="https://anas-portfolio-rose-nine.vercel.app/" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Anas Al-Tarayra Portfolio</title>
-    <meta name="description" content="Portfolio of Anas Al-Tarayrah - Software Engineering Student, Vibe Coder & UI-UX Designer based in Amman, Jordan." />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Anas Tarayra" />
+    <meta property="og:title" content="Anas Tarayra — Full-Stack Developer & UI/UX Designer" />
+    <meta
+      property="og:description"
+      content="Software Engineering student, full-stack developer and UI/UX designer — turning ideas into designs and designs into digital products."
+    />
+    <meta property="og:url" content="https://anas-portfolio-rose-nine.vercel.app/" />
+    <meta property="og:image" content="https://anas-portfolio-rose-nine.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Anas Tarayra — Turning ideas into designs and designs into digital products." />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="ar_JO" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Anas Tarayra — Full-Stack Developer & UI/UX Designer" />
+    <meta name="twitter:description" content="Turning ideas into designs and designs into digital products." />
+    <meta name="twitter:image" content="https://anas-portfolio-rose-nine.vercel.app/og-image.png" />
+
+    <!-- Brand fonts: preload the weights used above the fold -->
+    <link rel="preload" href="/fonts/SpaceGrotesk-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/SpaceGrotesk-400.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Anas Tarayra",
+        "alternateName": "أنس طرايرة",
+        "url": "https://anas-portfolio-rose-nine.vercel.app/",
+        "jobTitle": "Full-Stack Developer & UI/UX Designer",
+        "email": "mailto:anastarayra12@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Amman", "addressCountry": "JO" },
+        "affiliation": { "@type": "CollegeOrUniversity", "name": "Al-Zaytoonah University of Jordan" },
+        "knowsAbout": ["Software Engineering", "Full-Stack Development", "ASP.NET", "Angular", "UI/UX Design", "Figma"],
+        "knowsLanguage": ["ar", "en"],
+        "sameAs": ["https://www.linkedin.com/in/anastarayra12", "https://github.com/anastarayra12"]
+      }
+    </script>
+
+    <!-- Resolve theme & language before first paint (no flash) -->
+    <script>
+      (function () {
+        var d = document.documentElement;
+        try {
+          var th = localStorage.getItem('anas_portfolio_theme');
+          if (th !== 'light' && th !== 'dark') th = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          d.setAttribute('data-theme', th);
+          var lg = localStorage.getItem('anas_portfolio_lang');
+          if (!lg) lg = (navigator.language || '').toLowerCase().indexOf('ar') === 0 ? 'ar' : 'en';
+          if (lg === 'ar') {
+            d.setAttribute('lang', 'ar');
+            d.setAttribute('dir', 'rtl');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <p style="font-family: system-ui, sans-serif; padding: 2rem; color: #f5f4f1; background: #0b0b0b">
+        Anas Tarayra — Software Engineering Student, Full-Stack Developer &amp; UI/UX Designer.
+        Contact: <a style="color: #3b82f6" href="mailto:anastarayra12@gmail.com">anastarayra12@gmail.com</a>
+      </p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

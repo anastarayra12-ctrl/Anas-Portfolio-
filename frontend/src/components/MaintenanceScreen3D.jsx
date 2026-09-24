@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Sparkles, Stars } from '@react-three/drei';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, Mail, Wrench, RefreshCw, Eye, Sparkles as SparklesIcon, CheckCircle2, Globe, Clock, ShieldCheck, Cpu, Code2, Layers } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { MessageSquare, Mail, Wrench, RefreshCw, Eye, CheckCircle2, Globe, Clock, Cpu, Code2, Layers } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import maintenanceConfig from '../config/maintenanceConfig';
 
@@ -327,7 +327,7 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
           </div>
           <div>
             <div style={{ fontWeight: '700', fontSize: isMobile ? '14px' : '16px', letterSpacing: '0.3px', color: '#F9FAFB' }}>
-              {isAr ? 'أنس الطرايرة' : 'Anas Al-Tarayra'}
+              {isAr ? 'أنس طرايرة' : 'Anas Tarayra'}
             </div>
             <div style={{ fontSize: isMobile ? '10px' : '12px', color: '#9CA3AF', fontWeight: '500' }}>
               {isAr ? 'مطور فول ستاك & UI/UX' : 'Full Stack & UI/UX Architect'}
@@ -757,7 +757,7 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
           zIndex: 10,
         }}
       >
-        © {new Date().getFullYear()} Anas Al-Tarayra. {isAr ? 'جميع الحقوق محفوظة' : 'All rights reserved.'}
+        © {new Date().getFullYear()} Anas Tarayra. {isAr ? 'جميع الحقوق محفوظة' : 'All rights reserved.'}
       </div>
 
       {/* Inline Keyframe Animations */}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://anas-portfolio-rose-nine.vercel.app/sitemap.xml

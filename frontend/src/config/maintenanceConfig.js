@@ -3,7 +3,7 @@
 // Set `enabled: false` to display the full live portfolio.
 
 export const maintenanceConfig = {
-  enabled: true, // Toggle maintenance mode ON (true) or OFF (false)
+  enabled: false, // Toggle maintenance mode ON (true) or OFF (false)
   progressPercent: 88, // Live estimated progress percentage
   estimatedCompletion: {
     ar: 'التحديث الجاري لعام 2026',
@@ -20,7 +20,7 @@ export const maintenanceConfig = {
   contact: {
     whatsapp: 'https://wa.me/962796851497',
     email: 'anastarayra12@gmail.com',
-    linkedin: 'https://linkedin.com/in/anas-al-tarayra',
+    linkedin: 'https://www.linkedin.com/in/anastarayra12',
     github: 'https://github.com/anastarayra12',
   },
   allowBypassQuery: true, // Allows appending `?preview=true` to URL or shortcut Ctrl+Shift+M to view the live site

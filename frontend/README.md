@@ -1,16 +1,42 @@
-# React + Vite
+# Anas Tarayra — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal site of Anas Tarayra: Software Engineering student, full-stack developer and UI/UX designer.
+Built with React 19 + Vite, designed from the brand guide in `../Brand_Identity_and_CV/`.
 
-Currently, two official plugins are available:
+## Scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev       # local development
+npm run build     # production build to dist/
+npm run preview   # serve the production build
+npm run lint      # oxlint
+```
 
-## React Compiler
+## Where things live
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Path | Purpose |
+| --- | --- |
+| `src/content/site.js` | **All copy (EN/AR), links and project data.** Edit content here. |
+| `src/styles/tokens.css` | Design tokens: brand palette, type scale, spacing, radius, motion, themes. |
+| `src/styles/base.css` | Reset, typography, layout primitives, buttons, tags, links. |
+| `src/components/` | One component per section, each with its own CSS file. `Header` (identity + actions) and `Dock` (section navigation) are the two navigation layers; `ProcessMark` is the interactive brand mark in the hero. |
+| `src/components/ui/` | Shared primitives: `BrandMark`, `Reveal`, `Magnetic`, `SectionHead`, icons. |
+| `src/config/maintenanceConfig.js` | Maintenance screen toggle. |
+| `public/` | Fonts (WOFF2), CV files, favicon/OG image, robots.txt, sitemap.xml. |
 
-## Expanding the Oxlint configuration
+## Content rule
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Only publish facts that can be verified (CV, brand guide, this repo). To add a case study, append an
+object to `work.projects` in both `en` and `ar` in `src/content/site.js`, and add a preview component
+in `src/components/ProjectPreviews.jsx`.
+
+## Maintenance mode
+
+`maintenanceConfig.enabled = true` shows the 3D maintenance screen to visitors. The live site can be
+previewed with `?preview=true` or **Ctrl + Shift + M**. Set it to `false` to publish the site.
+
+## Contact form
+
+Set `VITE_WEB3FORMS_ACCESS_KEY` (see `.env.example`) to deliver messages through Web3Forms. Without a
+key, the form opens the visitor's email app with the message pre-filled — it never reports a fake success.
