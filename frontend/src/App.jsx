@@ -13,6 +13,7 @@ import { Journey } from './components/Journey';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { Backdrop } from './components/Backdrop';
+import { SwitchFx } from './components/SwitchFx';
 import { Splash, shouldShowSplash } from './components/Splash';
 import { IntroContext } from './context/IntroContext';
 
@@ -46,6 +47,7 @@ function Site() {
   return (
     <IntroContext.Provider value={ready}>
       {splash && <Splash onLeave={onLeave} onDone={onDone} />}
+      <SwitchFx />
       <div className="site">
         <Backdrop />
         <a className="skip-link" href="#main">

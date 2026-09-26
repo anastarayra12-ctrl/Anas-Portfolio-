@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { m, useScroll, useSpring } from 'framer-motion';
-import { Download, Moon, Sun, ArrowRight } from 'lucide-react';
+import { Moon, Sun, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
-import { links } from '../content/site';
 import { BrandMark } from './ui/BrandMark';
 import './Header.css';
 
@@ -27,8 +26,7 @@ export function Header() {
 
   const themeLabel = theme === 'dark' ? t.a11y.themeToLight : t.a11y.themeToDark;
   const onTheme = (e) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    toggleTheme({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+    toggleTheme(e.currentTarget.getBoundingClientRect());
   };
 
   return (
@@ -45,7 +43,7 @@ export function Header() {
         </a>
 
         <div className="header__actions">
-          {/* One control capsule: language · theme · CV */}
+          {/* One control capsule: language · theme */}
           <div className="controls">
             <button
               type="button"
@@ -82,13 +80,6 @@ export function Header() {
                 {theme === 'dark' ? <Moon size={13} strokeWidth={2.25} /> : <Sun size={13} strokeWidth={2.25} />}
               </span>
             </button>
-
-            <span className="controls__sep" aria-hidden="true" />
-
-            <a className="controls__cv" href={links.cvPdf} download={links.cvFileName} aria-label={t.header.cvLong} title={t.header.cvLong}>
-              <Download size={16} strokeWidth={1.75} aria-hidden="true" />
-              <span className="controls__cv-text">{t.header.cv}</span>
-            </a>
           </div>
 
           <a className="btn btn--primary btn--sm header__talk" href="#contact">

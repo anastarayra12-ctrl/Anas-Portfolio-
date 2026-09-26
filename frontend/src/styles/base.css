@@ -295,11 +295,6 @@ p { text-wrap: pretty; }
 main:focus { outline: none; }
 .boot { min-height: 100vh; background: var(--bg); }
 
-/* Theme switch: circular reveal (animation set from ThemeContext) */
-.theme-vt::view-transition-old(root),
-.theme-vt::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
-.theme-vt::view-transition-old(root) { z-index: 1; }
-.theme-vt::view-transition-new(root) { z-index: 2; }
 
 /* Section titles: each word rises from its own mask */
 .h2--words .word { display: inline-block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; white-space: pre; }

@@ -10,7 +10,7 @@
     />
     <meta name="author" content="Anas Tarayra" />
     <meta name="theme-color" content="#0B0B0B" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="color-scheme" content="dark" />
     <link rel="canonical" href="https://anas-portfolio-rose-nine.vercel.app/" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -61,23 +61,6 @@
       }
     </script>
 
-    <!-- Resolve theme & language before first paint (no flash) -->
-    <script>
-      (function () {
-        var d = document.documentElement;
-        try {
-          var th = localStorage.getItem('anas_portfolio_theme');
-          if (th !== 'light' && th !== 'dark') th = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-          d.setAttribute('data-theme', th);
-          var lg = localStorage.getItem('anas_portfolio_lang');
-          if (!lg) lg = (navigator.language || '').toLowerCase().indexOf('ar') === 0 ? 'ar' : 'en';
-          if (lg === 'ar') {
-            d.setAttribute('lang', 'ar');
-            d.setAttribute('dir', 'rtl');
-          }
-        } catch (e) {}
-      })();
-    </script>
   </head>
   <body>
     <div id="root"></div>

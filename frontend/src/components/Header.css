@@ -174,26 +174,6 @@
 }
 .theme-switch:hover .theme-switch__knob { box-shadow: 0 2px 12px -2px rgba(37, 99, 235, 0.9); }
 
-/* CV download */
-.controls__cv {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  min-width: 2.125rem;
-  height: 100%;
-  padding-inline: 0.5rem;
-  border-radius: var(--r-pill);
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--text-2);
-  transition: color var(--dur-fast), background-color var(--dur-fast);
-}
-.controls__cv:hover { color: var(--text); background: var(--surface-hover); }
-.controls__cv svg { transition: transform var(--dur) var(--ease-out); }
-.controls__cv:hover svg { transform: translateY(2px); }
-.controls__cv-text { display: none; }
-
 .header__talk { --btn-h: 2.625rem; padding-inline: var(--s-4); gap: var(--s-2); border-radius: var(--r-pill); }
 .header__talk .btn__arrow { display: none; }
 
@@ -216,8 +196,6 @@
 @media (min-width: 48rem) {
   .identity__role { display: block; }
   .identity__name { font-size: 0.875rem; }
-  .controls__cv { padding-inline: 0.7rem 0.8rem; }
-  .controls__cv-text { display: inline; }
   .header__talk .btn__arrow { display: inline; }
   .header__actions { gap: var(--s-3); }
 }
