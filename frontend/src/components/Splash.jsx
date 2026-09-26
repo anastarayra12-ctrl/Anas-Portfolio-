@@ -5,17 +5,25 @@ import './Splash.css';
 
 const ease = [0.22, 1, 0.36, 1];
 
+/** One continuous cursive stroke, written like the iPhone “hello”. viewBox 0 0 480 180 */
+const HELLO_PATH =
+  'M 14 150 C 40 145 62 118 76 82 C 88 50 90 22 76 20 C 62 18 58 50 60 90 C 61 120 62 140 62 158 C 66 128 84 110 100 112 C 116 114 118 132 116 148 C 115 158 118 162 126 160 C 150 155 176 140 176 124 C 176 110 158 110 150 124 C 142 140 150 160 170 160 C 196 160 214 124 224 84 C 232 50 234 22 220 22 C 206 22 204 60 206 100 C 207 136 212 160 230 160 C 254 160 268 124 278 84 C 286 50 288 22 274 22 C 260 22 258 60 260 100 C 261 136 266 160 284 160 C 300 160 312 140 322 124 C 330 112 348 108 360 116 C 374 126 374 152 356 160 C 338 168 322 150 330 128 C 336 114 356 110 372 118 C 386 124 400 118 412 108';
+const WRITE_START = 0.55;
+const WRITE_DURATION = 2.3;
+const HOLD = 0.9; // let the finished word breathe before the curtain lifts
+
 /** The splash greets every page load (skippable at any moment). */
 // eslint-disable-next-line react-refresh/only-export-components
 export const shouldShowSplash = () => true;
 
 /*
- * Timeline (≈2.6s):
+ * Timeline (≈3.6s):
  *   0.0  frame meta fades in, counter starts
  *   0.1  the brand mark draws itself — lines, then nodes, then the diamond
- *   0.55 "Hello" rises letter by letter; the brand diamond is its full stop
- *   1.15 the Arabic greeting joins underneath
- *   2.2  content lifts away and the panel wipes up to reveal the site
+ *   0.55 "hello" is handwritten in one continuous stroke (iPhone-style);
+ *        the brand diamond lands as its full stop
+ *   2.35 the Arabic greeting joins underneath
+ *   3.75 content lifts away and the panel wipes up to reveal the site
  * Click, Enter, Space or Escape skips it. Reduced motion: a short, still fade.
  */
 export function Splash({ onLeave, onDone }) {
@@ -45,7 +53,7 @@ export function Splash({ onLeave, onDone }) {
   }, []);
 
   useEffect(() => {
-    const total = reduce ? 0.9 : 2.2;
+    const total = reduce ? 0.9 : WRITE_START + WRITE_DURATION + HOLD;
     const ctrl = animate(progress, 100, { duration: total, ease: reduce ? 'linear' : [0.65, 0, 0.35, 1] });
     const t = setTimeout(finish, total * 1000 + 80);
     const onKey = (e) => {
@@ -59,9 +67,6 @@ export function Splash({ onLeave, onDone }) {
     };
   }, [finish, progress, reduce]);
 
-  const primary = lang === 'ar' ? 'مرحبًا' : 'Hello';
-  const secondary = lang === 'ar' ? 'Hello' : 'مرحبًا';
-  const letters = lang === 'ar' ? [primary] : [...primary]; // Arabic letters must stay joined
 
   const draw = (delay, duration = 0.6) =>
     reduce ? {} : { initial: { pathLength: 0 }, animate: { pathLength: 1 }, transition: { delay, duration, ease } };
@@ -97,36 +102,49 @@ export function Splash({ onLeave, onDone }) {
               <m.polygon points="50,50 57,58 50,66 43,58" fill="#38BDF8" style={{ transformOrigin: '50px 58px' }} {...pop(0.65)} />
             </svg>
 
-            <h2 className="splash__hello" lang={lang}>
-              {letters.map((ch, i) => (
-                <span key={i} className="splash__mask">
-                  <m.span
-                    className="splash__ch"
-                    initial={reduce ? { opacity: 0 } : { y: '110%' }}
-                    animate={reduce ? { opacity: 1 } : { y: 0 }}
-                    transition={{ delay: 0.55 + i * 0.07, duration: 0.8, ease }}
-                  >
-                    {ch}
-                  </m.span>
-                </span>
-              ))}
-              <m.span
-                className="splash__dot"
-                aria-hidden="true"
-                initial={reduce ? { opacity: 0 } : { scale: 0, rotate: 0 }}
-                animate={reduce ? { opacity: 1 } : { scale: 1, rotate: 45 }}
-                transition={{ delay: 0.55 + letters.length * 0.07 + 0.1, duration: 0.5, ease }}
-              />
+            <h2 className="splash__hello">
+              <span className="sr-only">Hello — مرحبًا</span>
+              <svg className="splash__script" viewBox="0 0 480 180" fill="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="splash-ink" x1="0" y1="0" x2="480" y2="0" gradientUnits="userSpaceOnUse">
+                    <stop offset="0.35" style={{ stopColor: 'var(--text)' }} />
+                    <stop offset="1" stopColor="#3B82F6" />
+                  </linearGradient>
+                </defs>
+                <m.path
+                  d={HELLO_PATH}
+                  stroke="url(#splash-ink)"
+                  strokeWidth="9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={reduce ? { opacity: 0 } : { pathLength: 0, opacity: 0 }}
+                  animate={reduce ? { opacity: 1 } : { pathLength: 1, opacity: 1 }}
+                  transition={
+                    reduce
+                      ? { duration: 0.4 }
+                      : { pathLength: { delay: WRITE_START, duration: WRITE_DURATION, ease: [0.45, 0.05, 0.25, 1] }, opacity: { delay: WRITE_START, duration: 0.01 } }
+                  }
+                />
+                {/* the brand diamond lands as the full stop once the pen lifts */}
+                <m.polygon
+                  points="426,93 434,103 426,113 418,103"
+                  fill="#38BDF8"
+                  style={{ transformBox: 'fill-box', originX: 0.5, originY: 0.5 }}
+                  initial={reduce ? { opacity: 0 } : { scale: 0, rotate: -90, opacity: 0 }}
+                  animate={reduce ? { opacity: 1 } : { scale: 1, rotate: 0, opacity: 1 }}
+                  transition={{ delay: reduce ? 0.2 : WRITE_START + WRITE_DURATION - 0.05, duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+                />
+              </svg>
             </h2>
 
             <m.p
               className="splash__sub"
-              lang={lang === 'ar' ? 'en' : 'ar'}
+              lang="ar"
               initial={{ opacity: 0, y: reduce ? 0 : 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: reduce ? 0.1 : 1.15, duration: 0.6, ease }}
+              transition={{ delay: reduce ? 0.1 : WRITE_START + WRITE_DURATION - 0.5, duration: 0.6, ease }}
             >
-              {secondary}
+              مرحبًا
             </m.p>
           </m.div>
 

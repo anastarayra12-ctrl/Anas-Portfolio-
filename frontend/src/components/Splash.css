@@ -36,31 +36,12 @@
 .splash__mark circle,
 .splash__mark polygon { transform-box: view-box; }
 
-.splash__hello {
-  display: flex;
-  align-items: baseline;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(4rem, 2rem + 11vw, 10rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.05em;
-}
-.splash__hello[lang='ar'] {
-  font-family: 'Lalezar', 'Changa', sans-serif;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.3;
-}
-.splash__mask { display: inline-block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
-.splash__hello[lang='ar'] .splash__mask { padding-block: 0.1em 0.2em; }
-.splash__ch { display: inline-block; }
-.splash__dot {
-  display: inline-block;
-  width: 0.16em;
-  height: 0.16em;
-  margin-inline-start: 0.08em;
-  background: var(--brand-sky);
-  transform: rotate(45deg);
+.splash__hello { margin: 0; line-height: 0; }
+.splash__script {
+  display: block;
+  width: min(34rem, 80vw);
+  height: auto;
+  overflow: visible;
 }
 
 .splash__sub {
