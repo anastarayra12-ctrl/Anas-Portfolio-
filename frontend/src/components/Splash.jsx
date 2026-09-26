@@ -3,26 +3,11 @@ import { AnimatePresence, animate, m, useMotionValue, useReducedMotion, useTrans
 import { useLanguage } from '../context/LanguageContext';
 import './Splash.css';
 
-const SEEN_KEY = 'anas_portfolio_splash_seen';
 const ease = [0.22, 1, 0.36, 1];
 
-/** The splash is a first-impression moment: once per browser session. */
+/** The splash greets every page load (skippable at any moment). */
 // eslint-disable-next-line react-refresh/only-export-components
-export const shouldShowSplash = () => {
-  try {
-    return sessionStorage.getItem(SEEN_KEY) !== '1';
-  } catch {
-    return false;
-  }
-};
-
-const markSeen = () => {
-  try {
-    sessionStorage.setItem(SEEN_KEY, '1');
-  } catch {
-    /* ignore */
-  }
-};
+export const shouldShowSplash = () => true;
 
 /*
  * Timeline (≈2.6s):
@@ -45,7 +30,6 @@ export function Splash({ onLeave, onDone }) {
   const finish = useCallback(() => {
     if (finished.current) return;
     finished.current = true;
-    markSeen();
     setLeaving(true);
     onLeave?.(); // let the page start its entrance while the curtain lifts
   }, [onLeave]);
