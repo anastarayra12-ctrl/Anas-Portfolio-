@@ -45,50 +45,51 @@ export function Header() {
         </a>
 
         <div className="header__actions">
-          {/* Language: segmented on wide screens, single toggle on small ones */}
-          <div className="lang-switch" role="group" aria-label={t.a11y.language}>
-            {[
-              { code: 'en', label: 'EN', full: 'English' },
-              { code: 'ar', label: 'عربي', full: 'العربية' },
-            ].map((o) => (
-              <button
-                key={o.code}
-                type="button"
-                className={`lang-switch__opt${lang === o.code ? ' is-active' : ''}`}
-                aria-pressed={lang === o.code}
-                aria-label={o.full}
-                lang={o.code}
-                onClick={() => setLanguage(o.code)}
-              >
-                {lang === o.code && (
-                  <m.span layoutId="lang-thumb" className="lang-switch__thumb" transition={{ type: 'spring', stiffness: 500, damping: 38 }} />
-                )}
-                <span className="lang-switch__label">{o.label}</span>
-              </button>
-            ))}
+          {/* One control capsule: language · theme · CV */}
+          <div className="controls">
+            <button
+              type="button"
+              className={`lang-toggle is-${lang}`}
+              onClick={() => setLanguage(lang === 'en' ? 'ar' : 'en')}
+              aria-label={lang === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
+              title={lang === 'en' ? 'العربية' : 'English'}
+              dir="ltr"
+            >
+              <span className="lang-toggle__thumb" aria-hidden="true" />
+              <span className="lang-toggle__opt" lang="en" aria-hidden="true">
+                EN
+              </span>
+              <span className="lang-toggle__opt" lang="ar" aria-hidden="true">
+                AR
+              </span>
+            </button>
+
+            <span className="controls__sep" aria-hidden="true" />
+
+            <button
+              type="button"
+              role="switch"
+              aria-checked={theme === 'dark'}
+              className={`theme-switch is-${theme}`}
+              onClick={onTheme}
+              aria-label={t.a11y.darkMode}
+              title={themeLabel}
+              dir="ltr"
+            >
+              <Sun size={13} strokeWidth={2} className="theme-switch__icon theme-switch__icon--sun" aria-hidden="true" />
+              <Moon size={13} strokeWidth={2} className="theme-switch__icon theme-switch__icon--moon" aria-hidden="true" />
+              <span className="theme-switch__knob" aria-hidden="true">
+                {theme === 'dark' ? <Moon size={13} strokeWidth={2.25} /> : <Sun size={13} strokeWidth={2.25} />}
+              </span>
+            </button>
+
+            <span className="controls__sep" aria-hidden="true" />
+
+            <a className="controls__cv" href={links.cvPdf} download={links.cvFileName} aria-label={t.header.cvLong} title={t.header.cvLong}>
+              <Download size={16} strokeWidth={1.75} aria-hidden="true" />
+              <span className="controls__cv-text">{t.header.cv}</span>
+            </a>
           </div>
-          <button
-            type="button"
-            className="h-btn lang-toggle"
-            onClick={() => setLanguage(lang === 'en' ? 'ar' : 'en')}
-            aria-label={lang === 'en' ? 'العربية' : 'English'}
-            lang={lang === 'en' ? 'ar' : 'en'}
-          >
-            {lang === 'en' ? 'عربي' : 'EN'}
-          </button>
-
-          <button type="button" className="h-btn theme-toggle" onClick={onTheme} aria-label={themeLabel} title={themeLabel}>
-            <span className="theme-toggle__icon" key={theme}>
-              {theme === 'dark' ? <Sun size={17} strokeWidth={1.75} /> : <Moon size={17} strokeWidth={1.75} />}
-            </span>
-          </button>
-
-          <span className="header__divider" aria-hidden="true" />
-
-          <a className="h-btn h-btn--cv" href={links.cvPdf} download={links.cvFileName} aria-label={t.header.cvLong} title={t.header.cvLong}>
-            <Download size={16} strokeWidth={1.75} aria-hidden="true" />
-            <span className="h-btn__text">{t.header.cv}</span>
-          </a>
 
           <a className="btn btn--primary btn--sm header__talk" href="#contact">
             {t.header.talk}
