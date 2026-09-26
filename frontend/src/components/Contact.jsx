@@ -1,5 +1,5 @@
 import { useId, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { ArrowUpRight, Check, Copy, Loader2, MapPin, Send, CircleCheck, CircleAlert, FileText } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { links } from '../content/site';
@@ -28,7 +28,7 @@ function Field({ id, label, error, children }) {
       {children}
       <AnimatePresence initial={false}>
         {error && (
-          <motion.p
+          <m.p
             id={`${id}-error`}
             className="field__error"
             initial={{ opacity: 0, y: -4 }}
@@ -38,7 +38,7 @@ function Field({ id, label, error, children }) {
           >
             <CircleAlert size={14} aria-hidden="true" />
             {error}
-          </motion.p>
+          </m.p>
         )}
       </AnimatePresence>
     </div>
@@ -108,7 +108,7 @@ function ContactForm({ f }) {
   return (
     <AnimatePresence mode="wait" initial={false}>
       {status === 'sent' || status === 'mailto' ? (
-        <motion.div
+        <m.div
           key="done"
           className="contact__done"
           initial={{ opacity: 0, y: 10 }}
@@ -133,9 +133,9 @@ function ContactForm({ f }) {
           <button type="button" className="btn btn--secondary btn--sm" onClick={() => setStatus('idle')}>
             {f.another}
           </button>
-        </motion.div>
+        </m.div>
       ) : (
-        <motion.form
+        <m.form
           key="form"
           ref={formRef}
           className="contact__form"
@@ -230,7 +230,7 @@ function ContactForm({ f }) {
               )}
             </button>
           </div>
-        </motion.form>
+        </m.form>
       )}
     </AnimatePresence>
   );
@@ -260,7 +260,6 @@ export function Contact() {
 
   return (
     <section className="section contact" id="contact" aria-labelledby="contact-title">
-      <div className="grid-bg contact__grid-bg" aria-hidden="true" />
       <div className="container">
         <SectionHead id="contact" index={c.index} kicker={c.kicker} title={c.title} intro={c.intro} />
 

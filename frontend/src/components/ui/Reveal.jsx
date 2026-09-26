@@ -1,11 +1,11 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 /**
  * Scroll reveal: a short fade + rise, once. Motion is disabled automatically
  * for users who prefer reduced motion (see <MotionConfig reducedMotion="user">).
  */
 export function Reveal({ as = 'div', delay = 0, y = 18, children, className, ...rest }) {
-  const Tag = motion[as] ?? motion.div;
+  const Tag = m[as] ?? m.div;
   return (
     <Tag
       className={className}

@@ -1,5 +1,5 @@
 import { useId, useRef, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { Code2, PenTool, Diamond } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { SectionHead } from './ui/SectionHead';
@@ -73,7 +73,7 @@ export function About() {
                     onClick={() => setLens(i)}
                   >
                     {selected && (
-                      <motion.span layoutId={`${uid}-lens`} className="lens__thumb" transition={{ type: 'spring', stiffness: 460, damping: 36 }} />
+                      <m.span layoutId={`${uid}-lens`} className="lens__thumb" transition={{ type: 'spring', stiffness: 460, damping: 36 }} />
                     )}
                     <Icon size={15} strokeWidth={1.75} aria-hidden="true" />
                     <span>{l.tab}</span>
@@ -84,7 +84,7 @@ export function About() {
 
             <div className="lens__panel" role="tabpanel" id={`${uid}-panel`} aria-labelledby={`${uid}-tab-${lens}`} tabIndex={0}>
               <AnimatePresence mode="wait" initial={false}>
-                <motion.div
+                <m.div
                   key={current.key}
                   initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -102,7 +102,7 @@ export function About() {
                       </li>
                     ))}
                   </ol>
-                </motion.div>
+                </m.div>
               </AnimatePresence>
             </div>
 

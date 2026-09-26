@@ -20,7 +20,7 @@ npm run lint      # oxlint
 | `src/content/site.js` | **All copy (EN/AR), links and project data.** Edit content here. |
 | `src/styles/tokens.css` | Design tokens: brand palette, type scale, spacing, radius, motion, themes. |
 | `src/styles/base.css` | Reset, typography, layout primitives, buttons, tags, links. |
-| `src/components/` | One component per section, each with its own CSS file. `Header` (identity + actions) and `Dock` (section navigation) are the two navigation layers; `ProcessMark` is the interactive brand mark in the hero. |
+| `src/components/` | One component per section, each with its own CSS file. `Header` (identity + actions) and `Dock` (section navigation) are the two navigation layers; `ProcessMark` is the interactive brand mark in the hero; `Splash` is the once-per-session “Hello” intro; `Backdrop` is the site-wide blueprint grid, pointer spotlight, ambient light and grain. |
 | `src/components/ui/` | Shared primitives: `BrandMark`, `Reveal`, `Magnetic`, `SectionHead`, icons. |
 | `src/config/maintenanceConfig.js` | Maintenance screen toggle. |
 | `public/` | Fonts (WOFF2), CV files, favicon/OG image, robots.txt, sitemap.xml. |

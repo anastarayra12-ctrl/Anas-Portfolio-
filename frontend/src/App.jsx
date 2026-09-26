@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
-import { MotionConfig } from 'framer-motion';
+import { LazyMotion, MotionConfig } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import maintenanceConfig from './config/maintenanceConfig';
@@ -12,6 +12,11 @@ import { Stack } from './components/Stack';
 import { Journey } from './components/Journey';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { Backdrop } from './components/Backdrop';
+import { Splash, shouldShowSplash } from './components/Splash';
+import { IntroContext } from './context/IntroContext';
+
+const loadMotionFeatures = () => import('./motionFeatures').then((mod) => mod.default);
 
 // Three.js is only needed for the maintenance screen — keep it out of the main bundle.
 const MaintenanceScreen3D = lazy(() =>
@@ -34,23 +39,31 @@ const readBypass = () => {
 
 function Site() {
   const { t } = useLanguage();
+  const [splash, setSplash] = useState(shouldShowSplash);
+  const [ready, setReady] = useState(() => !splash);
+  const onLeave = useCallback(() => setReady(true), []);
+  const onDone = useCallback(() => setSplash(false), []);
   return (
-    <>
-      <a className="skip-link" href="#main">
-        {t.a11y.skip}
-      </a>
-      <Header />
-      <main id="main" tabIndex={-1}>
-        <Hero />
-        <About />
-        <Stack />
-        <Work />
-        <Journey />
-        <Contact />
-      </main>
-      <Footer />
-      <Dock />
-    </>
+    <IntroContext.Provider value={ready}>
+      {splash && <Splash onLeave={onLeave} onDone={onDone} />}
+      <div className="site">
+        <Backdrop />
+        <a className="skip-link" href="#main">
+          {t.a11y.skip}
+        </a>
+        <Header />
+        <main id="main" tabIndex={-1}>
+          <Hero />
+          <About />
+          <Stack />
+          <Work />
+          <Journey />
+          <Contact />
+        </main>
+        <Footer />
+        <Dock />
+      </div>
+    </IntroContext.Provider>
   );
 }
 
@@ -91,9 +104,11 @@ export default function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <MotionConfig reducedMotion="user">
-          <Gate />
-        </MotionConfig>
+        <LazyMotion features={loadMotionFeatures}>
+          <MotionConfig reducedMotion="user">
+            <Gate />
+          </MotionConfig>
+        </LazyMotion>
       </LanguageProvider>
     </ThemeProvider>
   );

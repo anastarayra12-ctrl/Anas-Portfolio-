@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { UserRound, Layers, LayoutGrid, Route, MessageSquareText } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useActiveSection } from '../hooks/useActiveSection';
@@ -50,7 +50,7 @@ export function Dock() {
   };
 
   return (
-    <motion.nav
+    <m.nav
       className="dock"
       aria-label={t.a11y.sections}
       inert={!visible}
@@ -68,7 +68,7 @@ export function Dock() {
             <li key={id} className="dock__item">
               <a href={`#${id}`} className={`dock__link${isActive ? ' is-active' : ''}`} aria-current={isActive ? 'location' : undefined}>
                 {isActive && (
-                  <motion.span layoutId="dock-active" className="dock__active" transition={{ type: 'spring', stiffness: 420, damping: 36 }} />
+                  <m.span layoutId="dock-active" className="dock__active" transition={{ type: 'spring', stiffness: 420, damping: 36 }} />
                 )}
                 <span className="dock__icon" aria-hidden="true">
                   <Icon size={18} strokeWidth={1.75} />
@@ -84,6 +84,6 @@ export function Dock() {
           );
         })}
       </ul>
-    </motion.nav>
+    </m.nav>
   );
 }

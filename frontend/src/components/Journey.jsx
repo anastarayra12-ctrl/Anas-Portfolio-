@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
+import { AnimatePresence, m, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { SectionHead } from './ui/SectionHead';
 import { Reveal } from './ui/Reveal';
@@ -43,7 +43,7 @@ export function Journey() {
           <div className="route__aside" aria-hidden="true">
             <div className="route__sticky">
               <AnimatePresence mode="wait" initial={false}>
-                <motion.div
+                <m.div
                   key={current.key}
                   initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -52,7 +52,7 @@ export function Journey() {
                 >
                   <p className={`route__big${current.future ? ' is-future' : ''}`}>{current.mark}</p>
                   <p className="route__big-tag">{current.tag}</p>
-                </motion.div>
+                </m.div>
               </AnimatePresence>
               <p className="route__count">
                 <span>{String(active + 1).padStart(2, '0')}</span> / {String(j.chapters.length).padStart(2, '0')}
@@ -62,7 +62,7 @@ export function Journey() {
 
           <div className="route__track">
             <span className="route__rail" aria-hidden="true">
-              <motion.span className="route__rail-fill" style={{ scaleY: reduce ? 1 : fill }} />
+              <m.span className="route__rail-fill" style={{ scaleY: reduce ? 1 : fill }} />
             </span>
           <ol className="route__list" ref={listRef}>
 

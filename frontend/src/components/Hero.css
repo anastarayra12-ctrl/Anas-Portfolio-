@@ -5,16 +5,6 @@
   padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 
-.hero__grid-bg {
-  z-index: -1;
-  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 72% 38%, #000 15%, transparent 72%);
-  mask-image: radial-gradient(ellipse 75% 70% at 72% 38%, #000 15%, transparent 72%);
-}
-[dir='rtl'] .hero__grid-bg {
-  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 28% 38%, #000 15%, transparent 72%);
-  mask-image: radial-gradient(ellipse 75% 70% at 28% 38%, #000 15%, transparent 72%);
-}
-
 .hero__layout {
   display: grid;
   gap: clamp(3rem, 7vw, 4rem);

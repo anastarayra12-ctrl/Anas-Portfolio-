@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
+import { AnimatePresence, m, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { processIds } from '../content/site';
 import './ProcessMark.css';
 
@@ -29,16 +29,18 @@ const STROKES = {
   innerL: { from: BL, to: IL, w: 6.2 }, // drawn from the base towards the product
   innerR: { from: BR, to: IR, w: 6.2 },
 };
+/** Signal-only path: the idea (bottom-left) climbs to design (apex). */
+const SIGNALS = { ...STROKES, outerLUp: { from: BL, to: TOP, w: 4.6 } };
 
 /** What lights up for each step (source nodes stay lit to show the flow). */
 const LIT = {
   idea: ['bl'],
-  design: ['top'],
+  design: ['bl', 'top', 'outerL'],
   build: ['top', 'br', 'outerR'],
   product: ['bl', 'br', 'innerL', 'innerR', 'diamond'],
 };
 /** Which strokes carry the "signal" when a step activates. */
-const FLOW = { idea: [], design: [], build: ['outerR'], product: ['innerL', 'innerR'] };
+const FLOW = { idea: [], design: ['outerLUp'], build: ['outerR'], product: ['innerL', 'innerR'] };
 
 const LABEL_POS = {
   idea: { left: '18%', top: '93%', align: 'center' },
@@ -50,7 +52,7 @@ const LABEL_POS = {
 const ease = [0.22, 1, 0.36, 1];
 const line = ({ from, to }) => `M${from[0]} ${from[1]} L${to[0]} ${to[1]}`;
 
-export function ProcessMark({ copy, active, onActivate, highlight = false }) {
+export function ProcessMark({ copy, active, onActivate, highlight = false, ready = true }) {
   const reduce = useReducedMotion();
   const ref = useRef(null);
   const [exploring, setExploring] = useState(false);
@@ -84,9 +86,9 @@ export function ProcessMark({ copy, active, onActivate, highlight = false }) {
   const draw = (delay) =>
     reduce
       ? {}
-      : { initial: { pathLength: 0 }, animate: { pathLength: 1 }, transition: { delay, duration: 0.9, ease } };
+      : { initial: { pathLength: 0 }, animate: { pathLength: ready ? 1 : 0 }, transition: { delay, duration: 0.9, ease } };
   const pop = (delay) =>
-    reduce ? {} : { initial: { scale: 0 }, animate: { scale: 1 }, transition: { delay, duration: 0.55, ease } };
+    reduce ? {} : { initial: { scale: 0 }, animate: { scale: ready ? 1 : 0 }, transition: { delay, duration: 0.55, ease } };
 
   const select = (id) => onActivate(id);
 
@@ -115,7 +117,7 @@ export function ProcessMark({ copy, active, onActivate, highlight = false }) {
         onPointerLeave={onLeave}
         aria-hidden="true"
       >
-        <motion.div className="pm__stage" style={reduce ? undefined : { rotateX: rx, rotateY: ry }}>
+        <m.div className="pm__stage" style={reduce ? undefined : { rotateX: rx, rotateY: ry }}>
           {/* Layer 0 — construction guides (deepest) */}
           <svg className="pm__layer pm__layer--guides" viewBox="0 0 100 100">
             <line x1="50" y1="3" x2="50" y2="97" />
@@ -132,14 +134,14 @@ export function ProcessMark({ copy, active, onActivate, highlight = false }) {
           {/* Layer 1 — the strokes of the A */}
           <svg className="pm__layer pm__layer--strokes" viewBox="0 0 100 100">
             {Object.entries(STROKES).map(([key, s], i) => (
-              <motion.path key={key} d={line(s)} className={cls(key)} strokeWidth={s.w} {...draw(0.15 + (i > 1 ? 0.45 : 0))} />
+              <m.path key={key} d={line(s)} className={cls(key)} strokeWidth={s.w} {...draw(0.15 + (i > 1 ? 0.45 : 0))} />
             ))}
             {/* Signal travelling along the active connections */}
             {!reduce &&
               FLOW[active].map((key) => (
-                <motion.path
+                <m.path
                   key={`${key}-${pulse}`}
-                  d={line(STROKES[key])}
+                  d={line(SIGNALS[key])}
                   className="pm__signal"
                   initial={{ pathLength: 0, opacity: 1 }}
                   animate={{ pathLength: 1, opacity: [1, 1, 0] }}
@@ -157,7 +159,7 @@ export function ProcessMark({ copy, active, onActivate, highlight = false }) {
             ].map(([key, [cx, cy], fill, delay, id]) => (
               <g key={key} className={cls(key)}>
                 {active === id && <circle className="pm__halo" cx={cx} cy={cy} r="7" />}
-                <motion.circle
+                <m.circle
                   cx={cx}
                   cy={cy}
                   r="3.5"
@@ -175,7 +177,7 @@ export function ProcessMark({ copy, active, onActivate, highlight = false }) {
           <svg className="pm__layer pm__layer--product" viewBox="0 0 100 100">
             <g className={cls('diamond')}>
               {active === 'product' && <circle className="pm__halo pm__halo--product" cx={D[0]} cy={D[1]} r="11" />}
-              <motion.polygon
+              <m.polygon
                 points={`${D[0]},${D[1] - 8} ${D[0] + 7},${D[1]} ${D[0]},${D[1] + 8} ${D[0] - 7},${D[1]}`}
                 fill="var(--brand-sky)"
                 style={{ transformOrigin: `${D[0]}px ${D[1]}px`, transformBox: 'view-box' }}
@@ -202,7 +204,7 @@ export function ProcessMark({ copy, active, onActivate, highlight = false }) {
               );
             })}
           </div>
-        </motion.div>
+        </m.div>
         <span className="pm__corner pm__corner--tl" />
         <span className="pm__corner pm__corner--tr" />
         <span className="pm__corner pm__corner--bl" />
@@ -231,7 +233,7 @@ export function ProcessMark({ copy, active, onActivate, highlight = false }) {
 
       <div className="pm__panel" aria-live="polite">
         <AnimatePresence mode="wait" initial={false}>
-          <motion.div
+          <m.div
             key={active}
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -244,7 +246,7 @@ export function ProcessMark({ copy, active, onActivate, highlight = false }) {
               <span className="pm__panel-short">— {step.short}</span>
             </p>
             <p className="pm__panel-text">{step.d}</p>
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
     </div>

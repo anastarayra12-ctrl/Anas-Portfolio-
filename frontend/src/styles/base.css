@@ -268,18 +268,6 @@ p { text-wrap: pretty; }
   70%, 100% { transform: scale(2.6); opacity: 0; }
 }
 
-/* ---------- Blueprint grid background ---------- */
-.grid-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  background-position: center top;
-}
-
 /* Diamond glyph from the logo — used as a list marker & divider */
 .diamond {
   display: inline-block;
@@ -312,3 +300,17 @@ main:focus { outline: none; }
 .theme-vt::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 .theme-vt::view-transition-old(root) { z-index: 1; }
 .theme-vt::view-transition-new(root) { z-index: 2; }
+
+/* Section titles: each word rises from its own mask */
+.h2--words .word { display: inline-block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; white-space: pre; }
+:root[lang='ar'] .h2--words .word { padding-block: 0.12em 0.22em; margin-block: -0.12em -0.22em; }
+.h2--words .word__inner { display: inline-block; }
+
+/* ---------- Print: show everything, drop chrome ---------- */
+@media print {
+  .header, .dock, .splash, .skip-link, .pm__steps, .lens__tabs, .footer__top { display: none !important; }
+  * { opacity: 1 !important; transform: none !important; box-shadow: none !important; }
+  body { background: #fff; color: #000; }
+  .section { padding-block: 1.5rem; break-inside: avoid-page; }
+  a[href^='http']::after { content: ' (' attr(href) ')'; font-size: 0.8em; }
+}

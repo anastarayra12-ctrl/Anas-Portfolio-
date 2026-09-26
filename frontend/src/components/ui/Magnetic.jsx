@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
+import { m, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 
 /**
  * Gently pulls its child towards the pointer. Fine pointers only; inert on
@@ -23,7 +23,7 @@ export function Magnetic({ strength = 0.25, children, className }) {
   };
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={className}
       style={{ x, y, display: 'inline-flex' }}
@@ -31,6 +31,6 @@ export function Magnetic({ strength = 0.25, children, className }) {
       onPointerLeave={reset}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

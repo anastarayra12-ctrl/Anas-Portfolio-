@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { m, useScroll, useSpring } from 'framer-motion';
 import { Download, Moon, Sun, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
@@ -61,7 +61,7 @@ export function Header() {
                 onClick={() => setLanguage(o.code)}
               >
                 {lang === o.code && (
-                  <motion.span layoutId="lang-thumb" className="lang-switch__thumb" transition={{ type: 'spring', stiffness: 500, damping: 38 }} />
+                  <m.span layoutId="lang-thumb" className="lang-switch__thumb" transition={{ type: 'spring', stiffness: 500, damping: 38 }} />
                 )}
                 <span className="lang-switch__label">{o.label}</span>
               </button>
@@ -96,7 +96,7 @@ export function Header() {
           </a>
         </div>
       </div>
-      <motion.div className="header__progress" style={{ scaleX: progress }} aria-hidden="true" />
+      <m.div className="header__progress" style={{ scaleX: progress }} aria-hidden="true" />
     </header>
   );
 }

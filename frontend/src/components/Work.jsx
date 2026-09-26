@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { ArrowUpRight, Plus } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { links } from '../content/site';
@@ -78,7 +78,7 @@ function CaseStudy({ project, labels, index, newTab }) {
 
       <AnimatePresence initial={false}>
         {open && (
-          <motion.div
+          <m.div
             id={panelId}
             className="case__panel"
             role="region"
@@ -124,7 +124,7 @@ function CaseStudy({ project, labels, index, newTab }) {
                 <p>{project.outcome}</p>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </Reveal>
