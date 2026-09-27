@@ -115,48 +115,34 @@ const en = {
     index: '01',
     kicker: 'About Me',
     title: 'The Mind',
-    lead: 'I think about a product from two directions at once — how it works, and how it feels.',
-    body: [
-      "I'm Anas, a third-year Software Engineering student at Al-Zaytoonah University of Jordan and a full-stack developer working with .NET and Angular — with a strong passion for UI/UX and graphic design.",
-      'I believe the best digital products are created when design and development work together from the very beginning. So I build ideas and design them in the same moment, instead of treating them as separate phases.',
+    intro: {
+      title: 'About Anas',
+      text: "I'm Anas, a third-year Software Engineering student at Al-Zaytoonah University of Jordan. I enjoy turning ideas into digital experiences and constantly exploring new ways to create, learn, and build.",
+    },
+    sides: [
+      {
+        key: 'dev',
+        title: 'Anas as a Developer',
+        text: "I'm a Full-Stack Developer working with .NET and Angular, and a Vibe Coder who uses AI-powered tools to explore ideas, build faster, and turn concepts into real digital products. I focus on creating practical, scalable, and well-structured solutions.",
+        tags: ['.NET', 'Angular', 'AI-assisted'],
+      },
+      {
+        key: 'design',
+        title: 'Anas as a Designer',
+        text: "I'm passionate about UI/UX and graphic design, with a focus on creating interfaces and visual identities that are simple, clear, and purposeful. For me, design is not just about how a product looks, but how it communicates and feels.",
+        tags: ['UI/UX', 'Figma', 'Visual identity'],
+      },
     ],
     quote: 'I want to be recognised for the quality of my work before any job title.',
-    lensLabel: 'Look at my work through a lens',
-    lenses: [
-      {
-        key: 'engineer',
-        tab: 'Engineer',
-        question: 'How does it work?',
-        points: [
-          'Software engineering fundamentals and structured problem solving',
-          'Full-stack web applications with ASP.NET and Angular',
-          'Clean, maintainable code and component architecture',
-          'Git-based workflow and AI-assisted development',
-        ],
-      },
-      {
-        key: 'designer',
-        tab: 'Designer',
-        question: 'How does it feel?',
-        points: [
-          'User flows, wireframes and interactive prototypes in Figma',
-          'Interfaces with clear hierarchy, states and feedback',
-          'Design systems and visual identity',
-          'Graphic design in Adobe Photoshop',
-        ],
-      },
-      {
-        key: 'product',
-        tab: 'Both',
-        question: 'Why does it matter?',
-        points: [
-          'Design decisions are made knowing how they will be built',
-          'Technical constraints shape the design early — not after hand-off',
-          'Functionality and user experience are delivered as one thing',
-          'Clean, practical, high-quality work on both sides',
-        ],
-      },
-    ],
+    split: {
+      label: 'Same card, two views — drag to compare code and design',
+      code: 'Developer view',
+      design: 'Designer view',
+      hint: 'Drag',
+      role: 'Full Stack Developer & UI/UX Designer',
+      status: 'Available',
+      cta: "Let's build",
+    },
   },
   stack: {
     index: '02',
@@ -461,7 +447,7 @@ const ar = {
           n: '03',
           t: 'البناء',
           short: 'النظام',
-          d: 'هنا تصبح التجربة حقيقة. أبنيها بـ ‎.NET وAngular — مع الحفاظ على التصميم كما هو.',
+          d: 'هنا تصبح التجربة حقيقة. أبنيها بـ ⁦.NET⁩ وAngular — مع الحفاظ على التصميم كما هو.',
         },
         product: {
           n: '◆',
@@ -476,48 +462,34 @@ const ar = {
     index: '01',
     kicker: 'عنّي',
     title: 'طريقة التفكير',
-    lead: 'أفكّر بالمنتج من اتجاهين في الوقت نفسه — كيف يعمل، وكيف يُشعِر.',
-    body: [
-      'أنا أنس، طالب هندسة برمجيات في السنة الثالثة في جامعة الزيتونة الأردنية، ومطوّر Full-Stack أعمل بـ ‎.NET وAngular — مع شغف كبير بتصميم الواجهات وتجربة المستخدم والتصميم الجرافيكي.',
-      'أؤمن أن أفضل المنتجات الرقمية تولد عندما يعمل التصميم والتطوير معًا من البداية. لذلك أبني الفكرة وأصمّمها في اللحظة نفسها، بدل التعامل معهما كمرحلتين منفصلتين.',
+    intro: {
+      title: 'عن أنس',
+      text: 'أنا أنس، طالب هندسة برمجيات في السنة الثالثة في جامعة الزيتونة الأردنية. أستمتع بتحويل الأفكار إلى تجارب رقمية، وأبحث باستمرار عن طرق جديدة للإبداع والتعلّم والبناء.',
+    },
+    sides: [
+      {
+        key: 'dev',
+        title: 'أنس كمطوّر',
+        text: 'أنا مطوّر Full-Stack أعمل بـ ⁦.NET⁩ وAngular، وVibe Coder أستخدم أدوات الذكاء الاصطناعي لاستكشاف الأفكار والبناء بشكل أسرع وتحويل المفاهيم إلى منتجات رقمية حقيقية. أركّز على بناء حلول عملية وقابلة للتوسّع ومنظّمة بشكل جيد.',
+        tags: ['.NET', 'Angular', 'الذكاء الاصطناعي'],
+      },
+      {
+        key: 'design',
+        title: 'أنس كمصمّم',
+        text: 'أنا شغوف بتصميم الواجهات وتجربة المستخدم والتصميم الجرافيكي، وأركّز على صنع واجهات وهويات بصرية بسيطة وواضحة وهادفة. التصميم بالنسبة لي ليس فقط شكل المنتج، بل كيف يتواصل وكيف يُشعِر.',
+        tags: ['UI/UX', 'Figma', 'الهوية البصرية'],
+      },
     ],
     quote: 'أريد أن أُعرف بجودة عملي قبل أي مسمّى وظيفي.',
-    lensLabel: 'انظر إلى عملي من زاوية',
-    lenses: [
-      {
-        key: 'engineer',
-        tab: 'المهندس',
-        question: 'كيف يعمل المنتج؟',
-        points: [
-          'أساسيات هندسة البرمجيات وحلّ المشكلات بشكل منظّم',
-          'تطبيقات ويب متكاملة باستخدام ASP.NET وAngular',
-          'كود نظيف وقابل للصيانة وبنية مكوّنات واضحة',
-          'سير عمل مبني على Git وتطوير بمساعدة الذكاء الاصطناعي',
-        ],
-      },
-      {
-        key: 'designer',
-        tab: 'المصمّم',
-        question: 'كيف يُشعِر؟',
-        points: [
-          'مسارات الاستخدام والـ Wireframes والنماذج التفاعلية في Figma',
-          'واجهات بتسلسل بصري واضح وحالات وتفاعل مدروس',
-          'أنظمة التصميم والهوية البصرية',
-          'التصميم الجرافيكي باستخدام Adobe Photoshop',
-        ],
-      },
-      {
-        key: 'product',
-        tab: 'كلاهما',
-        question: 'لماذا يهمّ ذلك؟',
-        points: [
-          'قرارات التصميم تُتّخذ مع معرفة كيف ستُبنى',
-          'القيود التقنية تشكّل التصميم مبكرًا — لا بعد التسليم',
-          'الوظيفة وتجربة المستخدم تُقدَّمان كشيء واحد',
-          'عمل نظيف وعملي وعالي الجودة في الجانبين',
-        ],
-      },
-    ],
+    split: {
+      label: 'البطاقة نفسها بعينين — اسحب للمقارنة بين الكود والتصميم',
+      code: 'عين المطوّر',
+      design: 'عين المصمّم',
+      hint: 'اسحب',
+      role: 'Full Stack Developer & UI/UX Designer',
+      status: 'Available',
+      cta: "Let's build",
+    },
   },
   stack: {
     index: '02',
@@ -653,7 +625,7 @@ const ar = {
     ],
     empty: {
       title: 'التالي: مشاريع Full-Stack',
-      text: 'سأوثّق هنا أعمال برنامج ‎.NET وAngular الحالي عند اكتمالها.',
+      text: 'سأوثّق هنا أعمال برنامج ⁦.NET⁩ وAngular الحالي عند اكتمالها.',
       cta: 'تابعني على GitHub',
     },
   },
@@ -690,7 +662,7 @@ const ar = {
         mark: 'الآن',
         tag: 'نحو Full Stack',
         title: 'بناء المنتج كاملًا',
-        text: 'أعمّق تطوير Full-Stack بـ ‎.NET وAngular في برنامج Step by Step — لأبني كل طبقة مما أصمّمه.',
+        text: 'أعمّق تطوير Full-Stack بـ ⁦.NET⁩ وAngular في برنامج Step by Step — لأبني كل طبقة مما أصمّمه.',
         current: true,
       },
       {
