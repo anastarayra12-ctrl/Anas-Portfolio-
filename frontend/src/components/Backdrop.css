@@ -1,6 +1,8 @@
 .site { position: relative; isolation: isolate; }
 
 .backdrop {
+  --mx: -9999px;
+  --my: -9999px;
   position: absolute;
   inset: 0;
   z-index: -1;
@@ -23,27 +25,40 @@
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   --hero-x: 72%;
   -webkit-mask-image:
-    radial-gradient(ellipse 58% 820px at var(--hero-x) 340px, #000 10%, transparent 74%),
-    radial-gradient(ellipse 75% 760px at 50% 100%, #000 0%, transparent 72%);
+    radial-gradient(ellipse 62% 900px at var(--hero-x) 340px, #000 15%, transparent 78%),
+    radial-gradient(ellipse 80% 820px at 50% 100%, #000 5%, transparent 76%),
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
   mask-image:
-    radial-gradient(ellipse 58% 820px at var(--hero-x) 340px, #000 10%, transparent 74%),
-    radial-gradient(ellipse 75% 760px at 50% 100%, #000 0%, transparent 72%);
+    radial-gradient(ellipse 62% 900px at var(--hero-x) 340px, #000 15%, transparent 78%),
+    radial-gradient(ellipse 80% 820px at 50% 100%, #000 5%, transparent 76%),
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
 }
 [dir='rtl'] .backdrop__grid { --hero-x: 28%; }
 
+/* Pointer spotlight: brighter lines, glowing intersections, soft light */
 .backdrop__spot {
-  --mx: -9999px;
-  --my: -9999px;
   --r: 0px;
   background-image:
+    radial-gradient(circle at 0 0, var(--spot-dot) 1.6px, transparent 2.4px),
+    radial-gradient(circle at 100% 0, var(--spot-dot) 1.6px, transparent 2.4px),
+    radial-gradient(circle at 0 100%, var(--spot-dot) 1.6px, transparent 2.4px),
+    radial-gradient(circle at 100% 100%, var(--spot-dot) 1.6px, transparent 2.4px),
     linear-gradient(to right, var(--spot-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--spot-line) 1px, transparent 1px);
-  -webkit-mask-image: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.35) 45%, transparent 100%);
-  mask-image: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.35) 45%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.55) 40%, transparent 100%);
+  mask-image: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0, 0, 0, 0.55) 40%, transparent 100%);
   opacity: 0;
   transition: opacity 500ms var(--ease-out);
 }
-.backdrop__spot.is-on { --r: 260px; opacity: 1; }
+.backdrop__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 380px at var(--mx) var(--my), var(--spot-glow), transparent 70%);
+  opacity: 0;
+  transition: opacity 500ms var(--ease-out);
+}
+.backdrop.is-on .backdrop__spot { --r: 320px; opacity: 1; }
+.backdrop.is-on .backdrop__glow { opacity: 1; }
 
 /* Ambient light — fixed so it stays with the viewer */
 .backdrop__light {
