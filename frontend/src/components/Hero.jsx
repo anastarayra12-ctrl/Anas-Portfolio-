@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { m, useReducedMotion } from 'framer-motion';
-import { ArrowDown, Download, GraduationCap, Code2, PenTool, MapPin, Phone, Languages } from 'lucide-react';
+import { ArrowDown, Download, GraduationCap, Code2, PenTool } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useIntroReady } from '../context/IntroContext';
 import { links, processIds } from '../content/site';
@@ -150,42 +150,6 @@ export function Hero() {
         </m.div>
       </div>
 
-      {/* Quick info: where, how to reach, which languages */}
-      <div className="container">
-        <m.ul className="infobar" {...rise(0.65)}>
-          <li className="infobar__item">
-            <span className="infobar__icon" aria-hidden="true">
-              <MapPin size={16} strokeWidth={1.75} />
-            </span>
-            <span className="infobar__value">{h.info.location}</span>
-          </li>
-          <li className="infobar__item">
-            <a className="infobar__link" href={`tel:${links.phoneDisplay.replace(/\s/g, '')}`} aria-label={`${h.info.phoneLabel}: ${links.phoneDisplay}`}>
-              <span className="infobar__icon" aria-hidden="true">
-                <Phone size={16} strokeWidth={1.75} />
-              </span>
-              <span className="infobar__value" dir="ltr">
-                {links.phoneDisplay}
-              </span>
-            </a>
-          </li>
-          <li className="infobar__item infobar__item--langs">
-            <span className="infobar__icon" aria-hidden="true">
-              <Languages size={16} strokeWidth={1.75} />
-            </span>
-            <span className="infobar__label">{h.info.languagesLabel}</span>
-            <span className="infobar__langs">
-              {h.info.languages.map((l) => (
-                <span key={l.name} className="lang-chip">
-                  <span className="lang-chip__dot" aria-hidden="true" />
-                  <strong>{l.name}</strong>
-                  <span className="lang-chip__level">{l.level}</span>
-                </span>
-              ))}
-            </span>
-          </li>
-        </m.ul>
-      </div>
     </section>
   );
 }

@@ -1,11 +1,12 @@
-import { useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
-import { ArrowUpRight, Check, Copy, Loader2, MapPin, Send, CircleCheck, CircleAlert, FileText } from 'lucide-react';
+import { ArrowUpRight, Check, Clock, Copy, Download, FileText, Loader2, Mail, Send, CircleCheck, CircleAlert } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { links } from '../content/site';
 import { SectionHead } from './ui/SectionHead';
 import { Reveal } from './ui/Reveal';
 import { GitHubIcon, LinkedInIcon, WhatsAppIcon } from './ui/Icons';
+import { BrandMark } from './ui/BrandMark';
 import './Contact.css';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -236,6 +237,27 @@ function ContactForm({ f }) {
   );
 }
 
+function AmmanClock({ label }) {
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 15000);
+    return () => clearInterval(id);
+  }, []);
+  const time = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Amman' }).format(now);
+  return (
+    <div className="ctile ctile--time">
+      <span className="ctile__icon" aria-hidden="true">
+        <Clock size={20} strokeWidth={1.75} />
+      </span>
+      <span className="ctile__label">{label}</span>
+      <span className="ctile__time" dir="ltr">
+        {time}
+        <small>UTC+3</small>
+      </span>
+    </div>
+  );
+}
+
 export function Contact() {
   const { t } = useLanguage();
   const c = t.contact;
@@ -251,11 +273,9 @@ export function Contact() {
     }
   };
 
-  const channels = [
-    { key: 'linkedin', href: links.linkedin, label: 'LinkedIn', value: 'in/anastarayra12', Icon: LinkedInIcon, ext: true },
-    { key: 'github', href: links.github, label: 'GitHub', value: '@anastarayra12-ctrl', Icon: GitHubIcon, ext: true },
-    { key: 'whatsapp', href: links.whatsapp, label: 'WhatsApp', value: links.phoneDisplay, Icon: WhatsAppIcon, ext: true },
-    { key: 'cv', href: links.cvWeb, label: 'CV', value: c.cvWeb, Icon: FileText, ext: true },
+  const socials = [
+    { key: 'linkedin', href: links.linkedin, label: 'LinkedIn', value: 'in/anastarayra12', Icon: LinkedInIcon },
+    { key: 'github', href: links.github, label: 'GitHub', value: '@anastarayra12-ctrl', Icon: GitHubIcon },
   ];
 
   return (
@@ -263,53 +283,85 @@ export function Contact() {
       <div className="container">
         <SectionHead id="contact" index={c.index} kicker={c.kicker} title={c.title} intro={c.intro} />
 
-        <div className="contact__layout">
-          <Reveal className="contact__direct">
-            <p className="contact__label">{c.emailLabel}</p>
-            <div className="contact__email-row">
-              <a className="contact__email" href={`mailto:${links.email}`} dir="ltr">
+        <Reveal className="cbento">
+          {/* Main tile: email */}
+          <div className="ctile ctile--main">
+            <span className="ctile__mark" aria-hidden="true">
+              <BrandMark size={220} />
+            </span>
+            <span className="ctile__status">
+              <i aria-hidden="true" /> {t.hero.status}
+            </span>
+            <p className="ctile__eyebrow">{c.emailLabel}</p>
+            <div className="ctile__email-row">
+              <a className="ctile__email" href={`mailto:${links.email}`} dir="ltr">
                 {links.email}
-                <ArrowUpRight className="contact__email-arrow" aria-hidden="true" />
               </a>
-              <button type="button" className="icon-btn contact__copy" onClick={copyEmail} aria-label={copied ? c.copied : c.copy} title={c.copy}>
-                {copied ? <Check size={18} /> : <Copy size={18} />}
+              <button type="button" className="ctile__copy" onClick={copyEmail} aria-label={copied ? c.copied : c.copy} title={c.copy}>
+                {copied ? <Check size={17} /> : <Copy size={17} />}
               </button>
               <span className="sr-only" aria-live="polite">
                 {copied ? c.copied : ''}
               </span>
             </div>
+            <div className="ctile__actions">
+              <a className="btn btn--primary ctile__btn" href={`mailto:${links.email}`}>
+                <Mail size={16} aria-hidden="true" />
+                {c.mailBtn}
+              </a>
+              <a className="btn ctile__btn ctile__btn--wa" href={links.whatsapp} target="_blank" rel="noopener noreferrer">
+                <WhatsAppIcon size={16} />
+                {c.whatsappBtn}
+                <span className="sr-only">{t.a11y.newTab}</span>
+              </a>
+            </div>
+          </div>
 
-            <p className="contact__label contact__label--sub">{c.elsewhere}</p>
-            <ul className="channels">
-              {channels.map(({ key, href, label, value, Icon, ext }) => (
-                <li key={key}>
-                  <a className="channel" href={href} target={ext ? '_blank' : undefined} rel={ext ? 'noopener noreferrer' : undefined}>
-                    <span className="channel__icon" aria-hidden="true">
-                      <Icon size={18} strokeWidth={1.75} />
-                    </span>
-                    <span className="channel__text">
-                      <span className="channel__label">{label}</span>
-                      <span className="channel__value" dir="auto">
-                        {value}
-                      </span>
-                    </span>
-                    <ArrowUpRight size={16} className="channel__arrow" aria-hidden="true" />
-                    {ext && <span className="sr-only">{t.a11y.newTab}</span>}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          {/* Social tiles */}
+          {socials.map(({ key, href, label, value, Icon }) => (
+            <a key={key} className={`ctile ctile--link ctile--${key}`} href={href} target="_blank" rel="noopener noreferrer">
+              <span className="ctile__icon" aria-hidden="true">
+                <Icon size={22} />
+              </span>
+              <ArrowUpRight size={18} className="ctile__arrow" aria-hidden="true" />
+              <span className="ctile__label">{label}</span>
+              <span className="ctile__value" dir="ltr">
+                {value}
+              </span>
+              <span className="sr-only">{t.a11y.newTab}</span>
+            </a>
+          ))}
 
-            <p className="contact__location">
-              <MapPin size={14} aria-hidden="true" />
-              {c.location}
-            </p>
-          </Reveal>
+          {/* CV tile */}
+          <div className="ctile ctile--cv">
+            <span className="ctile__icon" aria-hidden="true">
+              <FileText size={20} strokeWidth={1.75} />
+            </span>
+            <span className="ctile__label">{c.cvTitle}</span>
+            <span className="ctile__cv-links">
+              <a className="ctile__cv-link" href={links.cvPdf} download={links.cvFileName}>
+                <Download size={14} aria-hidden="true" /> {c.cvPdf}
+              </a>
+              <a className="ctile__cv-link" href={links.cvWeb} target="_blank" rel="noopener noreferrer">
+                <ArrowUpRight size={14} aria-hidden="true" /> {c.cvWebShort}
+                <span className="sr-only">{t.a11y.newTab}</span>
+              </a>
+            </span>
+          </div>
 
-          <Reveal className="contact__form-wrap" delay={0.1}>
+          <AmmanClock label={c.timeLabel} />
+
+          {/* Form tile */}
+          <div className="ctile ctile--form">
+            <div className="ctile__form-intro">
+              <span className="ctile__icon" aria-hidden="true">
+                <Send size={20} strokeWidth={1.75} />
+              </span>
+              <p className="ctile__form-text">{c.formText}</p>
+            </div>
             <ContactForm f={c.form} />
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

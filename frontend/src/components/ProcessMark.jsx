@@ -12,8 +12,8 @@ import './ProcessMark.css';
  *            /  ◆  \        ◆ = PRODUCT: the inner strokes of IDEA and BUILD
  *     01 IDEA    03 BUILD      converge on the diamond — where the two meet.
  *
- * The explanation lives *on* the mark: the active node grows an annotation
- * card, tied to it by a leader line, floating on the closest layer of the
+ * The explanation lives *on* the mark: pointing at a node grows an annotation
+ * card (only while pointed at), tied by a leader line, on the closest layer of the
  * 3D stack. Node labels are real buttons (click / hover / arrow keys).
  * Stacked SVG layers in CSS 3D space — no WebGL.
  */
@@ -69,6 +69,17 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
   const ref = useRef(null);
   const [exploring, setExploring] = useState(false);
   const [pulse, setPulse] = useState(0);
+  // The explanation card only exists while a node is pointed at (or focused).
+  const [hovered, setHovered] = useState(null);
+  const enter = (id) => {
+    setHovered(id);
+    onActivate(id);
+  };
+  const leave = (e) => {
+    // touch "leaves" right after a tap — keep the card until the next tap elsewhere
+    if (e?.pointerType === 'touch') return;
+    setHovered(null);
+  };
 
   // Pointer parallax (fine pointers only)
   const mx = useMotionValue(0);
@@ -85,14 +96,15 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
     mx.set(0);
     my.set(0);
     setExploring(false);
+    setHovered(null);
   };
 
   useEffect(() => setPulse((p) => p + 1), [active]);
 
   const lit = new Set(LIT[active]);
   const cls = (key) => `pm-el${lit.has(key) ? ' is-lit' : ''}`;
-  const step = copy.steps[active];
-  const card = CARDS[active];
+  const shown = hovered ? copy.steps[hovered] : null;
+  const card = hovered ? CARDS[hovered] : null;
   const docDir = document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr';
 
   const draw = (delay) =>
@@ -126,6 +138,9 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
         onPointerMove={onMove}
         onPointerEnter={() => setExploring(true)}
         onPointerLeave={onLeave}
+        onClick={(e) => {
+          if (!e.target.closest('.pm__hit, .pm__label, .pm__card')) setHovered(null);
+        }}
         role="group"
         aria-label={copy.label}
         onKeyDown={onKeySteps}
@@ -162,9 +177,9 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
 
           {/* Layer 2 — nodes + the leader line to the annotation */}
           <svg className="pm__layer pm__layer--nodes" viewBox="0 0 100 100" aria-hidden="true">
-            {ready && (
+            {ready && card && (
               <m.path
-                key={`leader-${active}`}
+                key={`leader-${hovered}`}
                 className="pm__leader"
                 d={`M${card.leader[0][0]} ${card.leader[0][1]} L${card.leader[1][0]} ${card.leader[1][1]}`}
                 initial={reduce ? false : { pathLength: 0 }}
@@ -180,7 +195,7 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
               <g key={key} className={cls(key)}>
                 {active === id && <circle className="pm__halo" cx={cx} cy={cy} r="7" />}
                 <m.circle cx={cx} cy={cy} r="3.5" fill={fill} style={{ transformOrigin: `${cx}px ${cy}px`, transformBox: 'view-box' }} {...pop(delay)} />
-                <circle className="pm__hit" cx={cx} cy={cy} r="9" onPointerEnter={() => select(id)} onClick={() => select(id)} />
+                <circle className="pm__hit" cx={cx} cy={cy} r="9" onPointerEnter={() => enter(id)} onPointerLeave={leave} onClick={() => enter(id)} />
               </g>
             ))}
           </svg>
@@ -195,7 +210,7 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
                 style={{ transformOrigin: `${D[0]}px ${D[1]}px`, transformBox: 'view-box' }}
                 {...pop(1.25)}
               />
-              <circle className="pm__hit" cx={D[0]} cy={D[1]} r="11" onPointerEnter={() => select('product')} onClick={() => select('product')} />
+              <circle className="pm__hit" cx={D[0]} cy={D[1]} r="11" onPointerEnter={() => enter('product')} onPointerLeave={leave} onClick={() => enter('product')} />
             </g>
           </svg>
 
@@ -212,13 +227,17 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
                   className={`pm__label${active === id ? ' is-active' : ''}`}
                   style={{ left: `${p.left}%`, top: `${p.top}%` }}
                   aria-pressed={active === id}
-                  onClick={() => select(id)}
-                  onPointerEnter={() => select(id)}
+                  onClick={() => enter(id)}
+                  onPointerEnter={() => enter(id)}
+                  onPointerLeave={leave}
                   onFocus={() => {
                     setExploring(true);
-                    select(id);
+                    enter(id);
                   }}
-                  onBlur={() => setExploring(false)}
+                  onBlur={() => {
+                    setExploring(false);
+                    setHovered(null);
+                  }}
                   tabIndex={active === id ? 0 : -1}
                 >
                   <span className="pm__label-n">{copy.steps[id].n}</span>
@@ -231,10 +250,10 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
           {/* Layer 5 — the annotation card, closest to the viewer */}
           <div className="pm__layer pm__layer--card" aria-live="polite">
             <AnimatePresence mode="wait" initial={false}>
-              {ready && (
+              {ready && shown && (
                 <m.div
-                  key={active}
-                  className={`pm__card pm__card--${active}`}
+                  key={hovered}
+                  className={`pm__card pm__card--${hovered}`}
                   dir={docDir}
                   style={card.style}
                   initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.92, filter: 'blur(4px)' }}
@@ -243,11 +262,11 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
                   transition={{ duration: 0.35, ease, delay: reduce ? 0 : 0.12 }}
                 >
                   <p className="pm__card-head">
-                    <span className="pm__card-n">{step.n}</span>
-                    <strong>{step.t}</strong>
-                    <span className="pm__card-short">{step.short}</span>
+                    <span className="pm__card-n">{shown.n}</span>
+                    <strong>{shown.t}</strong>
+                    <span className="pm__card-short">{shown.short}</span>
                   </p>
-                  <p className="pm__card-text">{step.d}</p>
+                  <p className="pm__card-text">{shown.d}</p>
                 </m.div>
               )}
             </AnimatePresence>

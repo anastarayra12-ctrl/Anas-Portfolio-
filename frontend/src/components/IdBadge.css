@@ -1,0 +1,231 @@
+.badge {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding-top: 5.5rem;
+  perspective: 1100px;
+}
+
+/* ---------- Lanyard + clip ---------- */
+.badge__lanyard {
+  position: absolute;
+  top: -2.5rem;
+  left: 50%;
+  width: 9rem;
+  height: 9rem;
+  transform: translateX(-50%);
+  overflow: visible;
+}
+.badge__lanyard path {
+  fill: none;
+  stroke: var(--brand-deep);
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+.badge__lanyard path:last-child { stroke: var(--brand-accent); }
+
+.badge__swing {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  transform-origin: 50% -5.5rem;
+  animation: badge-swing 7s ease-in-out infinite;
+}
+.badge__swing:hover { animation-play-state: paused; }
+@keyframes badge-swing {
+  0%, 100% { transform: rotate(-1.6deg); }
+  50% { transform: rotate(1.6deg); }
+}
+.badge__clip {
+  position: absolute;
+  top: -1.9rem;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.4rem;
+  border-radius: 0.6rem 0.6rem 0.9rem 0.9rem;
+  background: linear-gradient(#c9ccd3, #8b9099);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+.badge__ring { width: 1.1rem; height: 0.55rem; border-radius: 0.3rem; background: var(--bg-sunken); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6); }
+
+/* ---------- Card & flip ---------- */
+.badge__tilt { transform-style: preserve-3d; will-change: transform; }
+.badge__card {
+  position: relative;
+  display: block;
+  width: min(19rem, 78vw);
+  aspect-ratio: 5 / 7.4;
+  transform-style: preserve-3d;
+  transition: transform 800ms cubic-bezier(0.34, 1.3, 0.64, 1);
+  border-radius: 1.4rem;
+  cursor: pointer;
+  text-align: start;
+}
+.badge__card.is-flipped { transform: rotateY(180deg); }
+.badge__card:focus-visible { outline: none; }
+.badge__card:focus-visible .badge__face { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent), var(--badge-shadow); }
+
+.badge__face {
+  --badge-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.75);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 1.1rem;
+  border-radius: inherit;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-shadow: var(--badge-shadow);
+}
+.badge__face--front {
+  color: var(--text);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--brand-accent) 14%, transparent), transparent 45%),
+    var(--surface);
+  border: 1px solid var(--line-strong);
+}
+.badge__face--back {
+  transform: rotateY(180deg);
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  text-align: center;
+  color: #F5F4F1;
+  background: linear-gradient(160deg, #1a3fae, #0b0b0b 70%);
+  border: 1px solid rgba(59, 130, 246, 0.45);
+}
+.badge--still .badge__swing { animation: none; }
+.badge--still .badge__card { transition: none; }
+.badge--still .badge__card.is-flipped { transform: none; }
+.badge--still .badge__face--back { transform: none; opacity: 0; transition: opacity 250ms; }
+.badge--still .badge__card.is-flipped .badge__face--back { opacity: 1; }
+.badge--still .badge__card.is-flipped .badge__face--front { opacity: 0; }
+
+.badge__slot {
+  position: absolute;
+  top: 0.7rem;
+  left: 50%;
+  width: 2.8rem;
+  height: 0.45rem;
+  transform: translateX(-50%);
+  border-radius: var(--r-pill);
+  background: var(--bg);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.badge__sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* ---------- Front ---------- */
+.badge__top { display: flex; align-items: center; justify-content: space-between; margin-top: 0.9rem; }
+.badge__org { font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.12em; color: var(--text-3); }
+.badge__photo {
+  display: grid;
+  place-items: center;
+  width: 6rem;
+  height: 6rem;
+  margin: 1.1rem 0 0.9rem;
+  border-radius: 1.2rem;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 12px 12px;
+  box-shadow: inset 0 0 0 1px var(--line-strong), 0 0 0 4px var(--accent-soft);
+}
+.badge__name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+:root[lang='ar'] .badge__name { font-family: 'Lalezar', 'Changa', sans-serif; font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 1.7rem; line-height: 1.3; }
+.badge__role { margin-top: 0.3rem; font-size: 0.78rem; font-weight: 600; color: var(--accent); }
+.badge__fields { display: grid; gap: 0.45rem; margin-top: 1rem; }
+.badge__field { display: grid; gap: 0.05rem; }
+.badge__k { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); }
+:root[lang='ar'] .badge__k { letter-spacing: 0; font-size: 0.7rem; }
+.badge__v { font-size: 0.82rem; font-weight: 600; line-height: 1.35; }
+.badge__foot {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--line-strong);
+}
+.badge__status {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-self: start;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--r-pill);
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--success) 14%, transparent);
+}
+.badge__status i { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); }
+.badge__barcode {
+  height: 1.6rem;
+  background: repeating-linear-gradient(90deg, var(--text) 0 2px, transparent 2px 4px, var(--text) 4px 5px, transparent 5px 8px, var(--text) 8px 11px, transparent 11px 12px);
+  opacity: 0.75;
+  border-radius: 2px;
+}
+.badge__id { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-3); letter-spacing: 0.08em; }
+
+/* ---------- Back ---------- */
+.badge__back-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(245, 244, 241, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 244, 241, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, #000, transparent 75%);
+  mask-image: radial-gradient(circle at 50% 40%, #000, transparent 75%);
+}
+.badge__back-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: #0b0b0b;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.4);
+}
+.badge__back-title { position: relative; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+:root[lang='ar'] .badge__back-title { font-family: 'Lalezar', sans-serif; font-weight: 400; letter-spacing: 0; }
+.badge__back-list { position: relative; display: grid; gap: 0.5rem; width: 100%; }
+.badge__field--back {
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.8rem;
+  background: rgba(245, 244, 241, 0.06);
+  border: 1px solid rgba(245, 244, 241, 0.1);
+}
+.badge__field--back .badge__k { color: #7dd3fc; }
+.badge__motto { position: relative; font-size: 0.78rem; font-weight: 600; color: rgba(245, 244, 241, 0.75); }
+.badge__palette { position: relative; display: flex; gap: 0.3rem; }
+.badge__palette i { width: 0.85rem; height: 0.85rem; border-radius: 50%; box-shadow: 0 0 0 1px rgba(245, 244, 241, 0.3); }
+
+.badge__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.4rem;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+:root[data-theme='light'] .badge__face { --badge-shadow: 0 34px 70px -34px rgba(11, 11, 11, 0.4); }
