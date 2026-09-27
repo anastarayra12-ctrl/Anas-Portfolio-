@@ -7,7 +7,7 @@
   width: min(calc(100% - 1.5rem), 34rem);
   padding: 0.3125rem;
   border: var(--hairline) solid var(--line-strong);
-  border-radius: 14px;
+  border-radius: 1.6rem;
   background: var(--dock-bg);
   box-shadow: var(--dock-shadow);
   -webkit-backdrop-filter: saturate(150%) blur(18px);
@@ -25,13 +25,13 @@
   gap: 0.2rem;
   min-height: 3.25rem;
   padding: 0.35rem 0.25rem;
-  border-radius: 10px;
+  border-radius: 1.3rem;
   color: var(--text-3);
   transition: color var(--dur-fast);
   -webkit-tap-highlight-color: transparent;
 }
 .dock__link:hover { color: var(--text); }
-.dock__link:focus-visible { outline-offset: -2px; border-radius: 10px; }
+.dock__link:focus-visible { outline-offset: -2px; border-radius: 1.3rem; }
 .dock__link.is-active { color: var(--text); }
 
 .dock__active {
@@ -81,7 +81,9 @@
 
 /* Wider screens: icon + index + label on one line */
 @media (min-width: 48rem) {
-  .dock { width: fit-content; bottom: 1.25rem; }
+  .dock { width: fit-content; bottom: 1.25rem; border-radius: var(--r-pill); padding: 0.375rem; }
+  .dock__link { border-radius: var(--r-pill); }
+  .dock__link:focus-visible { border-radius: var(--r-pill); }
   .dock__list { display: flex; }
   .dock__link {
     flex-direction: row;

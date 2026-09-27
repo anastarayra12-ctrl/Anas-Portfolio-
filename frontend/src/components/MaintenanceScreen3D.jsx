@@ -327,7 +327,7 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
           </div>
           <div>
             <div style={{ fontWeight: '700', fontSize: isMobile ? '14px' : '16px', letterSpacing: '0.3px', color: '#F9FAFB' }}>
-              {isAr ? 'أنس طرايرة' : 'Anas Tarayra'}
+              {isAr ? 'أنس الطرايرة' : 'Anas Tarayra'}
             </div>
             <div style={{ fontSize: isMobile ? '10px' : '12px', color: '#9CA3AF', fontWeight: '500' }}>
               {isAr ? 'مطور فول ستاك & UI/UX' : 'Full Stack & UI/UX Architect'}

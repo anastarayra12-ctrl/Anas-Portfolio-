@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { m, useReducedMotion } from 'framer-motion';
-import { ArrowDown, Download } from 'lucide-react';
+import { ArrowDown, Download, GraduationCap, Code2, PenTool, MapPin, Phone, Languages } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useIntroReady } from '../context/IntroContext';
 import { links, processIds } from '../content/site';
@@ -9,6 +9,7 @@ import { Magnetic } from './ui/Magnetic';
 import './Hero.css';
 
 const ease = [0.22, 1, 0.36, 1];
+const roleIcons = [GraduationCap, Code2, PenTool];
 
 export function Hero() {
   const { t, lang } = useLanguage();
@@ -27,7 +28,7 @@ export function Hero() {
     const timers = processIds.map((id, i) =>
       setTimeout(() => {
         if (!touched.current) setActive(id);
-      }, 1500 + i * 850),
+      }, 1700 + i * 1500),
     );
     return () => timers.forEach(clearTimeout);
   }, [reduce, ready]);
@@ -41,39 +42,68 @@ export function Hero() {
   const rise = (delay) =>
     reduce
       ? {}
-      : { initial: { opacity: 0, y: 16 }, animate: ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }, transition: { delay: delay + (ready ? 0.35 : 0), duration: 0.8, ease } };
-  const line = (i) =>
-    reduce ? {} : { initial: { y: '108%' }, animate: { y: ready ? 0 : '108%' }, transition: { delay: 0.1 + i * 0.1, duration: 1, ease } };
+      : {
+          initial: { opacity: 0, y: 16 },
+          animate: ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
+          transition: { delay: delay + (ready ? 0.35 : 0), duration: 0.8, ease },
+        };
 
-  const [first, last] = h.name.split(' ');
+  const [first, ...rest] = h.name.split(' ');
+  const last = rest.join(' ');
+  const isAr = lang === 'ar';
+  // Latin names reveal letter by letter; Arabic letters must stay joined, so by word.
+  const units = (word) => (isAr ? [word] : [...word]);
+
+  let n = 0;
+  const glyph = (ch) => {
+    const i = n++;
+    return (
+      <span key={i} className="hero__glyph-mask">
+        <m.span
+          className="hero__glyph"
+          initial={reduce ? false : { y: '110%', opacity: 0, filter: 'blur(8px)' }}
+          animate={ready || reduce ? { y: 0, opacity: 1, filter: 'blur(0px)' } : { y: '110%', opacity: 0, filter: 'blur(8px)' }}
+          transition={{ delay: 0.15 + i * 0.045, duration: 0.9, ease }}
+        >
+          {ch}
+        </m.span>
+      </span>
+    );
+  };
 
   return (
     <section className="hero" id="top" aria-labelledby="hero-name">
-
       <div className="container hero__layout">
         <div className="hero__copy">
           <m.p className="hero__status" {...rise(0)}>
-            <span className="status-dot" aria-hidden="true" />
-            {h.status}
+            <span className="hero__status-dot" aria-hidden="true">
+              <span className="status-dot" />
+            </span>
+            <span>{h.status}</span>
           </m.p>
 
-          <h1 className="hero__name" id="hero-name" key={lang}>
-            <span className="hero__name-line">
-              <m.span {...line(0)}>{first}</m.span>
+          <h1 className="hero__name" id="hero-name" key={lang} aria-label={h.name}>
+            <span className="hero__first" aria-hidden="true">
+              {units(first).map(glyph)}
             </span>
-            {" "}
-            <span className="hero__name-line">
-              <m.span {...line(1)}>{last}</m.span>
+            <span className="hero__last" aria-hidden="true">
+              {units(last).map(glyph)}
             </span>
           </h1>
 
-          <m.ul className="hero__roles" {...rise(0.35)}>
-            {h.roles.map((r) => (
-              <li key={r}>{r}</li>
-            ))}
+          <m.ul className="hero__roles" {...rise(0.3)}>
+            {h.roles.map((r, i) => {
+              const Icon = roleIcons[i];
+              return (
+                <li key={r} className="role">
+                  <Icon size={15} strokeWidth={1.75} aria-hidden="true" />
+                  {r}
+                </li>
+              );
+            })}
           </m.ul>
 
-          <m.p className="hero__statement" {...rise(0.45)}>
+          <m.p className="hero__statement" {...rise(0.42)}>
             {h.statement.map((part, i) =>
               part.node ? (
                 <span
@@ -93,7 +123,7 @@ export function Hero() {
             )}
           </m.p>
 
-          <m.div className="hero__ctas" {...rise(0.55)}>
+          <m.div className="hero__ctas" {...rise(0.52)}>
             <Magnetic>
               <a href="#work" className="btn btn--primary">
                 {h.primary}
@@ -120,18 +150,41 @@ export function Hero() {
         </m.div>
       </div>
 
+      {/* Quick info: where, how to reach, which languages */}
       <div className="container">
-        <m.dl className="hero__facts" {...rise(0.7)}>
-          {h.facts.map((f) => (
-            <div key={f.k} className="hero__fact">
-              <dt>{f.k}</dt>
-              <dd>
-                <span className="hero__fact-v">{f.v}</span>
-                <span className="hero__fact-d">{f.d}</span>
-              </dd>
-            </div>
-          ))}
-        </m.dl>
+        <m.ul className="infobar" {...rise(0.65)}>
+          <li className="infobar__item">
+            <span className="infobar__icon" aria-hidden="true">
+              <MapPin size={16} strokeWidth={1.75} />
+            </span>
+            <span className="infobar__value">{h.info.location}</span>
+          </li>
+          <li className="infobar__item">
+            <a className="infobar__link" href={`tel:${links.phoneDisplay.replace(/\s/g, '')}`} aria-label={`${h.info.phoneLabel}: ${links.phoneDisplay}`}>
+              <span className="infobar__icon" aria-hidden="true">
+                <Phone size={16} strokeWidth={1.75} />
+              </span>
+              <span className="infobar__value" dir="ltr">
+                {links.phoneDisplay}
+              </span>
+            </a>
+          </li>
+          <li className="infobar__item infobar__item--langs">
+            <span className="infobar__icon" aria-hidden="true">
+              <Languages size={16} strokeWidth={1.75} />
+            </span>
+            <span className="infobar__label">{h.info.languagesLabel}</span>
+            <span className="infobar__langs">
+              {h.info.languages.map((l) => (
+                <span key={l.name} className="lang-chip">
+                  <span className="lang-chip__dot" aria-hidden="true" />
+                  <strong>{l.name}</strong>
+                  <span className="lang-chip__level">{l.level}</span>
+                </span>
+              ))}
+            </span>
+          </li>
+        </m.ul>
       </div>
     </section>
   );

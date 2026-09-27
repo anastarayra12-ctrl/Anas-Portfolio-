@@ -71,11 +71,15 @@ const en = {
     ],
     primary: 'View My Work',
     secondary: 'Download CV',
-    facts: [
-      { k: 'Languages', v: 'Arabic · English', d: 'Native · Professional working proficiency' },
-      { k: 'Studying', v: 'B.Sc. Software Engineering', d: 'Al-Zaytoonah University of Jordan · 3rd year' },
-      { k: 'Beyond code', v: 'Graphic design & brand identity', d: 'I designed my own — the mark on this page included' },
-    ],
+    info: {
+      location: 'Jordan, Amman',
+      phoneLabel: 'Call or WhatsApp',
+      languagesLabel: 'Languages',
+      languages: [
+        { name: 'Arabic', level: 'Native' },
+        { name: 'English', level: 'Professional Working Proficiency' },
+      ],
+    },
     system: {
       label: 'Interactive brand mark: how an idea becomes a product',
       hint: 'Explore the process',
@@ -384,7 +388,7 @@ const en = {
 
 const ar = {
   meta: {
-    title: 'أنس طرايرة — مطوّر Full-Stack ومصمّم UI/UX',
+    title: 'أنس الطرايرة — مطوّر Full-Stack ومصمّم UI/UX',
     description:
       'طالب هندسة برمجيات ومطوّر Full-Stack ومصمّم UI/UX في عمّان، الأردن — أحوّل الأفكار إلى تصاميم، والتصاميم إلى منتجات رقمية.',
   },
@@ -397,10 +401,10 @@ const ar = {
     sections: 'الأقسام',
     backToTop: 'العودة للأعلى',
     newTab: '(يفتح في نافذة جديدة)',
-    home: 'أنس طرايرة — العودة للأعلى',
+    home: 'أنس الطرايرة — العودة للأعلى',
   },
   header: {
-    name: 'أنس طرايرة',
+    name: 'أنس الطرايرة',
     role: 'مطوّر Full Stack ومصمّم UI/UX',
     cv: 'السيرة',
     cvLong: 'تحميل السيرة الذاتية',
@@ -415,7 +419,7 @@ const ar = {
   },
   hero: {
     status: 'متاح للعمل والتعاون',
-    name: 'أنس طرايرة',
+    name: 'أنس الطرايرة',
     roles: ['طالب هندسة برمجيات', 'مطوّر Full Stack', 'مصمّم UI/UX'],
     statement: [
       { t: 'أحوّل ' },
@@ -428,11 +432,15 @@ const ar = {
     ],
     primary: 'استعرض أعمالي',
     secondary: 'تحميل السيرة الذاتية',
-    facts: [
-      { k: 'اللغات', v: 'العربية · الإنجليزية', d: 'اللغة الأم · كفاءة مهنية' },
-      { k: 'الدراسة', v: 'بكالوريوس هندسة البرمجيات', d: 'جامعة الزيتونة الأردنية · السنة الثالثة' },
-      { k: 'خارج الكود', v: 'التصميم الجرافيكي والهوية البصرية', d: 'صمّمت هويتي بنفسي — بما فيها الشعار في هذه الصفحة' },
-    ],
+    info: {
+      location: 'الأردن، عمّان',
+      phoneLabel: 'اتصال أو واتساب',
+      languagesLabel: 'اللغات',
+      languages: [
+        { name: 'العربية', level: 'اللغة الأم' },
+        { name: 'الإنجليزية', level: 'كفاءة مهنية في العمل' },
+      ],
+    },
     system: {
       label: 'شعار تفاعلي: كيف تتحوّل الفكرة إلى منتج',
       hint: 'استكشف طريقة العمل',
@@ -728,7 +736,7 @@ const ar = {
     },
   },
   footer: {
-    signoff: 'صمّمه وطوّره أنس طرايرة في عمّان.',
+    signoff: 'صمّمه وطوّره أنس الطرايرة في عمّان.',
     built: 'React · Vite · Changa',
     rights: 'جميع الحقوق محفوظة.',
   },

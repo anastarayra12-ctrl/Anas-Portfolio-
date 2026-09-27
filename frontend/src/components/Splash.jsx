@@ -80,7 +80,7 @@ export function Splash({ onLeave, onDone }) {
           className="splash"
           role="dialog"
           aria-modal="true"
-          aria-label={lang === 'ar' ? 'مرحبًا — أنس طرايرة' : 'Hello — Anas Tarayra'}
+          aria-label={lang === 'ar' ? 'مرحبًا — أنس الطرايرة' : 'Hello — Anas Tarayra'}
           onClick={finish}
           initial={{ clipPath: 'inset(0% 0% 0% 0%)' }}
           exit={reduce ? { opacity: 0, transition: { duration: 0.35 } } : { clipPath: 'inset(0% 0% 100% 0%)', transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.18 } }}

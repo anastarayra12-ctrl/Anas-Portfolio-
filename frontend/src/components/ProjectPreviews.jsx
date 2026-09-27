@@ -53,7 +53,7 @@ export function PortfolioPreview() {
         <div className="pv-phone__screen">
           <BrandMark size={12} />
           <span className="pv-phone__h1">
-            أنس <em>طرايرة</em>
+            أنس <em>الطرايرة</em>
           </span>
           <span className="pv-site__line" />
           <span className="pv-site__line pv-site__line--short" />
@@ -85,7 +85,7 @@ export function BrandPreview() {
     <div className="pv pv--brand" aria-hidden="true" dir="ltr">
       <div className="pv-brand__tile pv-brand__tile--dark">
         <BrandMark size={96} />
-        <span className="pv-brand__name-ar">أنس طرايرة</span>
+        <span className="pv-brand__name-ar">أنس الطرايرة</span>
         <span className="pv-brand__name-en">ANAS TARAYRA</span>
       </div>
       <div className="pv-brand__tile pv-brand__tile--light">
