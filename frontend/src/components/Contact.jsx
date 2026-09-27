@@ -253,7 +253,7 @@ export function Contact() {
 
   const channels = [
     { key: 'linkedin', href: links.linkedin, label: 'LinkedIn', value: 'in/anastarayra12', Icon: LinkedInIcon, ext: true },
-    { key: 'github', href: links.github, label: 'GitHub', value: '@anastarayra12', Icon: GitHubIcon, ext: true },
+    { key: 'github', href: links.github, label: 'GitHub', value: '@anastarayra12-ctrl', Icon: GitHubIcon, ext: true },
     { key: 'whatsapp', href: links.whatsapp, label: 'WhatsApp', value: links.phoneDisplay, Icon: WhatsAppIcon, ext: true },
     { key: 'cv', href: links.cvWeb, label: 'CV', value: c.cvWeb, Icon: FileText, ext: true },
   ];

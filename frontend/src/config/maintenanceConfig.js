@@ -21,7 +21,7 @@ export const maintenanceConfig = {
     whatsapp: 'https://wa.me/962796851497',
     email: 'anastarayra12@gmail.com',
     linkedin: 'https://www.linkedin.com/in/anastarayra12',
-    github: 'https://github.com/anastarayra12',
+    github: 'https://github.com/anastarayra12-ctrl',
   },
   allowBypassQuery: true, // Allows appending `?preview=true` to URL or shortcut Ctrl+Shift+M to view the live site
 };
