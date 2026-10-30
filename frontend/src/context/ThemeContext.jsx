@@ -1,25 +1,28 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { playSwitchFx } from '../fx/switchFx';
+import { PREF_KEYS, initialTheme, savePref } from '../prefs';
 
 const ThemeContext = createContext(null);
 
 /**
- * Dark is the brand default for every visitor, on every visit — the choice is
- * intentionally not persisted.
+ * Dark is the brand default (black-first palette), deliberately not the OS
+ * setting; an explicit choice is remembered and applied before first paint.
  */
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState(initialTheme);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#F5F4F1' : '#0B0B0B');
+    document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', theme);
   }, [theme]);
 
   /** Switch theme with the "design" effect, expanding from `origin` (a DOMRect). */
   const toggleTheme = useCallback(
     (origin) => {
       const next = theme === 'dark' ? 'light' : 'dark';
+      savePref(PREF_KEYS.theme, next);
       playSwitchFx({
         type: 'design',
         origin,

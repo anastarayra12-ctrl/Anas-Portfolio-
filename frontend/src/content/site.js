@@ -385,6 +385,21 @@ const en = {
     formText: 'Prefer a form? Leave your details and message, and I’ll reply by email.',
     form: {
       title: 'Or send a message here',
+      topic: 'What is it about?',
+      topics: [
+        {
+          key: 'hiring',
+          t: 'Hiring or internship',
+          d: 'A role, an internship or a technical position',
+          ph: 'Tell me about the role, the team and the timeline.',
+        },
+        {
+          key: 'project',
+          t: 'A project',
+          d: 'A website, UI/UX design or custom software',
+          ph: 'What would you like to build, and by when?',
+        },
+      ],
       name: 'Name',
       namePh: 'Your name',
       email: 'Email',
@@ -765,6 +780,21 @@ const ar = {
     formText: 'تفضّل النموذج؟ اترك بياناتك ورسالتك، وسأردّ عليك عبر البريد.',
     form: {
       title: 'أو أرسل رسالة من هنا',
+      topic: 'بخصوص ماذا؟',
+      topics: [
+        {
+          key: 'hiring',
+          t: 'توظيف أو تدريب',
+          d: 'وظيفة، أو فرصة تدريب، أو منصب تقني',
+          ph: 'حدّثني عن الدور والفريق والموعد المتوقّع.',
+        },
+        {
+          key: 'project',
+          t: 'مشروع',
+          d: 'موقع إلكتروني، أو تصميم واجهات، أو برمجيات مخصّصة',
+          ph: 'ماذا تريد أن تبني، ومتى؟',
+        },
+      ],
       name: 'الاسم',
       namePh: 'اسمك',
       email: 'البريد الإلكتروني',

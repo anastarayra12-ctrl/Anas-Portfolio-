@@ -12,9 +12,12 @@ const WRITE_START = 0.55;
 const WRITE_DURATION = 2.3;
 const HOLD = 0.9; // let the finished word breathe before the curtain lifts
 
-/** The splash greets every page load (skippable at any moment). */
+/**
+ * The splash greets every page load (skippable at any moment) — except deep
+ * links (#contact, #work/portfolio…): that visitor came for something specific.
+ */
 // eslint-disable-next-line react-refresh/only-export-components
-export const shouldShowSplash = () => true;
+export const shouldShowSplash = () => !window.location.hash;
 
 /*
  * Timeline (≈3.6s):

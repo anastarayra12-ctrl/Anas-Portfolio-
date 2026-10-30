@@ -8,6 +8,7 @@ import { SectionHead } from './ui/SectionHead';
 import { Reveal } from './ui/Reveal';
 import { GitHubIcon } from './ui/Icons';
 import { PortfolioPreview, BrandPreview } from './ProjectPreviews';
+import { track } from '../analytics';
 import './Work.css';
 
 const previews = { portfolio: PortfolioPreview, brand: BrandPreview };
@@ -245,18 +246,44 @@ function ProjectDialog({ project, labels, newTab, onClose }) {
 }
 
 /* --------------------------------------------------------------- Section */
+/* Each case study has its own address (#work/<id>) so it can be shared and the Back button closes it. */
+const PROJECT_HASH = /^#work\/([\w-]+)$/;
+const projectFromHash = () => window.location.hash.match(PROJECT_HASH)?.[1] ?? null;
+
 export function Work() {
   const { t } = useLanguage();
   const w = t.work;
-  const [openId, setOpenId] = useState(null);
+  const [openId, setOpenId] = useState(projectFromHash);
   const opener = useRef(null);
+  const pushed = useRef(false);
   const project = w.projects.find((p) => p.id === openId);
+
+  useEffect(() => {
+    const sync = () => {
+      pushed.current = false;
+      setOpenId(projectFromHash());
+    };
+    window.addEventListener('popstate', sync);
+    return () => window.removeEventListener('popstate', sync);
+  }, []);
 
   const open = useCallback((id, el) => {
     opener.current = el;
+    window.history.pushState(null, '', `#work/${id}`);
+    pushed.current = true;
+    track('project_open', { project: id });
     setOpenId(id);
   }, []);
-  const close = useCallback(() => setOpenId(null), []);
+  const close = useCallback(() => {
+    if (pushed.current) {
+      window.history.back(); // popstate closes the dialog
+      return;
+    }
+    // Arrived on a shared link: land on the projects instead of leaving the site.
+    window.history.replaceState(null, '', '#work');
+    setOpenId(null);
+    document.getElementById('work')?.scrollIntoView({ behavior: 'instant' });
+  }, []);
 
   return (
     <section className="section work" id="work" aria-labelledby="work-title">

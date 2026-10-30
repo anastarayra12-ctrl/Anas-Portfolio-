@@ -3,6 +3,7 @@ import { AnimatePresence, m } from 'framer-motion';
 import { ArrowUpRight, Check, Clock, Copy, Download, FileText, Loader2, Mail, Send, CircleCheck, CircleAlert } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { links } from '../content/site';
+import { track } from '../analytics';
 import { SectionHead } from './ui/SectionHead';
 import { Reveal } from './ui/Reveal';
 import { GitHubIcon, LinkedInIcon, WhatsAppIcon } from './ui/Icons';
@@ -53,6 +54,8 @@ function ContactForm({ f }) {
   const [touched, setTouched] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [status, setStatus] = useState('idle'); // idle | sending | sent | mailto | error
+  const [topic, setTopic] = useState(null); // optional: 'hiring' | 'project'
+  const chosen = f.topics.find((x) => x.key === topic);
 
   const errors = validate(values, f.errors);
   const showError = (k) => (touched[k] || submitted) && errors[k];
@@ -68,12 +71,15 @@ function ContactForm({ f }) {
       formRef.current?.querySelector(`[name="${first}"]`)?.focus();
       return;
     }
-    const subject = `Portfolio message from ${values.name.trim()}`;
+    // Subjects stay in English so the inbox sorts consistently: "[Hiring] Portfolio message from …"
+    const tag = { hiring: '[Hiring] ', project: '[Project] ' }[topic] ?? '';
+    const subject = `${tag}Portfolio message from ${values.name.trim()}`;
 
     // No form service configured: hand off to the visitor's email app — never fake a success.
     if (!ACCESS_KEY) {
       const body = `${values.message.trim()}\n\n— ${values.name.trim()} (${values.email.trim()})`;
       window.location.href = `mailto:${links.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      track('contact_submit', { topic: topic ?? 'none', via: 'mailto' });
       setStatus('mailto');
       return;
     }
@@ -90,12 +96,15 @@ function ContactForm({ f }) {
           from_name: values.name.trim(),
           email: values.email.trim(),
           message: values.message.trim(),
+          inquiry: topic ?? 'not specified',
           botcheck,
         }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.success) throw new Error(data.message || 'Request failed');
+      track('contact_submit', { topic: topic ?? 'none', via: 'form' });
       setStatus('sent');
+      setTopic(null);
       setValues({ name: '', email: '', message: '' });
       setTouched({});
       setSubmitted(false);
@@ -151,6 +160,26 @@ function ContactForm({ f }) {
           <h3 className="contact__form-title" id={`${uid}-title`}>
             {f.title}
           </h3>
+          {/* Two paths — companies and clients — without two separate forms */}
+          <fieldset className="topics">
+            <legend className="field__label">{f.topic}</legend>
+            <div className="topics__options">
+              {f.topics.map((x) => (
+                <label key={x.key} className={`topic${topic === x.key ? ' is-on' : ''}`}>
+                  <input
+                    type="radio"
+                    name="topic"
+                    value={x.key}
+                    checked={topic === x.key}
+                    onChange={() => setTopic(x.key)}
+                    className="topic__input"
+                  />
+                  <span className="topic__t">{x.t}</span>
+                  <span className="topic__d">{x.d}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
           <div className="contact__row">
             <Field id={`${uid}-name`} label={f.name} error={showError('name')}>
               <input
@@ -190,7 +219,7 @@ function ContactForm({ f }) {
               id={`${uid}-message`}
               name="message"
               rows={5}
-              placeholder={f.messagePh}
+              placeholder={chosen?.ph ?? f.messagePh}
               value={values.message}
               onChange={onChange}
               onBlur={onBlur}

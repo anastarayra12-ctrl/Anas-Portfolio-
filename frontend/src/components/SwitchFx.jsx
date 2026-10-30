@@ -82,13 +82,13 @@ function DesignFx({ job, onDone }) {
     (async () => {
       paint(0);
       root.current.classList.add('is-in');
-      await wait(140);
-      await tween(680, easeInOut, (t) => alive && paint(t));
+      await wait(80);
+      await tween(600, easeInOut, (t) => alive && paint(t));
       if (!alive) return;
       job.apply();
-      await wait(320);
+      await wait(220);
       root.current.classList.add('is-out');
-      await wait(420);
+      await wait(400);
       onDone();
     })();
     return () => {
@@ -153,24 +153,26 @@ function CodeFx({ job, onDone }) {
     const type = async () => {
       for (let i = 1; i <= newLine.length && alive; i++) {
         typed.current.textContent = newLine.slice(0, i);
-        await wait(i < 10 ? 22 : 13);
+        await wait(i < 10 ? 16 : 8);
       }
     };
 
     (async () => {
       cover(0);
       root.current.classList.add('is-in');
-      const typing = wait(160).then(type);
-      await tween(480, easeInOut, (q) => alive && cover(q));
+      const typing = wait(120).then(type);
+      await tween(420, easeInOut, (q) => alive && cover(q));
       await typing;
       if (!alive) return;
       root.current.classList.add('is-committed');
-      await wait(150);
+      await wait(100);
       job.apply();
       hello.current.classList.add('is-shown');
-      await wait(520);
+      // hold on the greeting until the new script's fonts are in (capped), so the reveal never shows a font swap
+      await Promise.all([wait(320), Promise.race([job.ready, wait(700)])]);
+      if (!alive) return;
       root.current.classList.add('is-leaving');
-      await tween(520, easeInOut, (q) => alive && reveal(q));
+      await tween(460, easeInOut, (q) => alive && reveal(q));
       edge.current.style.opacity = '0';
       onDone();
     })();
