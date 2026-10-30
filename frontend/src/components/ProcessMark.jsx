@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, m, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
+import { AnimatePresence, m, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { processIds } from '../content/site';
 import './ProcessMark.css';
 
@@ -16,6 +16,10 @@ import './ProcessMark.css';
  * card (only while pointed at), tied by a leader line, on the closest layer of the
  * 3D stack. Node labels are real buttons (click / hover / arrow keys).
  * Stacked SVG layers in CSS 3D space — no WebGL.
+ *
+ * Scrolling away from the hero pulls the stack apart into an exploded
+ * assembly drawing (--x: 0 assembled → 1 apart), each layer labelled.
+ * Transform-only, so it stays on the compositor; off for reduced motion.
  */
 
 const TOP = [50, 14];
@@ -99,6 +103,42 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
     setHovered(null);
   };
 
+  // Exploded view: 0 while the mark is at rest, 1 once it has scrolled off the top.
+  // Starts only after its centre passes 60% of the viewport, so it never begins half-open.
+  const wrap = useRef(null);
+  const span = useRef([0, 1]);
+  const room = useRef(0); // free space below the mark inside its section
+  useEffect(() => {
+    const measure = () => {
+      if (!wrap.current) return;
+      const r = wrap.current.getBoundingClientRect();
+      const top = r.top + window.scrollY;
+      const start = Math.max(0, top + r.height / 2 - window.innerHeight * 0.6);
+      span.current = [start, start + Math.min(r.height * 0.75, window.innerHeight * 0.45)];
+      const section = wrap.current.closest('section')?.getBoundingClientRect();
+      room.current = section ? Math.max(0, section.bottom - r.bottom) : 0;
+    };
+    measure();
+    document.fonts?.ready.then(measure);
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [copy]);
+  const { scrollY } = useScroll();
+  const explode = useSpring(
+    useTransform(scrollY, (y) => {
+      const [a, b] = span.current;
+      return Math.min(1, Math.max(0, (y - a) / (b - a)));
+    }),
+    { stiffness: 220, damping: 40, restDelta: 0.001 },
+  );
+  // End pose: tipped back into an isometric plane so the layers stack vertically.
+  const tiltX = useTransform([rx, explode], ([a, e]) => a + e * 50);
+  const tiltZ = useTransform(explode, [0, 1], [0, -18]);
+  const shrink = useTransform(explode, [0, 1], [1, 0.8]);
+  // The mark trails the scroll while it opens, so the moment happens on screen (no pinning),
+  // but never further than the room left in the hero — it must not slide over the next section.
+  const lag = useTransform(explode, (e) => e * Math.min((span.current[1] - span.current[0]) * 0.6, room.current));
+
   useEffect(() => setPulse((p) => p + 1), [active]);
 
   const lit = new Set(LIT[active]);
@@ -130,8 +170,8 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
   };
 
   return (
-    <div className={`pm${exploring || highlight ? ' is-exploring' : ''}`} data-active={active}>
-      <div
+    <div className={`pm${exploring || highlight ? ' is-exploring' : ''}`} data-active={active} ref={wrap}>
+      <m.div
         className="pm__viewport"
         ref={ref}
         dir="ltr"
@@ -144,8 +184,9 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
         role="group"
         aria-label={copy.label}
         onKeyDown={onKeySteps}
+        style={reduce ? undefined : { y: lag }}
       >
-        <m.div className="pm__stage" style={reduce ? undefined : { rotateX: rx, rotateY: ry }}>
+        <m.div className="pm__stage" style={reduce ? undefined : { rotateX: tiltX, rotateY: ry, rotate: tiltZ, scale: shrink, '--x': explode }}>
           {/* Layer 0 — construction guides */}
           <svg className="pm__layer pm__layer--guides" viewBox="0 0 100 100" aria-hidden="true">
             <line x1="50" y1="3" x2="50" y2="97" />
@@ -153,12 +194,16 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
             <line x1="3" y1="48" x2="97" y2="48" opacity="0.5" />
             <circle cx="50" cy="58" r="15" />
             <circle cx="50" cy="58" r="26" opacity="0.45" />
+            <rect className="pm__plate" x="0" y="0" width="100" height="100" rx="2" />
+            <text className="pm__note" x="3" y="97">L0 · GUIDES</text>
           </svg>
 
           <div className="pm__glow" aria-hidden="true" />
 
           {/* Layer 1 — the strokes of the A */}
           <svg className="pm__layer pm__layer--strokes" viewBox="0 0 100 100" aria-hidden="true">
+            <rect className="pm__plate" x="0" y="0" width="100" height="100" rx="2" />
+            <text className="pm__note" x="3" y="97">L1 · STROKES</text>
             {Object.entries(STROKES).map(([key, s], i) => (
               <m.path key={key} d={line(s)} className={cls(key)} strokeWidth={s.w} {...draw(0.15 + (i > 1 ? 0.45 : 0))} />
             ))}
@@ -177,6 +222,8 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
 
           {/* Layer 2 — nodes + the leader line to the annotation */}
           <svg className="pm__layer pm__layer--nodes" viewBox="0 0 100 100" aria-hidden="true">
+            <rect className="pm__plate" x="0" y="0" width="100" height="100" rx="2" />
+            <text className="pm__note" x="3" y="97">L2 · NODES</text>
             {ready && card && (
               <m.path
                 key={`leader-${hovered}`}
@@ -202,6 +249,8 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
 
           {/* Layer 3 — the product */}
           <svg className="pm__layer pm__layer--product" viewBox="0 0 100 100" aria-hidden="true">
+            <rect className="pm__plate" x="0" y="0" width="100" height="100" rx="2" />
+            <text className="pm__note" x="3" y="97">L3 · PRODUCT</text>
             <g className={cls('diamond')}>
               {active === 'product' && <circle className="pm__halo pm__halo--product" cx={D[0]} cy={D[1]} r="11" />}
               <m.polygon
@@ -276,7 +325,7 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
         <span className="pm__corner pm__corner--tr" aria-hidden="true" />
         <span className="pm__corner pm__corner--bl" aria-hidden="true" />
         <span className="pm__corner pm__corner--br" aria-hidden="true" />
-      </div>
+      </m.div>
     </div>
   );
 }

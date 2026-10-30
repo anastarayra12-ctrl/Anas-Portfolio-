@@ -22,12 +22,28 @@
   overflow: visible;
   pointer-events: none;
 }
-/* Depth: each layer sits at its own Z so pointer tilt produces real parallax */
-.pm__layer--guides { transform: translateZ(-60px); }
-.pm__layer--strokes { transform: translateZ(0); }
-.pm__layer--nodes { transform: translateZ(28px); }
-.pm__layer--product { transform: translateZ(56px); }
-.pm__layer--labels { transform: translateZ(40px); }
+/* Depth: each layer sits at its own Z so pointer tilt produces real parallax;
+   --x (0 → 1, driven by scroll) spreads them into an exploded view */
+.pm__layer--guides { transform: translateZ(calc(-60px - 40px * var(--x, 0))); }
+.pm__layer--strokes { transform: translateZ(calc(-10px * var(--x, 0))); }
+.pm__layer--nodes { transform: translateZ(calc(28px + 55px * var(--x, 0))); }
+.pm__layer--product { transform: translateZ(calc(56px + 100px * var(--x, 0))); }
+.pm__layer--labels { transform: translateZ(calc(40px + 55px * var(--x, 0))); }
+
+/* Exploded view: each layer becomes a visible sheet with a blueprint call-out */
+.pm__plate {
+  fill: var(--accent-soft);
+  stroke: var(--accent-line);
+  stroke-width: 0.3;
+  opacity: calc(var(--x, 0) * 1.3 - 0.15);
+}
+.pm__note {
+  font-family: var(--font-mono);
+  font-size: 2.4px;
+  letter-spacing: 0.12em;
+  fill: var(--accent);
+  opacity: calc(var(--x, 0) * 1.6 - 0.35);
+}
 
 .pm__glow {
   position: absolute;
@@ -38,7 +54,7 @@
   border-radius: 50%;
   background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 68%);
   filter: blur(18px);
-  transform: translateZ(-20px);
+  transform: translateZ(calc(-20px - 40px * var(--x, 0)));
   pointer-events: none;
 }
 :root[data-theme='light'] .pm__glow { background: radial-gradient(circle, rgba(37, 99, 235, 0.13), transparent 68%); }
@@ -95,7 +111,7 @@
 /* ---------- Node labels (buttons) ---------- */
 .pm__layer--labels,
 .pm__layer--card { pointer-events: none; }
-.pm__layer--card { transform: translateZ(80px); }
+.pm__layer--card { transform: translateZ(calc(80px + 60px * var(--x, 0))); }
 .pm__label {
   position: absolute;
   display: inline-flex;

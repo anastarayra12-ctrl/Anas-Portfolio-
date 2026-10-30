@@ -252,7 +252,7 @@ const en = {
         role: 'Designer & developer — end to end',
         highlights: [
           { t: 'Handwritten “hello” splash', d: 'One continuous SVG stroke drawn like the iPhone greeting, ending with the brand diamond. Skippable, and shown still for reduced-motion users.' },
-          { t: 'The logo as a process', d: 'The brand mark explains how I work — Idea → Design → Build → Product — with layered 3D depth, a signal that travels the strokes, and cards attached to each node.' },
+          { t: 'The logo as a process', d: 'The brand mark explains how I work — Idea → Design → Build → Product — with layered 3D depth, a signal that travels the strokes, and cards attached to each node. Scrolling away pulls its layers apart into a labelled exploded view.' },
           { t: 'Code ⇄ Design comparison', d: 'The same profile card shown as JSX/CSS and as a designed frame, with a draggable divider that the About cards steer.' },
           { t: 'Transitions tied to my two sides', d: 'Switching theme grows a Figma-style selection frame; switching language sweeps an editor pane while an <html lang dir> diff is typed.' },
           { t: 'Two navigation layers', d: 'An identity header with language and theme switches, plus a floating section dock that tracks where you are.' },
@@ -266,7 +266,7 @@ const en = {
         ],
         dev: [
           'React 19 + Vite, one component per section and a single bilingual content source',
-          'English / Arabic with genuine right-to-left layout',
+          'English / Arabic with genuine right-to-left layout — linkable per language and remembered per visitor, like the theme',
           'Scroll-aware navigation, focus management and keyboard control for every interactive piece',
           'A contact form that never fakes success: Web3Forms when configured, the visitor’s email app otherwise',
         ],
@@ -651,7 +651,7 @@ const ar = {
         role: 'مصمّم ومطوّر — من البداية للنهاية',
         highlights: [
           { t: 'شاشة ترحيب بخط اليد', d: 'كلمة hello تُكتب بخط واحد متصل مثل ترحيب iPhone، وتنتهي بمعيّن الهوية. يمكن تخطيها، وتظهر ثابتة لمن يفضّل تقليل الحركة.' },
-          { t: 'الشعار كطريقة عمل', d: 'يشرح الشعار طريقة عملي — فكرة ← تصميم ← بناء ← منتج — بعمق ثلاثي الأبعاد، وإشارة تسري على الخطوط، وبطاقات ملتصقة بكل نقطة.' },
+          { t: 'الشعار كطريقة عمل', d: 'يشرح الشعار طريقة عملي — فكرة ← تصميم ← بناء ← منتج — بعمق ثلاثي الأبعاد، وإشارة تسري على الخطوط، وبطاقات ملتصقة بكل نقطة. ومع التمرير تنفصل طبقاته في عرض تفكيكي موسوم.' },
           { t: 'مقارنة الكود والتصميم', d: 'البطاقة التعريفية نفسها ككود JSX/CSS وكتصميم نهائي، بفاصل قابل للسحب تتحكّم به بطاقتا المطوّر والمصمّم.' },
           { t: 'تأثيرات مرتبطة بجانبيّ', d: 'تبديل المظهر يطلق إطار تحديد بأسلوب Figma، وتبديل اللغة يمسح الصفحة بمحرر كود بينما يُكتب تعديل ⁦<html lang dir>⁩.' },
           { t: 'طبقتا تنقّل', d: 'ترويسة للهوية فيها مفتاحا اللغة والمظهر، وشريط أقسام عائم يعرف أين أنت في الصفحة.' },
@@ -665,7 +665,7 @@ const ar = {
         ],
         dev: [
           'React 19 وVite، مكوّن لكل قسم ومصدر محتوى واحد باللغتين',
-          'عربي / إنجليزي مع اتجاه حقيقي من اليمين لليسار',
+          'عربي / إنجليزي مع اتجاه حقيقي من اليمين لليسار — برابط لكل لغة، ويتذكّر اختيار الزائر كما يتذكّر المظهر',
           'تنقّل يتبع التمرير، وإدارة للتركيز، وتحكّم بلوحة المفاتيح في كل عنصر تفاعلي',
           'نموذج تواصل لا يدّعي النجاح كذبًا: Web3Forms عند ضبطه، وإلا تطبيق البريد لدى الزائر',
         ],
