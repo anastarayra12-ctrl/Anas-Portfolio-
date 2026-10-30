@@ -14,7 +14,7 @@ export function PortfolioPreview() {
             <i />
             <i />
           </span>
-          <span className="pv-browser__url">anas-portfolio-rose-nine.vercel.app</span>
+          <span className="pv-browser__url">anas-tarayra.vercel.app</span>
         </div>
         <div className="pv-site" dir="ltr">
           <div className="pv-site__nav">

@@ -49,16 +49,19 @@ export function Header() {
               type="button"
               className={`lang-toggle is-${lang}`}
               onClick={() => setLanguage(lang === 'en' ? 'ar' : 'en')}
-              aria-label={lang === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
               title={lang === 'en' ? 'العربية' : 'English'}
               dir="ltr"
             >
+              {/* The visible "EN AR" stays part of the accessible name (WCAG 2.5.3). */}
               <span className="lang-toggle__thumb" aria-hidden="true" />
-              <span className="lang-toggle__opt" lang="en" aria-hidden="true">
+              <span className="lang-toggle__opt" lang="en">
                 EN
               </span>
-              <span className="lang-toggle__opt" lang="ar" aria-hidden="true">
+              <span className="lang-toggle__opt" lang="ar">
                 AR
+              </span>
+              <span className="sr-only" lang={lang === 'en' ? 'ar' : 'en'}>
+                {lang === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
               </span>
             </button>
 

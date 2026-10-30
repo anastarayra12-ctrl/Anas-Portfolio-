@@ -12,7 +12,7 @@ export const links = {
   whatsapp: 'https://wa.me/962796851497',
   linkedin: 'https://www.linkedin.com/in/anastarayra12',
   github: 'https://github.com/anastarayra12-ctrl',
-  site: 'https://anas-portfolio-rose-nine.vercel.app/',
+  site: 'https://anas-tarayra.vercel.app/',
   cvPdf: '/Anas_AL-Tarayra-CV.pdf',
   cvFileName: 'Anas_Tarayra_CV.pdf',
   cvWeb: '/Anas_Al_Tarayrah_CV.html',
@@ -278,7 +278,7 @@ const en = {
         ],
         stack: ['React 19', 'Vite', 'Framer Motion', 'CSS custom properties', 'SVG', 'Web3Forms', 'Vercel'],
         outcome: 'One consistent product that presents my work — and is part of it.',
-        link: { href: 'https://anas-portfolio-rose-nine.vercel.app/' },
+        link: { href: 'https://anas-tarayra.vercel.app/' },
         repo: 'https://github.com/anastarayra12-ctrl/Anas-Portfolio-',
       },
       {
@@ -662,7 +662,7 @@ const ar = {
         ],
         stack: ['React 19', 'Vite', 'Framer Motion', 'CSS custom properties', 'SVG', 'Web3Forms', 'Vercel'],
         outcome: 'منتج واحد متّسق يعرض أعمالي — وهو جزء منها.',
-        link: { href: 'https://anas-portfolio-rose-nine.vercel.app/' },
+        link: { href: 'https://anas-tarayra.vercel.app/' },
         repo: 'https://github.com/anastarayra12-ctrl/Anas-Portfolio-',
       },
       {
