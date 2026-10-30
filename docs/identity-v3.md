@@ -10,7 +10,8 @@ one component per section (`Hero`, `About`, `Stack`, `Work`, `Journey`, `Contact
 navigation layers (`Header`, `Dock`). All copy lives in `src/content/site.js` (EN/AR). Plain CSS
 with design tokens (`src/styles/tokens.css`). Framer Motion via `LazyMotion` (async features),
 lucide icons. Three.js / React Three Fiber are only used by the maintenance screen, which is
-disabled and code-split — they never reach visitors. `backend/` (Express + .NET) is not deployed.
+disabled and code-split — they never reach visitors. `backend/` (Express + .NET) was not deployed
+and has since been removed (see §3).
 
 **Measured on the live site** (Lighthouse 12, simulated throttling):
 
@@ -43,8 +44,8 @@ no percentage skill bars, solid keyboard and reduced-motion support.
 7. No analytics, so no way to know whether the site produces opportunities.
 8. `npm install <new package>` fails with ERESOLVE (peer ranges around `@react-three/*`);
    `npm ci` works. `node_modules` was also partially missing (OneDrive sync), fixed by `npm ci`.
-9. `backend/server.js` *simulates* sending email (logs "successfully dispatched" without sending).
-   It is not deployed, but it is in a public repository recruiters may read.
+9. `backend/server.js` *simulated* sending email (logged "successfully dispatched" without sending).
+   It was not deployed, but it was in a public repository recruiters may read. **Removed.**
 
 ## 2. Decisions
 
@@ -73,6 +74,9 @@ no percentage skill bars, solid keyboard and reduced-motion support.
 3. `2e87b4d` Scroll-driven exploded view of the mark (`ProcessMark`); sitemap with alternates.
 4. `1adff1e` Transition scenes in an idle-prefetched chunk; no Arabic web font fetched for the
    hidden screen-reader label; lazy geometry for the exploded view.
+5. `2f9f833` Email-app fallback no longer shows a success mark; preferences saved only when applied.
+6. `90dfb31` `backend/` removed: never deployed or referenced, and both of its contact APIs only
+   simulated sending. Recover with `git checkout 2f9f833 -- backend`.
 
 ## 4. Verification
 
@@ -124,7 +128,6 @@ That is the owner's call — it was deliberately set to "every load".
    An ATS-friendly variant (single column, no dark background) is recommended.
 5. **Availability status** ("Available for work & collaborations"): confirm it is current.
 6. Search Console: verify the domain and submit `/sitemap.xml`.
-7. Decide on `backend/` (recommended: remove, since it simulates sending).
 
 ## 7. Roadmap
 
