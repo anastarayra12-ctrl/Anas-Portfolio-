@@ -417,6 +417,7 @@ const en = {
       mailtoOpened: 'Your email app should open with the message ready. If it didn’t, email me directly at',
       failure: 'The message couldn’t be sent. Please try again, or email me directly at',
       another: 'Send another message',
+      backToForm: 'Back to the form',
     },
   },
   footer: {
@@ -812,6 +813,7 @@ const ar = {
       mailtoOpened: 'يُفترض أن يفتح تطبيق البريد والرسالة جاهزة. إن لم يحدث، راسلني مباشرة على',
       failure: 'تعذّر إرسال الرسالة. حاول مجددًا، أو راسلني مباشرة على',
       another: 'إرسال رسالة أخرى',
+      backToForm: 'العودة إلى النموذج',
     },
   },
   footer: {

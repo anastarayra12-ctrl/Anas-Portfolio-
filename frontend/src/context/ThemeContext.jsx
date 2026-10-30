@@ -22,12 +22,15 @@ export function ThemeProvider({ children }) {
   const toggleTheme = useCallback(
     (origin) => {
       const next = theme === 'dark' ? 'light' : 'dark';
-      savePref(PREF_KEYS.theme, next);
       playSwitchFx({
         type: 'design',
         origin,
         meta: { from: theme, to: next },
-        apply: () => flushSync(() => setTheme(next)),
+        // saved only when actually applied: a toggle ignored mid-transition must not be remembered
+        apply: () => {
+          savePref(PREF_KEYS.theme, next);
+          flushSync(() => setTheme(next));
+        },
       });
     },
     [theme],

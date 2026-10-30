@@ -319,6 +319,7 @@
 .contact__done { display: grid; justify-items: start; gap: var(--s-5); padding-block: var(--s-4); }
 .contact__done p { font-size: var(--fs-md); }
 .contact__done-icon { color: var(--success); }
+.contact__done-icon--neutral { color: var(--accent); }
 .contact__done .btn { border-radius: var(--r-pill); }
 
 @media (max-width: 40rem) {

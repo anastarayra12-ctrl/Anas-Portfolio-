@@ -126,7 +126,12 @@ function ContactForm({ f }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <CircleCheck size={28} className="contact__done-icon" aria-hidden="true" />
+          {/* Only a confirmed delivery gets the success mark; the email-app hand-off is neutral. */}
+          {status === 'sent' ? (
+            <CircleCheck size={28} className="contact__done-icon" aria-hidden="true" />
+          ) : (
+            <Mail size={28} className="contact__done-icon contact__done-icon--neutral" aria-hidden="true" />
+          )}
           <p role="status">
             {status === 'sent' ? (
               f.success
@@ -141,7 +146,7 @@ function ContactForm({ f }) {
             )}
           </p>
           <button type="button" className="btn btn--secondary btn--sm" onClick={() => setStatus('idle')}>
-            {f.another}
+            {status === 'sent' ? f.another : f.backToForm}
           </button>
         </m.div>
       ) : (

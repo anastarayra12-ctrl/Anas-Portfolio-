@@ -53,12 +53,15 @@ export function LanguageProvider({ children }) {
   const setLanguage = useCallback(
     (next) => {
       if (next === lang) return;
-      savePref(PREF_KEYS.lang, next);
       playSwitchFx({
         type: 'code',
         meta: { from: lang, to: next },
         ready: loadFonts(next),
-        apply: () => keepPlace(() => flushSync(() => setLang(next))),
+        // saved only when actually applied: a toggle ignored mid-transition must not be remembered
+        apply: () => {
+          savePref(PREF_KEYS.lang, next);
+          keepPlace(() => flushSync(() => setLang(next)));
+        },
       });
     },
     [lang],
