@@ -105,28 +105,36 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
 
   // Exploded view: 0 while the mark is at rest, 1 once it has scrolled off the top.
   // Starts only after its centre passes 60% of the viewport, so it never begins half-open.
+  // Geometry is measured lazily on the first scroll rather than on mount, so
+  // startup never pays for a forced layout.
   const wrap = useRef(null);
-  const span = useRef([0, 1]);
-  const room = useRef(0); // free space below the mark inside its section
-  useEffect(() => {
-    const measure = () => {
-      if (!wrap.current) return;
+  const geo = useRef(null); // { a, b, room } — scroll span + free space below the mark in its section
+  const measure = () => {
+    if (!geo.current && wrap.current) {
       const r = wrap.current.getBoundingClientRect();
       const top = r.top + window.scrollY;
-      const start = Math.max(0, top + r.height / 2 - window.innerHeight * 0.6);
-      span.current = [start, start + Math.min(r.height * 0.75, window.innerHeight * 0.45)];
+      const a = Math.max(0, top + r.height / 2 - window.innerHeight * 0.6);
       const section = wrap.current.closest('section')?.getBoundingClientRect();
-      room.current = section ? Math.max(0, section.bottom - r.bottom) : 0;
-    };
-    measure();
-    document.fonts?.ready.then(measure);
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
+      geo.current = {
+        a,
+        b: a + Math.min(r.height * 0.75, window.innerHeight * 0.45),
+        room: section ? Math.max(0, section.bottom - r.bottom) : 0,
+      };
+    }
+    return geo.current ?? { a: 0, b: 1, room: 0 };
+  };
+  useEffect(() => {
+    const reset = () => (geo.current = null);
+    reset();
+    document.fonts?.ready.then(reset);
+    window.addEventListener('resize', reset);
+    return () => window.removeEventListener('resize', reset);
   }, [copy]);
   const { scrollY } = useScroll();
   const explode = useSpring(
     useTransform(scrollY, (y) => {
-      const [a, b] = span.current;
+      if (y <= 0) return 0;
+      const { a, b } = measure();
       return Math.min(1, Math.max(0, (y - a) / (b - a)));
     }),
     { stiffness: 220, damping: 40, restDelta: 0.001 },
@@ -137,7 +145,11 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
   const shrink = useTransform(explode, [0, 1], [1, 0.8]);
   // The mark trails the scroll while it opens, so the moment happens on screen (no pinning),
   // but never further than the room left in the hero — it must not slide over the next section.
-  const lag = useTransform(explode, (e) => e * Math.min((span.current[1] - span.current[0]) * 0.6, room.current));
+  const lag = useTransform(explode, (e) => {
+    if (e <= 0) return 0;
+    const { a, b, room } = measure();
+    return e * Math.min((b - a) * 0.6, room);
+  });
 
   useEffect(() => setPulse((p) => p + 1), [active]);
 
