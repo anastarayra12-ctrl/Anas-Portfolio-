@@ -6,5 +6,7 @@ export default defineConfig({
   build: {
     target: 'es2020',
     cssTarget: ['chrome111', 'edge111', 'firefox121', 'safari16.4'],
+    // The only large chunk is Three.js for the maintenance screen, which loads on demand.
+    chunkSizeWarningLimit: 1000,
   },
 });

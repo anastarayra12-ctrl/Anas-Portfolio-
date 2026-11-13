@@ -1,53 +1,76 @@
-# Anas Tarayra — Portfolio
+# Anas Tarayra — Portfolio website
 
-Personal site of Anas Tarayra: Software Engineering student, full-stack developer and UI/UX designer.
-Built with React 19 + Vite, designed from the brand guide in `../Brand_Identity_and_CV/`.
+Personal website of Anas Tarayra, UI/UX Designer & Front-End Developer.
+React 19 + Vite, bilingual (English / Arabic with real RTL), dark and light themes.
+Live: https://anas-tarayra.vercel.app/
 
-## Scripts
+## Run it
 
 ```bash
 npm install
 npm run dev       # local development
-npm run build     # production build to dist/
+npm run build     # production build → dist/
 npm run preview   # serve the production build
 npm run lint      # oxlint
 ```
 
-## Where things live
+## Where to change things
 
-| Path | Purpose |
+| I want to change… | Edit |
 | --- | --- |
-| `src/content/site.js` | **All copy (EN/AR), links and project data.** Edit content here. |
-| `src/styles/tokens.css` | Design tokens: brand palette, type scale, spacing, radius, motion, themes. |
-| `src/styles/base.css` | Reset, typography, layout primitives, buttons, tags, links. |
-| `src/components/` | One component per section, each with its own CSS file. `Header` (identity + actions) and `Dock` (section navigation) are the two navigation layers; `ProcessMark` is the interactive brand mark in the hero; `Splash` is the “Hello” intro shown on every load except deep links (skippable); `SwitchFx` hosts the theme/language transitions (scenes in `SwitchFxScenes`, loaded when idle); `Backdrop` is the site-wide blueprint grid, pointer spotlight, ambient light and grain. |
-| `src/components/ui/` | Shared primitives: `BrandMark`, `Reveal`, `Magnetic`, `SectionHead`, icons. |
-| `src/prefs.js` | Theme / language persistence. The inline script in `index.html` applies saved values before first paint — keep the keys in sync. |
-| `src/analytics.js` | Optional cookieless Vercel Web Analytics and the tracked events. |
-| `src/config/maintenanceConfig.js` | Maintenance screen toggle. |
-| `public/` | Fonts (WOFF2), CV files, favicon/OG image, robots.txt, sitemap.xml. |
+| Any text, in either language | `src/content/en.js` · `src/content/ar.js` |
+| A project (text, links, colours, tech) | `src/content/projects.js` — screenshots in `public/projects/<id>-desktop|detail|mobile.webp` |
+| Skills, tools, certificates | `src/content/skills.js` — certificate images in `public/courses/` |
+| Email, phone, social links, CV file | `src/content/links.js` — the CV itself is `public/Anas_AL-Tarayra-CV.pdf` |
+| Colours, fonts, spacing, radius, motion | `src/styles/tokens.css` (brand tokens, dark + light themes) |
+| Buttons, labels, section header, tags | `src/styles/base.css` |
+| One section's layout | `src/sections/<section>/` — each has its `.jsx` and `.css` side by side |
+| Maintenance screen on / off | `src/maintenance/maintenanceConfig.js` |
+
+## Structure
+
+```
+src/
+├── content/        all copy and data (en, ar, projects, skills, links)
+├── sections/       one folder per page section
+│   ├── hero/       Hero + ProcessMark (the interactive brand mark)
+│   ├── about/      About + IdBadge (3D flip card)
+│   ├── skills/     "What I Use" — tools tied to their certificates
+│   ├── projects/   "What I've Built" — ProjectStage (3D scroll, desktop),
+│   │               ProjectList (mobile / reduced motion), ProjectDialog, ProjectDevice
+│   ├── journey/    "How I Got Here"
+│   └── contact/    "Let's Build Something" — every contact channel, no form
+├── components/
+│   ├── layout/     Header, Dock (section navigation), Footer, Backdrop
+│   ├── controls/   LanguageSwitch, ThemeSwitch
+│   ├── effects/    Splash ("hello" intro), SwitchFx (theme / language transitions)
+│   ├── brand/      BrandMark (the logo, coloured by --mark-* tokens)
+│   └── ui/         Reveal, SectionHead, Magnetic, brand icons
+├── context/        Theme, Language and Intro providers
+├── hooks/          useActiveSection, useMediaQuery
+├── lib/            prefs (saved theme/language), switchFx bridge, analytics, helpers
+├── maintenance/    optional 3D maintenance screen (Three.js, loaded only when enabled)
+└── styles/         tokens.css, base.css
+```
+
+## How the main pieces work
+
+- **Theme & language** — the inline script in `index.html` applies the saved choice before
+  first paint (keys must match `src/lib/prefs.js`). Switching plays a transition from
+  `components/effects/SwitchFx*`; the page swaps while the screen is covered.
+- **3D projects** — `ProjectStage` pins the section and maps scroll progress to a camera
+  position along the projects (`d = pos − index`). Shown only on wide, tall-enough screens
+  without reduced motion; everyone else gets `ProjectList`. Each project has a shareable URL
+  (`#projects/<id>`) that opens its detail dialog.
+- **Performance** — animation features load lazily, transition scenes load when idle,
+  Three.js is split out for the maintenance screen only, fonts are WOFF2 with preload,
+  screenshots are WebP (17–54 KB).
 
 ## Content rule
 
-Only publish facts that can be verified (CV, brand guide, this repo). To add a case study, append an
-object to `work.projects` in both `en` and `ar` in `src/content/site.js`, and add a preview component
-in `src/components/ProjectPreviews.jsx`.
+Every fact comes from the CV (`public/Anas_AL-Tarayra-CV.pdf`), the live projects themselves or
+this repository. Never add experience, skills, metrics or clients that cannot be verified.
 
-## Maintenance mode
+## Versions
 
-`maintenanceConfig.enabled = true` shows the 3D maintenance screen to visitors. The live site can be
-previewed with `?preview=true` or **Ctrl + Shift + M**. Set it to `false` to publish the site.
-
-## Contact form
-
-Set `VITE_WEB3FORMS_ACCESS_KEY` (see `.env.example`) to deliver messages through Web3Forms. Without a
-key, the form opens the visitor's email app with the message pre-filled — it never reports a fake success.
-
-## Links, preferences and analytics
-
-- Every case study has its own address: `/#work/<project id>` (e.g. `/#work/portfolio`).
-- `/?lang=ar` opens the Arabic site; an explicit language or theme choice is remembered per visitor.
-- Analytics are off unless `VITE_ANALYTICS=vercel` is set (enable Web Analytics in Vercel first).
-
-The October 2026 audit, design decisions, measurements and open items are in
-[`../docs/identity-v3.md`](../docs/identity-v3.md).
+See `../CHANGELOG.md`. Releases are tagged `vMAJOR.MINOR.PATCH` (v1.0.0 = this redesign).

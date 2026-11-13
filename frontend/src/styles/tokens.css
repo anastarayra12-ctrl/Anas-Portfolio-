@@ -1,15 +1,18 @@
 /* ==========================================================================
-   Design tokens — Anas Tarayra Brand Identity v2.1 "Midnight & Volt"
-   Palette: Black #0A0A0C · Midnight #0D1838 · Deep Blue #1E3FB8 · Cobalt #3B5BDB
-            Volt #C6F24E (spark) · Off White #F3F2EE · Pure White #FFFFFF
-   Usage: black + midnight 70% · blues 14% · Volt 4% (a spark, never a fill).
-   The logo is always blue: --mark-* tokens below. Volt never appears in the logo.
+   Design tokens — Anas Tarayra Brand Identity v3.0 "Deep Blue"
+   Primary   Dark Blue #1E3FB8  — the logo, buttons, fills, key graphics
+   Secondary Navy      #0D1838  — panels, the logo's diamond and name on light
+   Grounds   Black #0A0A0C · Off White #F3F2EE · Pure White #FFFFFF
+   Support   Blue tint #7088EE — small text & icons on dark only (Dark Blue is 2.3:1 there)
+             Volt #C6F24E      — the spark: status dots, never a fill, never in the logo
+   Edit colours here; every component reads these tokens.
    ========================================================================== */
 
 @font-face { font-family: 'Space Grotesk'; src: url('/fonts/SpaceGrotesk-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Space Grotesk'; src: url('/fonts/SpaceGrotesk-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
 @font-face { font-family: 'Space Grotesk'; src: url('/fonts/SpaceGrotesk-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
 @font-face { font-family: 'Space Grotesk'; src: url('/fonts/SpaceGrotesk-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Space Mono'; src: url('/fonts/SpaceMono-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Changa'; src: url('/fonts/Changa-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Changa'; src: url('/fonts/Changa-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
 @font-face { font-family: 'Changa'; src: url('/fonts/Changa-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
@@ -19,36 +22,34 @@
 :root {
   /* Brand palette (raw) */
   --brand-black: #0A0A0C;
-  --brand-midnight: #0D1838;
-  --brand-deep: #1E3FB8;
-  --brand-accent: #3B5BDB;   /* Cobalt — large text and graphics only on dark */
-  --brand-sky: #C6F24E;      /* Volt — the spark (name kept for compatibility) */
-  --brand-volt-dark: #5B7A00;/* Volt on light grounds */
-  --brand-powder: #C9D4F5;
+  --brand-navy: #0D1838;
+  --brand-blue: #1E3FB8;      /* Dark Blue — primary */
+  --brand-tint: #7088EE;      /* legibility tint of Dark Blue for small text on dark */
+  --brand-volt: #C6F24E;
   --brand-off: #F3F2EE;
   --brand-white: #FFFFFF;
 
   /* Typography */
   --font-sans: 'Space Grotesk', 'Changa', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: var(--font-sans);
-  --font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
 
-  --fs-2xs: 0.6875rem;                                  /* 11px — kicker / labels */
-  --fs-xs: 0.75rem;                                     /* 12px */
-  --fs-sm: 0.875rem;                                    /* 14px */
-  --fs-base: 1rem;                                      /* 16px */
-  --fs-md: 1.125rem;                                    /* 18px */
+  --fs-2xs: 0.6875rem;                                    /* 11px — labels */
+  --fs-xs: 0.75rem;                                       /* 12px */
+  --fs-sm: 0.875rem;                                      /* 14px */
+  --fs-base: 1rem;                                        /* 16px */
+  --fs-md: 1.125rem;                                      /* 18px */
   --fs-lead: clamp(1.0625rem, 0.98rem + 0.4vw, 1.3125rem);
   --fs-h4: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
   --fs-h3: clamp(1.375rem, 1.18rem + 0.9vw, 1.875rem);
-  --fs-h2: clamp(2rem, 1.45rem + 2.6vw, 3.75rem);
-  --fs-display: clamp(2.875rem, 1.5rem + 6vw, 7rem);
+  --fs-h2: clamp(2.25rem, 1.5rem + 3.2vw, 4.5rem);
+  --fs-display: clamp(3rem, 1.2rem + 7.4vw, 8.5rem);
 
-  --lh-tight: 1.02;
+  --lh-tight: 0.98;
   --lh-snug: 1.18;
   --lh-body: 1.65;
-  --tracking-tight: -0.035em;
-  --tracking-kicker: 0.22em;
+  --tracking-tight: -0.04em;
+  --tracking-label: 0.14em;
 
   /* Spacing — 4px base */
   --s-1: 0.25rem;
@@ -62,77 +63,83 @@
   --s-12: 3rem;
   --s-16: 4rem;
   --s-20: 5rem;
-  --section-y: clamp(5rem, 3.2rem + 7vw, 10rem);
+  --section-y: clamp(5rem, 3rem + 7vw, 9.5rem);
   --gutter: clamp(1rem, 0.4rem + 3vw, 2.5rem);
-  --container: 78rem;                                   /* 1248px */
-  --container-wide: 90rem;
+  --container: 80rem;                                     /* 1280px */
 
-  /* Shape — the guide uses a 6px radius on every card */
+  /* Shape */
   --r-xs: 4px;
-  --r-sm: 6px;
-  --r-md: 10px;
-  --r-lg: 16px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
   --r-pill: 999px;
   --hairline: 1px;
 
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
   --dur-fast: 160ms;
   --dur: 280ms;
   --dur-slow: 600ms;
 
   /* Layers */
   --z-nav: 50;
-  --z-menu: 60;
+  --z-dialog: 80;
   --z-skip: 100;
 
-  --nav-h: 4rem;
-  --dock-space: 6.5rem;               /* reserved below content for the floating dock */
+  --nav-h: 4.5rem;
+  --dock-space: 6.5rem;                 /* reserved below content for the floating dock */
 }
 
-/* ---------- Dark theme (default — black-first brand) ---------- */
+/* ---------- Dark theme (brand default) ---------- */
 :root,
 :root[data-theme='dark'] {
   color-scheme: dark;
   --bg: var(--brand-black);
-  --bg-raised: #111216;
+  --bg-raised: #101116;
   --bg-sunken: #060607;
-  --surface: #15171C;
-  --surface-hover: #1B1E25;
+  --surface: #13151B;
+  --surface-2: #181B23;
   --line: rgba(243, 242, 238, 0.09);
   --line-strong: rgba(243, 242, 238, 0.18);
   --text: var(--brand-off);
   --text-2: rgba(243, 242, 238, 0.7);
   --text-3: rgba(243, 242, 238, 0.52);
-  --accent: var(--brand-sky);               /* small text & icons on dark: Volt 15.3:1 (Cobalt is 3.5:1) */
-  --accent-fill: var(--brand-deep);         /* fills with white text: 8.5:1 */
-  --accent-soft: rgba(198, 242, 78, 0.1);
-  --accent-line: rgba(198, 242, 78, 0.35);
-  --spark: var(--brand-sky);
+  --accent: var(--brand-tint);          /* small text & icons: 6.1:1 on black */
+  --accent-fill: var(--brand-blue);     /* fills with white text: 8.5:1 */
+  --accent-soft: rgba(30, 63, 184, 0.16);
+  --accent-line: rgba(112, 136, 238, 0.38);
+  --panel: var(--brand-navy);           /* the secondary colour as a surface */
+  --panel-text: var(--brand-off);
+  --spark: var(--brand-volt);
   --on-accent: var(--brand-white);
-  --grid-line: rgba(243, 242, 238, 0.06);
-  --spot-line: rgba(59, 91, 219, 0.65);
-  --spot-dot: rgba(198, 242, 78, 0.95);
+  --grid-line: rgba(243, 242, 238, 0.05);
+  --spot-line: rgba(30, 63, 184, 0.75);
+  --spot-dot: rgba(112, 136, 238, 0.95);
   --spot-glow: rgba(30, 63, 184, 0.3);
-  --ambient-a: rgba(30, 63, 184, 0.22);
-  --ambient-b: rgba(13, 24, 56, 0.55);
-  /* Logo — all blue */
-  --mark-stroke: var(--brand-deep);
-  --mark-top: var(--brand-accent);
-  --mark-left: var(--brand-deep);
-  --mark-right: var(--brand-deep);
-  --mark-diamond: var(--brand-accent);
-  --name-sheen: linear-gradient(100deg, var(--brand-deep) 0%, var(--brand-accent) 30%, var(--brand-powder) 50%, var(--brand-accent) 70%, var(--brand-deep) 100%);
-  --grain: 0.065;
-  --shadow-lg: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
-  --nav-bg: rgba(10, 10, 12, 0.78);
-  --dock-bg: rgba(21, 23, 28, 0.84);
-  --dock-active: rgba(243, 242, 238, 0.075);
+  --ambient-a: rgba(30, 63, 184, 0.24);
+  --ambient-b: rgba(13, 24, 56, 0.6);
+  /* Logo — Dark Blue on dark grounds */
+  --mark-stroke: var(--brand-blue);
+  --mark-top: var(--brand-blue);
+  --mark-left: var(--brand-blue);
+  --mark-right: var(--brand-blue);
+  --mark-diamond: var(--brand-blue);
+  --name-sheen: linear-gradient(100deg, var(--brand-blue) 0%, #4C68DE 35%, var(--brand-tint) 50%, #4C68DE 65%, var(--brand-blue) 100%);
+  --shadow-lg: 0 30px 80px -30px rgba(0, 0, 0, 0.85);
+  --nav-bg: rgba(10, 10, 12, 0.72);
+  --dock-bg: rgba(19, 21, 27, 0.86);
+  --dock-active: rgba(243, 242, 238, 0.08);
   --dock-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  --selection: rgba(30, 63, 184, 0.55);
+  --control-bg: rgba(243, 242, 238, 0.05);
+  --control-thumb: var(--brand-off);
+  --control-thumb-text: var(--brand-black);
+  --selection: rgba(30, 63, 184, 0.6);
   --success: #4ADE80;
-  --danger: #F87171;
+  --stage-veil: rgba(10, 10, 12, 0.55);
+  --grain: 0.065;
 }
 
 /* ---------- Light theme ---------- */
@@ -142,40 +149,45 @@
   --bg-raised: #FAF9F6;
   --bg-sunken: #EAE8E3;
   --surface: var(--brand-white);
-  --surface-hover: #FAFAF9;
+  --surface-2: #F7F6F2;
   --line: rgba(10, 10, 12, 0.1);
   --line-strong: rgba(10, 10, 12, 0.2);
   --text: var(--brand-black);
   --text-2: rgba(10, 10, 12, 0.72);
   --text-3: rgba(10, 10, 12, 0.6);
-  --accent: var(--brand-deep);              /* 7.6:1 on off-white */
-  --accent-fill: var(--brand-deep);
+  --accent: var(--brand-blue);          /* 7.6:1 on off-white */
+  --accent-fill: var(--brand-blue);
   --accent-soft: rgba(30, 63, 184, 0.08);
-  --accent-line: rgba(30, 63, 184, 0.35);
-  --spark: var(--brand-volt-dark);
+  --accent-line: rgba(30, 63, 184, 0.32);
+  --panel: var(--brand-navy);
+  --panel-text: var(--brand-off);
+  --spark: var(--brand-blue);
   --on-accent: var(--brand-white);
-  --grid-line: rgba(10, 10, 12, 0.075);
+  --grid-line: rgba(10, 10, 12, 0.06);
   --spot-line: rgba(30, 63, 184, 0.5);
   --spot-dot: rgba(30, 63, 184, 0.9);
   --spot-glow: rgba(30, 63, 184, 0.1);
-  --ambient-a: rgba(30, 63, 184, 0.08);
-  --ambient-b: rgba(59, 91, 219, 0.06);
-  /* Logo — all blue */
-  --mark-stroke: var(--brand-deep);
-  --mark-top: var(--brand-accent);
-  --mark-left: var(--brand-deep);
-  --mark-right: var(--brand-midnight);
-  --mark-diamond: var(--brand-accent);
-  --name-sheen: linear-gradient(100deg, var(--brand-midnight) 0%, var(--brand-deep) 30%, var(--brand-accent) 50%, var(--brand-deep) 70%, var(--brand-midnight) 100%);
-  --grain: 0.06;
-  --shadow-lg: 0 30px 70px -35px rgba(10, 10, 12, 0.28);
-  --nav-bg: rgba(243, 242, 238, 0.82);
-  --dock-bg: rgba(255, 255, 255, 0.86);
-  --dock-active: rgba(10, 10, 12, 0.055);
-  --dock-shadow: 0 20px 44px -22px rgba(10, 10, 12, 0.35);
+  --ambient-a: rgba(30, 63, 184, 0.09);
+  --ambient-b: rgba(13, 24, 56, 0.05);
+  /* Logo — Dark Blue with the Navy diamond on light grounds */
+  --mark-stroke: var(--brand-blue);
+  --mark-top: var(--brand-blue);
+  --mark-left: var(--brand-blue);
+  --mark-right: var(--brand-blue);
+  --mark-diamond: var(--brand-navy);
+  --name-sheen: linear-gradient(100deg, var(--brand-navy) 0%, var(--brand-blue) 35%, #4C68DE 50%, var(--brand-blue) 65%, var(--brand-navy) 100%);
+  --shadow-lg: 0 30px 70px -35px rgba(13, 24, 56, 0.35);
+  --nav-bg: rgba(243, 242, 238, 0.8);
+  --dock-bg: rgba(255, 255, 255, 0.88);
+  --dock-active: rgba(10, 10, 12, 0.06);
+  --dock-shadow: 0 20px 44px -22px rgba(13, 24, 56, 0.35);
+  --control-bg: rgba(10, 10, 12, 0.05);
+  --control-thumb: var(--brand-navy);
+  --control-thumb-text: var(--brand-off);
   --selection: rgba(30, 63, 184, 0.22);
   --success: #15803D;
-  --danger: #B91C1C;
+  --stage-veil: rgba(243, 242, 238, 0.6);
+  --grain: 0.05;
 }
 
 /* ---------- Arabic: Lalezar for display, Changa for text ---------- */
@@ -183,7 +195,7 @@
   --font-sans: 'Changa', 'Space Grotesk', system-ui, sans-serif;
   --font-display: 'Lalezar', 'Changa', system-ui, sans-serif;
   --tracking-tight: 0;
-  --tracking-kicker: 0.04em;
+  --tracking-label: 0.02em;
   --lh-tight: 1.25;
   --lh-snug: 1.4;
   --lh-body: 1.85;

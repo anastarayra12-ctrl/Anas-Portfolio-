@@ -2,26 +2,26 @@ import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import { LazyMotion, MotionConfig } from 'framer-motion';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
-import maintenanceConfig from './config/maintenanceConfig';
-import { Header } from './components/Header';
-import { Dock } from './components/Dock';
-import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Work } from './components/Work';
-import { Stack } from './components/Stack';
-import { Journey } from './components/Journey';
-import { Contact } from './components/Contact';
-import { Footer } from './components/Footer';
-import { Backdrop } from './components/Backdrop';
-import { SwitchFx } from './components/SwitchFx';
-import { Splash, shouldShowSplash } from './components/Splash';
 import { IntroContext } from './context/IntroContext';
+import maintenanceConfig from './maintenance/maintenanceConfig';
+import { Header } from './components/layout/Header';
+import { Dock } from './components/layout/Dock';
+import { Footer } from './components/layout/Footer';
+import { Backdrop } from './components/layout/Backdrop';
+import { SwitchFx } from './components/effects/SwitchFx';
+import { Splash, shouldShowSplash } from './components/effects/Splash';
+import { Hero } from './sections/hero/Hero';
+import { About } from './sections/about/About';
+import { Skills } from './sections/skills/Skills';
+import { Projects } from './sections/projects/Projects';
+import { Journey } from './sections/journey/Journey';
+import { Contact } from './sections/contact/Contact';
 
-const loadMotionFeatures = () => import('./motionFeatures').then((mod) => mod.default);
+const loadMotionFeatures = () => import('./lib/motionFeatures').then((mod) => mod.default);
 
 // Three.js is only needed for the maintenance screen — keep it out of the main bundle.
 const MaintenanceScreen3D = lazy(() =>
-  import('./components/MaintenanceScreen3D').then((m) => ({ default: m.MaintenanceScreen3D })),
+  import('./maintenance/MaintenanceScreen3D').then((m) => ({ default: m.MaintenanceScreen3D })),
 );
 
 const PREVIEW_KEY = 'anas_portfolio_preview';
@@ -57,8 +57,8 @@ function Site() {
         <main id="main" tabIndex={-1}>
           <Hero />
           <About />
-          <Stack />
-          <Work />
+          <Skills />
+          <Projects />
           <Journey />
           <Contact />
         </main>

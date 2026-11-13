@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { playSwitchFx } from '../fx/switchFx';
-import { PREF_KEYS, initialTheme, savePref } from '../prefs';
+import { playSwitchFx } from '../lib/switchFx';
+import { PREF_KEYS, initialTheme, savePref } from '../lib/prefs';
 
 const ThemeContext = createContext(null);
 

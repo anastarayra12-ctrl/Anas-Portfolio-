@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Header controls — language segment + theme switch (same height: 2.25rem)
+   ========================================================================== */
+
+/* ---------- Language segment ---------- */
+.seg {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  height: 2.25rem;
+  padding: 3px;
+  border-radius: var(--r-pill);
+  background: var(--control-bg);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.seg__thumb {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: var(--r-pill);
+  background: var(--control-thumb);
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.45);
+  transition: transform 520ms var(--ease-spring);
+}
+.seg.is-ar .seg__thumb { transform: translateX(100%); }
+.seg__opt {
+  position: relative;
+  z-index: 1;
+  min-width: 2.25rem;
+  height: 100%;
+  padding-inline: 0.6rem;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+  transition: color var(--dur) var(--ease-out);
+}
+.seg__opt[lang='ar'] { font-family: 'Lalezar', 'Changa', sans-serif; font-size: 1rem; font-weight: 400; letter-spacing: 0; line-height: 1; padding-top: 0.15rem; }
+.seg__opt:hover { color: var(--text); }
+.seg__opt[aria-pressed='true'] { color: var(--control-thumb-text); }
+.seg__opt:focus-visible { outline-offset: 1px; }
+
+/* ---------- Theme switch ---------- */
+.theme-switch {
+  position: relative;
+  width: 3.5rem;
+  height: 2.25rem;
+  padding: 3px;
+  border-radius: var(--r-pill);
+  background: var(--control-bg);
+  box-shadow: inset 0 0 0 1px var(--line);
+  overflow: hidden;
+  transition: background-color var(--dur) var(--ease-out);
+}
+.theme-switch:hover { box-shadow: inset 0 0 0 1px var(--line-strong); }
+.theme-switch__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  display: grid;
+  place-items: center;
+  width: calc(2.25rem - 6px);
+  height: calc(2.25rem - 6px);
+  border-radius: 50%;
+  background: var(--control-thumb);
+  color: var(--control-thumb-text);
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.45);
+  transition: transform 560ms var(--ease-spring), background-color var(--dur);
+}
+.theme-switch.is-dark .theme-switch__knob { transform: translateX(calc(3.5rem - 2.25rem)); }
+
+/* Sun ⇄ moon morph */
+.theme-switch__icon { overflow: visible; }
+.theme-switch__core { transition: r 520ms var(--ease-out); }
+.theme-switch__cut { transition: transform 520ms var(--ease-out); transform: translate(10px, -10px); }
+.theme-switch__rays { transform-origin: 12px 12px; transition: transform 520ms var(--ease-out), opacity 300ms; }
+.theme-switch.is-dark .theme-switch__core { r: 8px; }
+.theme-switch.is-dark .theme-switch__cut { transform: translate(0, 0); }
+.theme-switch.is-dark .theme-switch__rays { transform: rotate(-90deg) scale(0.4); opacity: 0; }
+
+/* Tiny stars on the track in dark mode */
+.theme-switch__stars i {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--text-2);
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  transform: translateY(4px);
+}
+.theme-switch__stars i:nth-child(1) { left: 11px; top: 10px; }
+.theme-switch__stars i:nth-child(2) { left: 18px; top: 20px; width: 1.5px; height: 1.5px; }
+.theme-switch__stars i:nth-child(3) { left: 8px; top: 23px; width: 1.5px; height: 1.5px; }
+.theme-switch.is-dark .theme-switch__stars i { opacity: 0.8; transform: none; }

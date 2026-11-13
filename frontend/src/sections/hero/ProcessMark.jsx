@@ -1,0 +1,343 @@
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, m, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { processIds } from '../../content';
+import './ProcessMark.css';
+
+/*
+ * The brand mark as a process diagram.
+ *
+ *            02 DESIGN  (apex node)
+ *              /  \
+ *   outer legs     outer legs
+ *            /  ◆  \        ◆ = PRODUCT: the inner strokes of IDEA and BUILD
+ *     01 IDEA    03 BUILD      converge on the diamond — where the two meet.
+ *
+ * The explanation lives *on* the mark: pointing at a node grows an annotation
+ * card (only while pointed at), tied by a leader line, on the closest layer of the
+ * 3D stack. Node labels are real buttons (click / hover / arrow keys).
+ * Stacked SVG layers in CSS 3D space — no WebGL.
+ *
+ * Scrolling away from the hero pulls the stack apart into an exploded
+ * assembly drawing (--x: 0 assembled → 1 apart), each layer labelled.
+ * Transform-only, so it stays on the compositor; off for reduced motion.
+ */
+
+const TOP = [50, 14];
+const BL = [18, 84];
+const BR = [82, 84];
+const IL = [38, 48];
+const IR = [62, 48];
+const D = [50, 58];
+
+const STROKES = {
+  outerL: { from: TOP, to: BL, w: 4.6 },
+  outerR: { from: TOP, to: BR, w: 4.6 },
+  innerL: { from: BL, to: IL, w: 6.2 },
+  innerR: { from: BR, to: IR, w: 6.2 },
+};
+/** Signal-only path: the idea (bottom-left) climbs to design (apex). */
+const SIGNALS = { ...STROKES, outerLUp: { from: BL, to: TOP, w: 4.6 } };
+
+const LIT = {
+  idea: ['bl'],
+  design: ['bl', 'top', 'outerL'],
+  build: ['top', 'br', 'outerR'],
+  product: ['bl', 'br', 'innerL', 'innerR', 'diamond'],
+};
+const FLOW = { idea: [], design: ['outerLUp'], build: ['outerR'], product: ['innerL', 'innerR'] };
+
+/** Node label positions (% of the stage). */
+const LABEL_POS = {
+  idea: { left: 18, top: 93 },
+  design: { left: 50, top: 3 },
+  build: { left: 82, top: 93 },
+  product: { left: 50, top: 74 },
+};
+
+/**
+ * Annotation card per step: where the card sits (% of stage) and the leader
+ * line from the node to the card's attachment point (viewBox units = %).
+ */
+const CARDS = {
+  design: { style: { left: '60%', top: '9%' }, leader: [[54, 14], [60, 14]] },
+  idea: { style: { left: '-4%', bottom: '28%' }, leader: [[18, 80], [18, 72]] },
+  build: { style: { right: '-4%', bottom: '28%' }, leader: [[82, 80], [82, 72]] },
+  product: { style: { left: '-8%', top: '2%' }, leader: [[44, 54], [30, 30]] },
+};
+
+const ease = [0.22, 1, 0.36, 1];
+const line = ({ from, to }) => `M${from[0]} ${from[1]} L${to[0]} ${to[1]}`;
+
+export function ProcessMark({ copy, active, onActivate, highlight = false, ready = true }) {
+  const reduce = useReducedMotion();
+  const ref = useRef(null);
+  const [exploring, setExploring] = useState(false);
+  const [pulse, setPulse] = useState(0);
+  // The explanation card only exists while a node is pointed at (or focused).
+  const [hovered, setHovered] = useState(null);
+  const enter = (id) => {
+    setHovered(id);
+    onActivate(id);
+  };
+  const leave = (e) => {
+    // touch "leaves" right after a tap — keep the card until the next tap elsewhere
+    if (e?.pointerType === 'touch') return;
+    setHovered(null);
+  };
+
+  // Pointer parallax (fine pointers only)
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rx = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), { stiffness: 110, damping: 16 });
+  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-11, 11]), { stiffness: 110, damping: 16 });
+  const onMove = (e) => {
+    if (reduce || e.pointerType !== 'mouse' || !ref.current) return;
+    const r = ref.current.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => {
+    mx.set(0);
+    my.set(0);
+    setExploring(false);
+    setHovered(null);
+  };
+
+  // Exploded view: 0 while the mark is at rest, 1 once it has scrolled off the top.
+  // Starts only after its centre passes 60% of the viewport, so it never begins half-open.
+  // Geometry is measured lazily on the first scroll rather than on mount, so
+  // startup never pays for a forced layout.
+  const wrap = useRef(null);
+  const geo = useRef(null); // { a, b, room } — scroll span + free space below the mark in its section
+  const measure = () => {
+    if (!geo.current && wrap.current) {
+      const r = wrap.current.getBoundingClientRect();
+      const top = r.top + window.scrollY;
+      const a = Math.max(0, top + r.height / 2 - window.innerHeight * 0.6);
+      const section = wrap.current.closest('section')?.getBoundingClientRect();
+      geo.current = {
+        a,
+        b: a + Math.min(r.height * 0.75, window.innerHeight * 0.45),
+        room: section ? Math.max(0, section.bottom - r.bottom) : 0,
+      };
+    }
+    return geo.current ?? { a: 0, b: 1, room: 0 };
+  };
+  useEffect(() => {
+    const reset = () => (geo.current = null);
+    reset();
+    document.fonts?.ready.then(reset);
+    window.addEventListener('resize', reset);
+    return () => window.removeEventListener('resize', reset);
+  }, [copy]);
+  const { scrollY } = useScroll();
+  const explode = useSpring(
+    useTransform(scrollY, (y) => {
+      if (y <= 0) return 0;
+      const { a, b } = measure();
+      return Math.min(1, Math.max(0, (y - a) / (b - a)));
+    }),
+    { stiffness: 220, damping: 40, restDelta: 0.001 },
+  );
+  // End pose: tipped back into an isometric plane so the layers stack vertically.
+  const tiltX = useTransform([rx, explode], ([a, e]) => a + e * 50);
+  const tiltZ = useTransform(explode, [0, 1], [0, -18]);
+  const shrink = useTransform(explode, [0, 1], [1, 0.8]);
+  // The mark trails the scroll while it opens, so the moment happens on screen (no pinning),
+  // but never further than the room left in the hero — it must not slide over the next section.
+  const lag = useTransform(explode, (e) => {
+    if (e <= 0) return 0;
+    const { a, b, room } = measure();
+    return e * Math.min((b - a) * 0.6, room);
+  });
+
+  useEffect(() => setPulse((p) => p + 1), [active]);
+
+  const lit = new Set(LIT[active]);
+  const cls = (key) => `pm-el${lit.has(key) ? ' is-lit' : ''}`;
+  const shown = hovered ? copy.steps[hovered] : null;
+  const card = hovered ? CARDS[hovered] : null;
+  const docDir = document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr';
+
+  const draw = (delay) =>
+    reduce ? {} : { initial: { pathLength: 0 }, animate: { pathLength: ready ? 1 : 0 }, transition: { delay, duration: 0.9, ease } };
+  const pop = (delay) =>
+    reduce ? {} : { initial: { scale: 0 }, animate: { scale: ready ? 1 : 0 }, transition: { delay, duration: 0.55, ease } };
+
+  const select = (id) => onActivate(id);
+
+  // Arrow keys move through the steps in reading order (RTL-aware)
+  const onKeySteps = (e) => {
+    const i = processIds.indexOf(active);
+    const rtl = document.documentElement.dir === 'rtl';
+    const fwd = rtl ? 'ArrowLeft' : 'ArrowRight';
+    const back = rtl ? 'ArrowRight' : 'ArrowLeft';
+    let next = null;
+    if (e.key === fwd || e.key === 'ArrowDown') next = (i + 1) % processIds.length;
+    if (e.key === back || e.key === 'ArrowUp') next = (i - 1 + processIds.length) % processIds.length;
+    if (next === null) return;
+    e.preventDefault();
+    select(processIds[next]);
+    e.currentTarget.querySelector(`[data-step="${processIds[next]}"]`)?.focus();
+  };
+
+  return (
+    <div className={`pm${exploring || highlight ? ' is-exploring' : ''}`} data-active={active} ref={wrap}>
+      <m.div
+        className="pm__viewport"
+        ref={ref}
+        dir="ltr"
+        onPointerMove={onMove}
+        onPointerEnter={() => setExploring(true)}
+        onPointerLeave={onLeave}
+        onClick={(e) => {
+          if (!e.target.closest('.pm__hit, .pm__label, .pm__card')) setHovered(null);
+        }}
+        role="group"
+        aria-label={copy.label}
+        onKeyDown={onKeySteps}
+        style={reduce ? undefined : { y: lag }}
+      >
+        <m.div className="pm__stage" style={reduce ? undefined : { rotateX: tiltX, rotateY: ry, rotate: tiltZ, scale: shrink, '--x': explode }}>
+          {/* Layer 0 — construction guides */}
+          <svg className="pm__layer pm__layer--guides" viewBox="0 0 100 100" aria-hidden="true">
+            <line x1="50" y1="3" x2="50" y2="97" />
+            <line x1="3" y1="84" x2="97" y2="84" />
+            <line x1="3" y1="48" x2="97" y2="48" opacity="0.5" />
+            <circle cx="50" cy="58" r="15" />
+            <circle cx="50" cy="58" r="26" opacity="0.45" />
+            <rect className="pm__plate" x="0" y="0" width="100" height="100" rx="2" />
+            <text className="pm__note" x="3" y="97">L0 · GUIDES</text>
+          </svg>
+
+          <div className="pm__glow" aria-hidden="true" />
+
+          {/* Layer 1 — the strokes of the A */}
+          <svg className="pm__layer pm__layer--strokes" viewBox="0 0 100 100" aria-hidden="true">
+            <rect className="pm__plate" x="0" y="0" width="100" height="100" rx="2" />
+            <text className="pm__note" x="3" y="97">L1 · STROKES</text>
+            {Object.entries(STROKES).map(([key, s], i) => (
+              <m.path key={key} d={line(s)} className={cls(key)} strokeWidth={s.w} {...draw(0.15 + (i > 1 ? 0.45 : 0))} />
+            ))}
+            {!reduce &&
+              FLOW[active].map((key) => (
+                <m.path
+                  key={`${key}-${pulse}`}
+                  d={line(SIGNALS[key])}
+                  className="pm__signal"
+                  initial={{ pathLength: 0, opacity: 1 }}
+                  animate={{ pathLength: 1, opacity: [1, 1, 0] }}
+                  transition={{ duration: 0.9, ease, opacity: { times: [0, 0.75, 1], duration: 1.1 } }}
+                />
+              ))}
+          </svg>
+
+          {/* Layer 2 — nodes + the leader line to the annotation */}
+          <svg className="pm__layer pm__layer--nodes" viewBox="0 0 100 100" aria-hidden="true">
+            <rect className="pm__plate" x="0" y="0" width="100" height="100" rx="2" />
+            <text className="pm__note" x="3" y="97">L2 · NODES</text>
+            {ready && card && (
+              <m.path
+                key={`leader-${hovered}`}
+                className="pm__leader"
+                d={`M${card.leader[0][0]} ${card.leader[0][1]} L${card.leader[1][0]} ${card.leader[1][1]}`}
+                initial={reduce ? false : { pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.3, ease }}
+              />
+            )}
+            {[
+              ['top', TOP, 'var(--mark-top)', 0.9, 'design'],
+              ['bl', BL, 'var(--mark-left)', 1.0, 'idea'],
+              ['br', BR, 'var(--mark-right)', 1.1, 'build'],
+            ].map(([key, [cx, cy], fill, delay, id]) => (
+              <g key={key} className={cls(key)}>
+                {active === id && <circle className="pm__halo" cx={cx} cy={cy} r="7" />}
+                <m.circle cx={cx} cy={cy} r="3.5" fill={fill} style={{ transformOrigin: `${cx}px ${cy}px`, transformBox: 'view-box' }} {...pop(delay)} />
+                <circle className="pm__hit" cx={cx} cy={cy} r="9" onPointerEnter={() => enter(id)} onPointerLeave={leave} onClick={() => enter(id)} />
+              </g>
+            ))}
+          </svg>
+
+          {/* Layer 3 — the product */}
+          <svg className="pm__layer pm__layer--product" viewBox="0 0 100 100" aria-hidden="true">
+            <rect className="pm__plate" x="0" y="0" width="100" height="100" rx="2" />
+            <text className="pm__note" x="3" y="97">L3 · PRODUCT</text>
+            <g className={cls('diamond')}>
+              {active === 'product' && <circle className="pm__halo pm__halo--product" cx={D[0]} cy={D[1]} r="11" />}
+              <m.polygon
+                points={`${D[0]},${D[1] - 8} ${D[0] + 7},${D[1]} ${D[0]},${D[1] + 8} ${D[0] - 7},${D[1]}`}
+                fill="var(--mark-diamond)"
+                style={{ transformOrigin: `${D[0]}px ${D[1]}px`, transformBox: 'view-box' }}
+                {...pop(1.25)}
+              />
+              <circle className="pm__hit" cx={D[0]} cy={D[1]} r="11" onPointerEnter={() => enter('product')} onPointerLeave={leave} onClick={() => enter('product')} />
+            </g>
+          </svg>
+
+          {/* Layer 4 — node labels (buttons) */}
+          <div className="pm__layer pm__layer--labels">
+            {processIds.map((id) => {
+              const p = LABEL_POS[id];
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  data-step={id}
+                  dir={docDir}
+                  className={`pm__label${active === id ? ' is-active' : ''}`}
+                  style={{ left: `${p.left}%`, top: `${p.top}%` }}
+                  aria-pressed={active === id}
+                  onClick={() => enter(id)}
+                  onPointerEnter={() => enter(id)}
+                  onPointerLeave={leave}
+                  onFocus={() => {
+                    setExploring(true);
+                    enter(id);
+                  }}
+                  onBlur={() => {
+                    setExploring(false);
+                    setHovered(null);
+                  }}
+                  tabIndex={active === id ? 0 : -1}
+                >
+                  <span className="pm__label-n">{copy.steps[id].n}</span>
+                  <span>{copy.steps[id].t}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Layer 5 — the annotation card, closest to the viewer */}
+          <div className="pm__layer pm__layer--card" aria-live="polite">
+            <AnimatePresence mode="wait" initial={false}>
+              {ready && shown && (
+                <m.div
+                  key={hovered}
+                  className={`pm__card pm__card--${hovered}`}
+                  dir={docDir}
+                  style={card.style}
+                  initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.92, filter: 'blur(4px)' }}
+                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, scale: reduce ? 1 : 0.96, transition: { duration: 0.15 } }}
+                  transition={{ duration: 0.35, ease, delay: reduce ? 0 : 0.12 }}
+                >
+                  <p className="pm__card-head">
+                    <span className="pm__card-n">{shown.n}</span>
+                    <strong>{shown.t}</strong>
+                    <span className="pm__card-short">{shown.short}</span>
+                  </p>
+                  <p className="pm__card-text">{shown.d}</p>
+                </m.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </m.div>
+        <span className="pm__corner pm__corner--tl" aria-hidden="true" />
+        <span className="pm__corner pm__corner--tr" aria-hidden="true" />
+        <span className="pm__corner pm__corner--bl" aria-hidden="true" />
+        <span className="pm__corner pm__corner--br" aria-hidden="true" />
+      </m.div>
+    </div>
+  );
+}

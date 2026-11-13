@@ -1,0 +1,165 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: min(100svh, 62rem);
+  padding-top: calc(var(--nav-h) + clamp(1.5rem, 4vw, 3rem));
+  padding-bottom: var(--s-6);
+}
+.hero__layout {
+  flex: 1;
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 3.5rem);
+  align-items: center;
+}
+@media (min-width: 64rem) {
+  .hero__layout { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2.5rem, 5vw, 5rem); }
+}
+
+/* ---------- Availability ---------- */
+.hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: var(--s-6);
+  padding: 0.45rem 0.95rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-2);
+  border-radius: var(--r-pill);
+  border: var(--hairline) solid var(--line-strong);
+  background: color-mix(in srgb, var(--bg-raised) 80%, transparent);
+}
+
+/* ---------- Name: two editorial lines ---------- */
+.hero__name {
+  display: grid;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+@media (min-width: 64rem) {
+  .hero__name { font-size: clamp(4.5rem, 1rem + 6vw, 8.5rem); }
+}
+:root[lang='ar'] .hero__name {
+  font-family: 'Lalezar', 'Changa', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+.hero__line { display: inline-flex; white-space: nowrap; }
+.hero__last { padding-inline-start: 0.04em; }
+.hero__glyph-mask { display: inline-block; overflow: hidden; padding-block: 0.04em 0.08em; margin-block: -0.04em -0.08em; }
+:root[lang='ar'] .hero__glyph-mask { padding-block: 0.12em 0.22em; margin-block: -0.12em -0.22em; }
+.hero__glyph { display: inline-block; will-change: transform; }
+
+/* Surname: Dark Blue sheen */
+.hero__last .hero__glyph {
+  background-image: var(--name-sheen);
+  background-size: 250% 100%;
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: name-sheen 7s ease-in-out infinite;
+}
+@keyframes name-sheen {
+  0%, 100% { background-position: 100% 0; }
+  50% { background-position: 0% 0; }
+}
+
+/* ---------- Title from the CV ---------- */
+.hero__title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-8);
+  padding-top: var(--s-5);
+  border-top: var(--hairline) solid var(--line);
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+:root[lang='ar'] .hero__title { letter-spacing: 0; }
+
+.hero__statement {
+  margin-top: var(--s-4);
+  max-width: 36rem;
+  font-size: clamp(1.2rem, 1rem + 0.9vw, 1.7rem);
+  font-weight: 500;
+  line-height: 1.32;
+  letter-spacing: -0.015em;
+  color: var(--text-2);
+  text-wrap: balance;
+}
+:root[lang='ar'] .hero__statement { letter-spacing: 0; line-height: 1.6; }
+.hero__word {
+  color: var(--text);
+  background-image: linear-gradient(var(--accent-line), var(--accent-line));
+  background-size: 100% 1px;
+  background-position: 0 94%;
+  background-repeat: no-repeat;
+  transition: color var(--dur);
+  cursor: default;
+}
+.hero__word.is-active { color: var(--accent); background-image: linear-gradient(var(--accent), var(--accent)); }
+
+.hero__ctas { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-8); }
+.hero__file {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  color: var(--text-3);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 0 0.45rem;
+}
+@media (max-width: 30rem) {
+  .hero__ctas > div,
+  .hero__ctas .btn { width: 100%; }
+}
+
+/* ---------- The brand mark ---------- */
+.hero__system { width: 100%; max-width: 27rem; justify-self: center; }
+@media (min-width: 64rem) {
+  .hero__system { justify-self: end; max-width: 30rem; }
+  [dir='rtl'] .hero__system { justify-self: start; }
+}
+
+/* ---------- Foot: meta + scroll cue ---------- */
+.hero__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-top: var(--s-10);
+  padding-top: var(--s-4);
+  border-top: var(--hairline) solid var(--line);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.hero__meta { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-8); }
+.hero__meta li { display: inline-flex; align-items: center; gap: var(--s-2); }
+.hero__scroll { display: inline-flex; align-items: center; gap: var(--s-3); color: var(--text-2); font-weight: 500; }
+.hero__scroll-line { position: relative; width: 3rem; height: 1px; background: var(--line-strong); overflow: hidden; }
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: translateX(-100%);
+  animation: scroll-cue 2.2s var(--ease-in-out) infinite;
+}
+[dir='rtl'] .hero__scroll-line::after { animation-direction: reverse; }
+@keyframes scroll-cue {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+@media (max-width: 40rem) { .hero__scroll { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__last .hero__glyph { animation: none; }
+}

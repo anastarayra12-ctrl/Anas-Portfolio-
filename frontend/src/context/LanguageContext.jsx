@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { content, links } from '../content/site';
-import { playSwitchFx } from '../fx/switchFx';
-import { PREF_KEYS, initialLang, savePref, syncLangParam } from '../prefs';
+import { content, links } from '../content';
+import { playSwitchFx } from '../lib/switchFx';
+import { PREF_KEYS, initialLang, savePref, syncLangParam } from '../lib/prefs';
 
 const LanguageContext = createContext(null);
 
