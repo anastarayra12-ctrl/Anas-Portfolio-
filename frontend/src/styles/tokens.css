@@ -1,8 +1,9 @@
 /* ==========================================================================
-   Design tokens — derived from the Anas Tarayra Brand Guide (2026)
-   Palette: Primary black #0B0B0B · Deep blue #2563EB · Accent blue #3B82F6
-            Sky blue #38BDF8 · Off white #F5F4F1 · Pure white #FFFFFF
-   Usage rule: black 60% · deep/accent blue 30% · sky 10% (light touch only).
+   Design tokens — Anas Tarayra Brand Identity v2.1 "Midnight & Volt"
+   Palette: Black #0A0A0C · Midnight #0D1838 · Deep Blue #1E3FB8 · Cobalt #3B5BDB
+            Volt #C6F24E (spark) · Off White #F3F2EE · Pure White #FFFFFF
+   Usage: black + midnight 70% · blues 14% · Volt 4% (a spark, never a fill).
+   The logo is always blue: --mark-* tokens below. Volt never appears in the logo.
    ========================================================================== */
 
 @font-face { font-family: 'Space Grotesk'; src: url('/fonts/SpaceGrotesk-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
@@ -17,11 +18,14 @@
 
 :root {
   /* Brand palette (raw) */
-  --brand-black: #0B0B0B;
-  --brand-deep: #2563EB;
-  --brand-accent: #3B82F6;
-  --brand-sky: #38BDF8;
-  --brand-off: #F5F4F1;
+  --brand-black: #0A0A0C;
+  --brand-midnight: #0D1838;
+  --brand-deep: #1E3FB8;
+  --brand-accent: #3B5BDB;   /* Cobalt — large text and graphics only on dark */
+  --brand-sky: #C6F24E;      /* Volt — the spark (name kept for compatibility) */
+  --brand-volt-dark: #5B7A00;/* Volt on light grounds */
+  --brand-powder: #C9D4F5;
+  --brand-off: #F3F2EE;
   --brand-white: #FFFFFF;
 
   /* Typography */
@@ -92,34 +96,41 @@
 :root[data-theme='dark'] {
   color-scheme: dark;
   --bg: var(--brand-black);
-  --bg-raised: #111214;
-  --bg-sunken: #070707;
-  --surface: #141518;
-  --surface-hover: #1A1C20;
-  --line: rgba(245, 244, 241, 0.09);
-  --line-strong: rgba(245, 244, 241, 0.18);
+  --bg-raised: #111216;
+  --bg-sunken: #060607;
+  --surface: #15171C;
+  --surface-hover: #1B1E25;
+  --line: rgba(243, 242, 238, 0.09);
+  --line-strong: rgba(243, 242, 238, 0.18);
   --text: var(--brand-off);
-  --text-2: rgba(245, 244, 241, 0.7);
-  --text-3: rgba(245, 244, 241, 0.52);
-  --accent: var(--brand-accent);            /* text & strokes: 5.4:1 on black */
-  --accent-fill: var(--brand-deep);         /* fills with white text: 5.2:1 */
-  --accent-soft: rgba(59, 130, 246, 0.12);
-  --accent-line: rgba(59, 130, 246, 0.4);
-  --spark: var(--brand-sky);                /* 10% light touch */
+  --text-2: rgba(243, 242, 238, 0.7);
+  --text-3: rgba(243, 242, 238, 0.52);
+  --accent: var(--brand-sky);               /* small text & icons on dark: Volt 15.3:1 (Cobalt is 3.5:1) */
+  --accent-fill: var(--brand-deep);         /* fills with white text: 8.5:1 */
+  --accent-soft: rgba(198, 242, 78, 0.1);
+  --accent-line: rgba(198, 242, 78, 0.35);
+  --spark: var(--brand-sky);
   --on-accent: var(--brand-white);
-  --grid-line: rgba(245, 244, 241, 0.075);
-  --spot-line: rgba(59, 130, 246, 0.6);
-  --spot-dot: rgba(56, 189, 248, 0.95);
-  --spot-glow: rgba(59, 130, 246, 0.17);
-  --ambient-a: rgba(37, 99, 235, 0.11);
-  --ambient-b: rgba(56, 189, 248, 0.05);
+  --grid-line: rgba(243, 242, 238, 0.06);
+  --spot-line: rgba(59, 91, 219, 0.65);
+  --spot-dot: rgba(198, 242, 78, 0.95);
+  --spot-glow: rgba(30, 63, 184, 0.3);
+  --ambient-a: rgba(30, 63, 184, 0.22);
+  --ambient-b: rgba(13, 24, 56, 0.55);
+  /* Logo — all blue */
+  --mark-stroke: var(--brand-deep);
+  --mark-top: var(--brand-accent);
+  --mark-left: var(--brand-deep);
+  --mark-right: var(--brand-deep);
+  --mark-diamond: var(--brand-accent);
+  --name-sheen: linear-gradient(100deg, var(--brand-deep) 0%, var(--brand-accent) 30%, var(--brand-powder) 50%, var(--brand-accent) 70%, var(--brand-deep) 100%);
   --grain: 0.065;
   --shadow-lg: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
-  --nav-bg: rgba(11, 11, 11, 0.78);
-  --dock-bg: rgba(22, 23, 26, 0.84);
-  --dock-active: rgba(245, 244, 241, 0.075);
+  --nav-bg: rgba(10, 10, 12, 0.78);
+  --dock-bg: rgba(21, 23, 28, 0.84);
+  --dock-active: rgba(243, 242, 238, 0.075);
   --dock-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  --selection: rgba(59, 130, 246, 0.35);
+  --selection: rgba(30, 63, 184, 0.55);
   --success: #4ADE80;
   --danger: #F87171;
 }
@@ -128,34 +139,41 @@
 :root[data-theme='light'] {
   color-scheme: light;
   --bg: var(--brand-off);
-  --bg-raised: #FBFAF8;
-  --bg-sunken: #ECEAE5;
+  --bg-raised: #FAF9F6;
+  --bg-sunken: #EAE8E3;
   --surface: var(--brand-white);
   --surface-hover: #FAFAF9;
-  --line: rgba(11, 11, 11, 0.1);
-  --line-strong: rgba(11, 11, 11, 0.2);
+  --line: rgba(10, 10, 12, 0.1);
+  --line-strong: rgba(10, 10, 12, 0.2);
   --text: var(--brand-black);
-  --text-2: rgba(11, 11, 11, 0.72);
-  --text-3: rgba(11, 11, 11, 0.6);
-  --accent: var(--brand-deep);              /* 4.9:1 on off-white */
+  --text-2: rgba(10, 10, 12, 0.72);
+  --text-3: rgba(10, 10, 12, 0.6);
+  --accent: var(--brand-deep);              /* 7.6:1 on off-white */
   --accent-fill: var(--brand-deep);
-  --accent-soft: rgba(37, 99, 235, 0.08);
-  --accent-line: rgba(37, 99, 235, 0.35);
-  --spark: var(--brand-accent);
+  --accent-soft: rgba(30, 63, 184, 0.08);
+  --accent-line: rgba(30, 63, 184, 0.35);
+  --spark: var(--brand-volt-dark);
   --on-accent: var(--brand-white);
-  --grid-line: rgba(11, 11, 11, 0.085);
-  --spot-line: rgba(37, 99, 235, 0.5);
-  --spot-dot: rgba(37, 99, 235, 0.9);
-  --spot-glow: rgba(37, 99, 235, 0.1);
-  --ambient-a: rgba(37, 99, 235, 0.07);
-  --ambient-b: rgba(56, 189, 248, 0.07);
+  --grid-line: rgba(10, 10, 12, 0.075);
+  --spot-line: rgba(30, 63, 184, 0.5);
+  --spot-dot: rgba(30, 63, 184, 0.9);
+  --spot-glow: rgba(30, 63, 184, 0.1);
+  --ambient-a: rgba(30, 63, 184, 0.08);
+  --ambient-b: rgba(59, 91, 219, 0.06);
+  /* Logo — all blue */
+  --mark-stroke: var(--brand-deep);
+  --mark-top: var(--brand-accent);
+  --mark-left: var(--brand-deep);
+  --mark-right: var(--brand-midnight);
+  --mark-diamond: var(--brand-accent);
+  --name-sheen: linear-gradient(100deg, var(--brand-midnight) 0%, var(--brand-deep) 30%, var(--brand-accent) 50%, var(--brand-deep) 70%, var(--brand-midnight) 100%);
   --grain: 0.06;
-  --shadow-lg: 0 30px 70px -35px rgba(11, 11, 11, 0.28);
-  --nav-bg: rgba(245, 244, 241, 0.82);
+  --shadow-lg: 0 30px 70px -35px rgba(10, 10, 12, 0.28);
+  --nav-bg: rgba(243, 242, 238, 0.82);
   --dock-bg: rgba(255, 255, 255, 0.86);
-  --dock-active: rgba(11, 11, 11, 0.055);
-  --dock-shadow: 0 20px 44px -22px rgba(11, 11, 11, 0.35);
-  --selection: rgba(37, 99, 235, 0.22);
+  --dock-active: rgba(10, 10, 12, 0.055);
+  --dock-shadow: 0 20px 44px -22px rgba(10, 10, 12, 0.35);
+  --selection: rgba(30, 63, 184, 0.22);
   --success: #15803D;
   --danger: #B91C1C;
 }

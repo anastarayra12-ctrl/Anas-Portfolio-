@@ -21,7 +21,7 @@
 .wcard:focus-within {
   border-color: var(--accent-line);
   transform: translateY(-6px);
-  box-shadow: 0 30px 60px -34px rgba(37, 99, 235, 0.65);
+  box-shadow: 0 30px 60px -34px rgba(30, 63, 184, 0.65);
 }
 /* the whole card is one big button */
 .wcard__hit {
@@ -309,7 +309,7 @@
   width: min(100%, 36rem);
   border: 1px solid var(--line-strong);
   border-radius: var(--r-md);
-  background: #0B0B0B;
+  background: #0A0A0C;
   box-shadow: var(--shadow-lg);
   overflow: hidden;
   transform: translate(-4%, -2%);
@@ -321,11 +321,11 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid rgba(245, 244, 241, 0.08);
+  border-bottom: 1px solid rgba(243, 242, 238, 0.08);
   background: #111214;
 }
 .pv-browser__dots { display: flex; gap: 0.3rem; }
-.pv-browser__dots i { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: rgba(245, 244, 241, 0.18); }
+.pv-browser__dots i { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: rgba(243, 242, 238, 0.18); }
 .pv-browser__url {
   flex: 1;
   min-width: 0;
@@ -334,17 +334,17 @@
   white-space: nowrap;
   font-family: var(--font-mono);
   font-size: 0.625rem;
-  color: rgba(245, 244, 241, 0.5);
+  color: rgba(243, 242, 238, 0.5);
   padding: 0.15rem 0.6rem;
   border-radius: var(--r-xs);
-  background: rgba(245, 244, 241, 0.05);
+  background: rgba(243, 242, 238, 0.05);
 }
-.pv-site { padding: 0.75rem 1rem 1.5rem; color: #F5F4F1; font-family: 'Space Grotesk', sans-serif; }
+.pv-site { padding: 0.75rem 1rem 1.5rem; color: #F3F2EE; font-family: 'Space Grotesk', sans-serif; }
 .pv-site__nav { display: flex; align-items: center; gap: 0.4rem; }
 .pv-site__brand { font-size: 0.5625rem; font-weight: 600; }
 .pv-site__links { display: flex; gap: 0.4rem; margin-inline-start: auto; }
-.pv-site__links i { width: 1.1rem; height: 0.2rem; border-radius: 2px; background: rgba(245, 244, 241, 0.2); }
-.pv-site__cta { width: 2rem; height: 0.7rem; border-radius: 2px; background: #2563EB; }
+.pv-site__links i { width: 1.1rem; height: 0.2rem; border-radius: 2px; background: rgba(243, 242, 238, 0.2); }
+.pv-site__cta { width: 2rem; height: 0.7rem; border-radius: 2px; background: #1E3FB8; }
 .pv-site__hero {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -352,19 +352,19 @@
   gap: 0.75rem;
   margin-top: 1.25rem;
   background-image:
-    linear-gradient(to right, rgba(245, 244, 241, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(245, 244, 241, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(243, 242, 238, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(243, 242, 238, 0.05) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 .pv-site__copy { display: grid; gap: 0.4rem; justify-items: start; }
-.pv-site__kicker { font-size: 0.4375rem; letter-spacing: 0.2em; color: #3B82F6; font-weight: 600; }
+.pv-site__kicker { font-size: 0.4375rem; letter-spacing: 0.2em; color: #3B5BDB; font-weight: 600; }
 .pv-site__h1 { font-size: clamp(1.25rem, 0.8rem + 1.6vw, 2rem); font-weight: 700; line-height: 0.92; letter-spacing: -0.035em; }
-.pv-site__h1 em { font-style: normal; color: #3B82F6; }
-.pv-site__line { display: block; width: 90%; height: 0.2rem; border-radius: 2px; background: rgba(245, 244, 241, 0.16); }
+.pv-site__h1 em { font-style: normal; color: #3B5BDB; }
+.pv-site__line { display: block; width: 90%; height: 0.2rem; border-radius: 2px; background: rgba(243, 242, 238, 0.16); }
 .pv-site__line--short { width: 60%; }
 .pv-site__btns { display: flex; gap: 0.3rem; margin-top: 0.3rem; }
-.pv-site__btns i { width: 2.6rem; height: 0.8rem; border-radius: 2px; background: #2563EB; }
-.pv-site__btns i + i { background: transparent; border: 1px solid rgba(245, 244, 241, 0.25); }
+.pv-site__btns i { width: 2.6rem; height: 0.8rem; border-radius: 2px; background: #1E3FB8; }
+.pv-site__btns i + i { background: transparent; border: 1px solid rgba(243, 242, 238, 0.25); }
 .pv-site__mark { display: grid; place-items: center; }
 .pv-site__mark svg { width: 100%; max-width: 5.25rem; height: auto; }
 
@@ -389,19 +389,19 @@
   gap: 0.35rem;
   padding: 0.6rem 0.5rem;
   border-radius: 0.75rem;
-  background: #F5F4F1;
-  color: #0B0B0B;
+  background: #F3F2EE;
+  color: #0A0A0C;
   direction: rtl;
 }
 .pv-phone__screen svg { margin-bottom: 0.6rem; }
 .pv-phone__h1 { font-family: 'Lalezar', sans-serif; font-size: clamp(0.8rem, 0.6rem + 0.6vw, 1.05rem); line-height: 1.3; }
-.pv-phone__h1 em { display: block; font-style: normal; color: #2563EB; }
-.pv-phone__screen .pv-site__line { background: rgba(11, 11, 11, 0.14); height: 0.15rem; }
-.pv-phone__mark { display: grid; place-items: center; padding-block: 0.5rem; border-radius: 0.4rem; background: #0B0B0B; margin-top: 0.3rem; }
+.pv-phone__h1 em { display: block; font-style: normal; color: #1E3FB8; }
+.pv-phone__screen .pv-site__line { background: rgba(10, 10, 12, 0.14); height: 0.15rem; }
+.pv-phone__mark { display: grid; place-items: center; padding-block: 0.5rem; border-radius: 0.4rem; background: #0A0A0C; margin-top: 0.3rem; }
 .pv-phone__screen .pv-phone__mark svg { margin: 0; width: 60%; height: auto; }
 .pv-phone__rows { display: grid; gap: 0.25rem; }
-.pv-phone__rows i { height: 0.55rem; border-radius: 2px; border: 1px solid rgba(11, 11, 11, 0.12); }
-.pv-phone__btn { width: 100%; height: 0.8rem; border-radius: 2px; background: #2563EB; margin-top: auto; }
+.pv-phone__rows i { height: 0.55rem; border-radius: 2px; border: 1px solid rgba(10, 10, 12, 0.12); }
+.pv-phone__btn { width: 100%; height: 0.8rem; border-radius: 2px; background: #1E3FB8; margin-top: auto; }
 
 /* Brand preview: board of tiles */
 .pv--brand {
@@ -423,18 +423,18 @@
 }
 .pv-brand__tile--dark {
   grid-row: 1 / span 2;
-  background: #0B0B0B;
-  border: 1px solid rgba(245, 244, 241, 0.1);
-  color: #F5F4F1;
+  background: #0A0A0C;
+  border: 1px solid rgba(243, 242, 238, 0.1);
+  color: #F3F2EE;
 }
 .pv-brand__tile--dark svg { width: clamp(3.5rem, 30%, 6rem); height: auto; margin-bottom: 0.5rem; transition: transform var(--dur-slow) var(--ease-out); }
 .wcard:hover .pv-brand__tile--dark svg { transform: scale(1.06); }
 .pv-brand__name-ar { font-family: 'Lalezar', sans-serif; font-size: clamp(1.1rem, 0.8rem + 1vw, 1.6rem); line-height: 1.2; }
-.pv-brand__name-en { font-family: 'Space Grotesk', sans-serif; font-size: 0.5625rem; font-weight: 600; letter-spacing: 0.35em; color: #38BDF8; }
-.pv-brand__tile--light { background: #F5F4F1; color: #0B0B0B; }
+.pv-brand__name-en { font-family: 'Space Grotesk', sans-serif; font-size: 0.5625rem; font-weight: 600; letter-spacing: 0.35em; color: #C6F24E; }
+.pv-brand__tile--light { background: #F3F2EE; color: #0A0A0C; }
 .pv-brand__tile--light svg { width: 2.75rem; height: auto; }
-.pv-brand__spec { font-family: var(--font-mono); font-size: 0.5625rem; color: rgba(11, 11, 11, 0.55); }
-.pv-brand__tile--type { background: #2563EB; color: #fff; padding: 0.5rem; text-align: center; }
+.pv-brand__spec { font-family: var(--font-mono); font-size: 0.5625rem; color: rgba(10, 10, 12, 0.55); }
+.pv-brand__tile--type { background: #1E3FB8; color: #fff; padding: 0.5rem; text-align: center; }
 .pv-brand__aa { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(1.75rem, 1rem + 2.5vw, 3rem); line-height: 1; letter-spacing: -0.04em; }
 .pv-brand__type-name { font-size: 0.5625rem; opacity: 0.85; }
 .pv-brand__palette {

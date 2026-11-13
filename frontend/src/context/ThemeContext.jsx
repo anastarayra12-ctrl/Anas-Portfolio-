@@ -14,7 +14,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#F5F4F1' : '#0B0B0B');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#F3F2EE' : '#0A0A0C');
     document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', theme);
   }, [theme]);
 

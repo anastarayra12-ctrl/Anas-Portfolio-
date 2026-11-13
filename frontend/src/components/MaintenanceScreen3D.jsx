@@ -62,8 +62,8 @@ function FloatingCyberCore({ mousePos, isMobile }) {
         <mesh ref={knotRef}>
           <torusKnotGeometry args={[1.25, 0.38, 128, 32]} />
           <meshStandardMaterial
-            color="#2563EB"
-            emissive="#1D4ED8"
+            color="#1E3FB8"
+            emissive="#1E3FB8"
             emissiveIntensity={0.5}
             roughness={0.12}
             metalness={0.88}
@@ -76,8 +76,8 @@ function FloatingCyberCore({ mousePos, isMobile }) {
       <mesh ref={innerPolyRef}>
         <octahedronGeometry args={[0.75, 0]} />
         <meshStandardMaterial
-          color="#60A5FA"
-          emissive="#3B82F6"
+          color="#5A78E6"
+          emissive="#3B5BDB"
           emissiveIntensity={0.8}
           wireframe
           transparent
@@ -89,7 +89,7 @@ function FloatingCyberCore({ mousePos, isMobile }) {
       <mesh>
         <sphereGeometry args={[2.5, 24, 24]} />
         <meshStandardMaterial
-          color="#38BDF8"
+          color="#C6F24E"
           wireframe
           transparent
           opacity={0.12}
@@ -100,8 +100,8 @@ function FloatingCyberCore({ mousePos, isMobile }) {
       <mesh ref={ringRef1} rotation={[Math.PI / 4, 0, 0]}>
         <torusGeometry args={[2.9, 0.035, 16, 100]} />
         <meshStandardMaterial
-          color="#60A5FA"
-          emissive="#3B82F6"
+          color="#5A78E6"
+          emissive="#3B5BDB"
           emissiveIntensity={1.2}
           toneMapped={false}
         />
@@ -111,7 +111,7 @@ function FloatingCyberCore({ mousePos, isMobile }) {
       <mesh ref={ringRef2} rotation={[-Math.PI / 3, Math.PI / 6, 0]}>
         <torusGeometry args={[3.3, 0.025, 16, 100]} />
         <meshStandardMaterial
-          color="#38BDF8"
+          color="#C6F24E"
           emissive="#0284C7"
           emissiveIntensity={0.9}
           toneMapped={false}
@@ -122,21 +122,21 @@ function FloatingCyberCore({ mousePos, isMobile }) {
       <group ref={satellitesGroupRef}>
         <mesh position={[3.2, 0, 0]}>
           <boxGeometry args={[0.2, 0.2, 0.2]} />
-          <meshStandardMaterial color="#60A5FA" emissive="#3B82F6" emissiveIntensity={0.8} />
+          <meshStandardMaterial color="#5A78E6" emissive="#3B5BDB" emissiveIntensity={0.8} />
         </mesh>
         <mesh position={[-3.2, 0, 0]}>
           <octahedronGeometry args={[0.15, 0]} />
-          <meshStandardMaterial color="#38BDF8" emissive="#0284C7" emissiveIntensity={0.8} />
+          <meshStandardMaterial color="#C6F24E" emissive="#0284C7" emissiveIntensity={0.8} />
         </mesh>
         <mesh position={[0, 3.2, 0]}>
           <sphereGeometry args={[0.12, 12, 12]} />
-          <meshStandardMaterial color="#93C5FD" emissive="#2563EB" emissiveIntensity={0.8} />
+          <meshStandardMaterial color="#C9D4F5" emissive="#1E3FB8" emissiveIntensity={0.8} />
         </mesh>
       </group>
 
       {/* Dynamic Ambient Particle Field */}
-      <Sparkles count={isMobile ? 80 : 150} scale={9} size={3} speed={0.4} color="#60A5FA" />
-      <Sparkles count={isMobile ? 40 : 80} scale={7} size={5} speed={0.6} color="#38BDF8" />
+      <Sparkles count={isMobile ? 80 : 150} scale={9} size={3} speed={0.4} color="#5A78E6" />
+      <Sparkles count={isMobile ? 40 : 80} scale={7} size={5} speed={0.6} color="#C6F24E" />
     </group>
   );
 }
@@ -149,9 +149,9 @@ function Scene3D({ mousePos, isMobile }) {
       style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
     >
       <ambientLight intensity={0.8} />
-      <directionalLight position={[10, 12, 10]} intensity={1.6} color="#93C5FD" />
-      <pointLight position={[-10, -10, -5]} intensity={1.2} color="#3B82F6" />
-      <pointLight position={[0, 0, 5]} intensity={0.9} color="#38BDF8" />
+      <directionalLight position={[10, 12, 10]} intensity={1.6} color="#C9D4F5" />
+      <pointLight position={[-10, -10, -5]} intensity={1.2} color="#3B5BDB" />
+      <pointLight position={[0, 0, 5]} intensity={0.9} color="#C6F24E" />
       
       <Stars radius={50} depth={50} count={isMobile ? 700 : 1500} factor={4} saturation={0} fade speed={1.2} />
       <FloatingCyberCore mousePos={mousePos} isMobile={isMobile} />
@@ -268,7 +268,7 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
           left: '20%',
           width: isMobile ? '300px' : '550px',
           height: isMobile ? '300px' : '550px',
-          background: 'radial-gradient(circle, rgba(37,99,235,0.28) 0%, rgba(0,0,0,0) 70%)',
+          background: 'radial-gradient(circle, rgba(30, 63, 184,0.28) 0%, rgba(0,0,0,0) 70%)',
           pointerEvents: 'none',
           filter: 'blur(70px)',
           zIndex: 1,
@@ -281,7 +281,7 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
           right: '20%',
           width: isMobile ? '300px' : '550px',
           height: isMobile ? '300px' : '550px',
-          background: 'radial-gradient(circle, rgba(56,189,248,0.22) 0%, rgba(0,0,0,0) 70%)',
+          background: 'radial-gradient(circle, rgba(198, 242, 78,0.22) 0%, rgba(0,0,0,0) 70%)',
           pointerEvents: 'none',
           filter: 'blur(70px)',
           zIndex: 1,
@@ -313,13 +313,13 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
               width: isMobile ? '36px' : '42px',
               height: isMobile ? '36px' : '42px',
               borderRadius: '12px',
-              background: 'linear-gradient(135deg, #2563EB 0%, #0284C7 100%)',
+              background: 'linear-gradient(135deg, #1E3FB8 0%, #0284C7 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: '800',
               fontSize: isMobile ? '16px' : '19px',
-              boxShadow: '0 0 20px rgba(37, 99, 235, 0.5)',
+              boxShadow: '0 0 20px rgba(30, 63, 184, 0.5)',
               color: '#FFFFFF',
             }}
           >
@@ -372,16 +372,16 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
                 gap: '5px',
                 padding: isMobile ? '6px 10px' : '8px 14px',
                 borderRadius: '20px',
-                border: '1px solid rgba(56, 189, 248, 0.35)',
-                background: 'rgba(37, 99, 235, 0.15)',
-                color: '#38BDF8',
+                border: '1px solid rgba(198, 242, 78, 0.35)',
+                background: 'rgba(30, 63, 184, 0.15)',
+                color: '#C6F24E',
                 fontSize: isMobile ? '11px' : '12px',
                 fontWeight: '600',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(37, 99, 235, 0.3)')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(37, 99, 235, 0.15)')}
+              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(30, 63, 184, 0.3)')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(30, 63, 184, 0.15)')}
             >
               <Eye size={isMobile ? 12 : 14} />
               <span>{isAr ? 'المعاينة' : 'Preview'}</span>
@@ -404,7 +404,7 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
           WebkitBackdropFilter: 'blur(24px)',
           borderRadius: isMobile ? '24px' : '32px',
           border: '1px solid rgba(255, 255, 255, 0.14)',
-          boxShadow: '0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 50px rgba(37, 99, 235, 0.2)',
+          boxShadow: '0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 50px rgba(30, 63, 184, 0.2)',
           padding: isMobile ? '28px 18px' : '44px 36px',
           textAlign: 'center',
           position: 'relative',
@@ -419,8 +419,8 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
             left: '15%',
             right: '15%',
             height: '2px',
-            background: 'linear-gradient(90deg, transparent 0%, #3B82F6 50%, transparent 100%)',
-            boxShadow: '0 0 15px #3B82F6',
+            background: 'linear-gradient(90deg, transparent 0%, #3B5BDB 50%, transparent 100%)',
+            boxShadow: '0 0 15px #3B5BDB',
           }}
         />
 
@@ -443,9 +443,9 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
               gap: '8px',
               padding: '6px 16px',
               borderRadius: '30px',
-              background: 'rgba(37, 99, 235, 0.15)',
-              border: '1px solid rgba(56, 189, 248, 0.35)',
-              color: '#38BDF8',
+              background: 'rgba(30, 63, 184, 0.15)',
+              border: '1px solid rgba(198, 242, 78, 0.35)',
+              color: '#C6F24E',
               fontSize: isMobile ? '12px' : '13px',
               fontWeight: '700',
             }}
@@ -455,8 +455,8 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
                 width: '8px',
                 height: '8px',
                 borderRadius: '50%',
-                backgroundColor: '#38BDF8',
-                boxShadow: '0 0 12px #38BDF8',
+                backgroundColor: '#C6F24E',
+                boxShadow: '0 0 12px #C6F24E',
                 animation: 'pulse 1.8s infinite',
               }}
             />
@@ -480,7 +480,7 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
                 fontWeight: '600',
               }}
             >
-              <Clock size={12} style={{ color: '#60A5FA' }} />
+              <Clock size={12} style={{ color: '#5A78E6' }} />
               <span>{isAr ? `عمان ${ammanTime}` : `Amman ${ammanTime}`}</span>
             </div>
           )}
@@ -569,10 +569,10 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
             }}
           >
             <span style={{ color: '#E2E8F0', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <RefreshCw size={14} className="spin-slow" style={{ color: '#38BDF8' }} />
+              <RefreshCw size={14} className="spin-slow" style={{ color: '#C6F24E' }} />
               {statusText}
             </span>
-            <span style={{ color: '#38BDF8', fontWeight: '700' }}>{maintenanceConfig.progressPercent}%</span>
+            <span style={{ color: '#C6F24E', fontWeight: '700' }}>{maintenanceConfig.progressPercent}%</span>
           </div>
 
           {/* Progress Bar Track */}
@@ -592,9 +592,9 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
               transition={{ duration: 1.4, ease: 'easeOut' }}
               style={{
                 height: '100%',
-                background: 'linear-gradient(90deg, #2563EB 0%, #38BDF8 100%)',
+                background: 'linear-gradient(90deg, #1E3FB8 0%, #C6F24E 100%)',
                 borderRadius: '6px',
-                boxShadow: '0 0 14px rgba(56, 189, 248, 0.9)',
+                boxShadow: '0 0 14px rgba(198, 242, 78, 0.9)',
               }}
             />
           </div>
@@ -622,23 +622,23 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
               gap: '8px',
               padding: isMobile ? '14px 20px' : '14px 26px',
               borderRadius: '16px',
-              background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+              background: 'linear-gradient(135deg, #1E3FB8 0%, #1E3FB8 100%)',
               color: '#FFFFFF',
               fontWeight: '700',
               fontSize: '14px',
               textDecoration: 'none',
-              boxShadow: '0 8px 25px rgba(37, 99, 235, 0.4)',
+              boxShadow: '0 8px 25px rgba(30, 63, 184, 0.4)',
               transition: 'transform 0.2s ease, boxShadow 0.2s ease',
               width: isMobile ? '100%' : 'auto',
               flex: isMobile ? 'none' : '1',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 12px 30px rgba(37, 99, 235, 0.55)';
+              e.currentTarget.style.boxShadow = '0 12px 30px rgba(30, 63, 184, 0.55)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 8px 25px rgba(37, 99, 235, 0.4)';
+              e.currentTarget.style.boxShadow = '0 8px 25px rgba(30, 63, 184, 0.4)';
             }}
           >
             <MessageSquare size={18} />
@@ -734,7 +734,7 @@ export const MaintenanceScreen3D = ({ onBypass }) => {
               display: 'inline-flex',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = '#38BDF8';
+              e.currentTarget.style.color = '#C6F24E';
               e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
             }}
             onMouseLeave={(e) => {

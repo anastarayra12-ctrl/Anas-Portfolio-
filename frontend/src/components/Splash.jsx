@@ -93,16 +93,16 @@ export function Splash({ onLeave, onDone }) {
             exit={reduce ? {} : { y: -40, opacity: 0, transition: { duration: 0.45, ease: [0.55, 0, 1, 0.45] } }}
           >
             <svg className="splash__mark" viewBox="12 8 76 82" fill="none" aria-hidden="true">
-              <g stroke="#3B82F6" strokeLinecap="round" strokeLinejoin="round">
+              <g style={{ stroke: 'var(--mark-stroke)' }} strokeLinecap="round" strokeLinejoin="round">
                 <m.path d="M50 14 L18 84" strokeWidth="4.6" {...draw(0.1)} />
                 <m.path d="M50 14 L82 84" strokeWidth="4.6" {...draw(0.1)} />
                 <m.path d="M38 48 L18 84" strokeWidth="6.2" {...draw(0.35, 0.4)} />
                 <m.path d="M62 48 L82 84" strokeWidth="6.2" {...draw(0.35, 0.4)} />
               </g>
-              <m.circle cx="50" cy="14" r="3.5" fill="#38BDF8" style={{ transformOrigin: '50px 14px' }} {...pop(0.45)} />
-              <m.circle cx="18" cy="84" r="3.5" fill="#3B82F6" style={{ transformOrigin: '18px 84px' }} {...pop(0.5)} />
-              <m.circle cx="82" cy="84" r="3.5" fill="#2563EB" style={{ transformOrigin: '82px 84px' }} {...pop(0.55)} />
-              <m.polygon points="50,50 57,58 50,66 43,58" fill="#38BDF8" style={{ transformOrigin: '50px 58px' }} {...pop(0.65)} />
+              <m.circle cx="50" cy="14" r="3.5" style={{ fill: 'var(--mark-top)', transformOrigin: '50px 14px' }} {...pop(0.45)} />
+              <m.circle cx="18" cy="84" r="3.5" style={{ fill: 'var(--mark-left)', transformOrigin: '18px 84px' }} {...pop(0.5)} />
+              <m.circle cx="82" cy="84" r="3.5" style={{ fill: 'var(--mark-right)', transformOrigin: '82px 84px' }} {...pop(0.55)} />
+              <m.polygon points="50,50 57,58 50,66 43,58" style={{ fill: 'var(--mark-diamond)', transformOrigin: '50px 58px' }} {...pop(0.65)} />
             </svg>
 
             <h2 className="splash__hello">
@@ -111,7 +111,7 @@ export function Splash({ onLeave, onDone }) {
                 <defs>
                   <linearGradient id="splash-ink" x1="0" y1="0" x2="480" y2="0" gradientUnits="userSpaceOnUse">
                     <stop offset="0.35" style={{ stopColor: 'var(--text)' }} />
-                    <stop offset="1" stopColor="#3B82F6" />
+                    <stop offset="1" style={{ stopColor: 'var(--brand-accent)' }} />
                   </linearGradient>
                 </defs>
                 <m.path
@@ -131,8 +131,7 @@ export function Splash({ onLeave, onDone }) {
                 {/* the brand diamond lands as the full stop once the pen lifts */}
                 <m.polygon
                   points="426,93 434,103 426,113 418,103"
-                  fill="#38BDF8"
-                  style={{ transformBox: 'fill-box', originX: 0.5, originY: 0.5 }}
+                  style={{ fill: 'var(--spark)', transformBox: 'fill-box', originX: 0.5, originY: 0.5 }}
                   initial={reduce ? { opacity: 0 } : { scale: 0, rotate: -90, opacity: 0 }}
                   animate={reduce ? { opacity: 1 } : { scale: 1, rotate: 0, opacity: 1 }}
                   transition={{ delay: reduce ? 0.2 : WRITE_START + WRITE_DURATION - 0.05, duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}

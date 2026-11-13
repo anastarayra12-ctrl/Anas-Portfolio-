@@ -52,12 +52,12 @@
   width: 40%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 68%);
+  background: radial-gradient(circle, rgba(59, 91, 219, 0.32), transparent 68%);
   filter: blur(18px);
   transform: translateZ(calc(-20px - 40px * var(--x, 0)));
   pointer-events: none;
 }
-:root[data-theme='light'] .pm__glow { background: radial-gradient(circle, rgba(37, 99, 235, 0.13), transparent 68%); }
+:root[data-theme='light'] .pm__glow { background: radial-gradient(circle, rgba(30, 63, 184, 0.13), transparent 68%); }
 
 .pm__layer--guides line,
 .pm__layer--guides circle {
@@ -75,20 +75,20 @@
 
 .pm__layer--strokes path {
   fill: none;
-  stroke: var(--brand-accent);
+  stroke: var(--mark-stroke);
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 .pm__signal {
-  stroke: var(--brand-sky) !important;
+  stroke: var(--brand-powder) !important;
   stroke-width: 1.3;
-  filter: drop-shadow(0 0 1.5px rgba(56, 189, 248, 0.9));
+  filter: drop-shadow(0 0 1.5px rgba(59, 91, 219, 0.9));
 }
 :root[data-theme='light'] .pm__signal { stroke: #fff !important; filter: none; }
 
 .pm__halo {
   fill: none;
-  stroke: var(--spark);
+  stroke: var(--mark-top);
   stroke-width: 0.35;
   opacity: 0.8;
   transform-box: fill-box;
@@ -156,7 +156,7 @@
   pointer-events: auto;
   transform-origin: center;
 }
-:root[data-theme='light'] .pm__card { box-shadow: 0 18px 40px -22px rgba(11, 11, 11, 0.3); }
+:root[data-theme='light'] .pm__card { box-shadow: 0 18px 40px -22px rgba(10, 10, 12, 0.3); }
 .pm__card--idea { transform-origin: 20% 100%; }
 .pm__card--build { transform-origin: 80% 100%; }
 .pm__card--design { transform-origin: 0% 20%; }

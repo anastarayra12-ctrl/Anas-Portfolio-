@@ -72,7 +72,7 @@
 
 /* Surname: brand-blue gradient with a slow light sweep */
 .hero__last .hero__glyph {
-  background-image: linear-gradient(100deg, var(--brand-deep) 0%, var(--brand-accent) 30%, var(--brand-sky) 50%, var(--brand-accent) 70%, var(--brand-deep) 100%);
+  background-image: var(--name-sheen);
   background-size: 250% 100%;
   background-attachment: fixed;
   -webkit-background-clip: text;
@@ -85,7 +85,7 @@
   50% { background-position: 0% 0; }
 }
 .hero__first .hero__glyph { transition: color var(--dur), transform var(--dur) var(--ease-out); }
-.hero__first:hover .hero__glyph { color: var(--brand-accent); }
+.hero__first:hover .hero__glyph { color: var(--mark-top); }
 
 /* ---------- Roles as chips ---------- */
 .hero__roles {

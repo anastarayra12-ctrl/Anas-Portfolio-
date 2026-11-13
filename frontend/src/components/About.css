@@ -67,7 +67,7 @@
   opacity: 0;
   transition: opacity var(--dur);
 }
-.side:hover { border-color: var(--accent-line); transform: translateY(-3px); box-shadow: 0 24px 50px -30px rgba(37, 99, 235, 0.55); }
+.side:hover { border-color: var(--accent-line); transform: translateY(-3px); box-shadow: 0 24px 50px -30px rgba(30, 63, 184, 0.55); }
 .side:hover::before { opacity: 1; }
 .side__head { display: flex; align-items: center; justify-content: space-between; }
 .side__icon {

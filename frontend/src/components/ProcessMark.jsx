@@ -247,9 +247,9 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
               />
             )}
             {[
-              ['top', TOP, 'var(--brand-sky)', 0.9, 'design'],
-              ['bl', BL, 'var(--brand-accent)', 1.0, 'idea'],
-              ['br', BR, 'var(--brand-deep)', 1.1, 'build'],
+              ['top', TOP, 'var(--mark-top)', 0.9, 'design'],
+              ['bl', BL, 'var(--mark-left)', 1.0, 'idea'],
+              ['br', BR, 'var(--mark-right)', 1.1, 'build'],
             ].map(([key, [cx, cy], fill, delay, id]) => (
               <g key={key} className={cls(key)}>
                 {active === id && <circle className="pm__halo" cx={cx} cy={cy} r="7" />}
@@ -267,7 +267,7 @@ export function ProcessMark({ copy, active, onActivate, highlight = false, ready
               {active === 'product' && <circle className="pm__halo pm__halo--product" cx={D[0]} cy={D[1]} r="11" />}
               <m.polygon
                 points={`${D[0]},${D[1] - 8} ${D[0] + 7},${D[1]} ${D[0]},${D[1] + 8} ${D[0] - 7},${D[1]}`}
-                fill="var(--brand-sky)"
+                fill="var(--mark-diamond)"
                 style={{ transformOrigin: `${D[0]}px ${D[1]}px`, transformBox: 'view-box' }}
                 {...pop(1.25)}
               />

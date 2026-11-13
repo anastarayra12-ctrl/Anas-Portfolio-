@@ -73,11 +73,11 @@ export function PortfolioPreview() {
 }
 
 const swatches = [
-  { hex: '#0B0B0B', name: 'Black' },
-  { hex: '#2563EB', name: 'Deep' },
-  { hex: '#3B82F6', name: 'Accent' },
-  { hex: '#38BDF8', name: 'Sky' },
-  { hex: '#F5F4F1', name: 'Off white' },
+  { hex: '#0A0A0C', name: 'Black' },
+  { hex: '#0D1838', name: 'Midnight' },
+  { hex: '#1E3FB8', name: 'Deep' },
+  { hex: '#3B5BDB', name: 'Cobalt' },
+  { hex: '#C6F24E', name: 'Volt' },
 ];
 
 export function BrandPreview() {

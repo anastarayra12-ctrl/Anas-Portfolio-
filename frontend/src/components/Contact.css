@@ -66,20 +66,20 @@
   justify-content: flex-end;
   gap: 0.9rem;
   padding: clamp(1.4rem, 3vw, 2.25rem);
-  color: #F5F4F1;
-  border-color: rgba(59, 130, 246, 0.4);
+  color: #F3F2EE;
+  border-color: rgba(59, 91, 219, 0.4);
   background:
-    radial-gradient(120% 90% at 100% 0%, rgba(56, 189, 248, 0.28), transparent 55%),
-    radial-gradient(90% 90% at 0% 100%, rgba(37, 99, 235, 0.45), transparent 60%),
-    #0B0B0B;
+    radial-gradient(120% 90% at 100% 0%, rgba(59, 91, 219, 0.32), transparent 55%),
+    radial-gradient(90% 90% at 0% 100%, rgba(30, 63, 184, 0.45), transparent 60%),
+    #0A0A0C;
 }
 .ctile--main::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, rgba(245, 244, 241, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(245, 244, 241, 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(243, 242, 238, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(243, 242, 238, 0.06) 1px, transparent 1px);
   background-size: 40px 40px;
   -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
   mask-image: linear-gradient(to bottom, #000, transparent 85%);
@@ -110,7 +110,7 @@
   border: 1px solid rgba(74, 222, 128, 0.35);
 }
 .ctile__status i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 10px #4ADE80; }
-.ctile__eyebrow { position: relative; font-size: var(--fs-sm); color: rgba(245, 244, 241, 0.65); }
+.ctile__eyebrow { position: relative; font-size: var(--fs-sm); color: rgba(243, 242, 238, 0.65); }
 .ctile__email-row { position: relative; display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
 .ctile__email {
   min-width: 0;
@@ -120,7 +120,7 @@
   letter-spacing: -0.03em;
   line-height: 1.1;
   overflow-wrap: anywhere;
-  background-image: linear-gradient(#F5F4F1, #F5F4F1);
+  background-image: linear-gradient(#F3F2EE, #F3F2EE);
   background-size: 0% 2px;
   background-position: 0 100%;
   background-repeat: no-repeat;
@@ -135,21 +135,21 @@
   width: 2.6rem;
   height: 2.6rem;
   border-radius: 50%;
-  color: #F5F4F1;
-  border: 1px solid rgba(245, 244, 241, 0.25);
-  background: rgba(245, 244, 241, 0.06);
+  color: #F3F2EE;
+  border: 1px solid rgba(243, 242, 238, 0.25);
+  background: rgba(243, 242, 238, 0.06);
   transition: background-color var(--dur-fast);
 }
-.ctile__copy:hover { background: rgba(245, 244, 241, 0.14); }
-.ctile__copy:focus-visible { outline: 2px solid #38BDF8; outline-offset: 2px; }
+.ctile__copy:hover { background: rgba(243, 242, 238, 0.14); }
+.ctile__copy:focus-visible { outline: 2px solid #C6F24E; outline-offset: 2px; }
 .ctile__actions { position: relative; display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.4rem; }
 .ctile__btn { border-radius: var(--r-pill); }
 .ctile__btn--wa {
-  color: #F5F4F1;
-  border: 1px solid rgba(245, 244, 241, 0.28);
-  background: rgba(245, 244, 241, 0.06);
+  color: #F3F2EE;
+  border: 1px solid rgba(243, 242, 238, 0.28);
+  background: rgba(243, 242, 238, 0.06);
 }
-.ctile__btn--wa:hover { background: rgba(245, 244, 241, 0.14); }
+.ctile__btn--wa:hover { background: rgba(243, 242, 238, 0.14); }
 
 /* ---------- Link tiles ---------- */
 .ctile--link { gap: 0.3rem; }
@@ -169,7 +169,7 @@
   background: var(--brand-deep);
   color: #fff;
   transform: translateY(-4px);
-  box-shadow: 0 24px 50px -24px rgba(37, 99, 235, 0.8);
+  box-shadow: 0 24px 50px -24px rgba(30, 63, 184, 0.8);
 }
 .ctile--link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .ctile--link:hover .ctile__icon,

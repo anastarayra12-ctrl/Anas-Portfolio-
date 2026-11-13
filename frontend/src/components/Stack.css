@@ -34,7 +34,7 @@
   z-index: -1;
   border-radius: inherit;
   background: var(--bg);
-  box-shadow: 0 0 0 1px var(--accent-line), 0 16px 40px -24px rgba(37, 99, 235, 0.7);
+  box-shadow: 0 0 0 1px var(--accent-line), 0 16px 40px -24px rgba(30, 63, 184, 0.7);
 }
 .bench__tab-icon {
   grid-area: icon;
@@ -48,7 +48,7 @@
   transition: color var(--dur), background-color var(--dur);
 }
 .bench__tab.is-active { color: var(--text); }
-.bench__tab.is-active .bench__tab-icon { color: #fff; background: var(--brand-deep); box-shadow: 0 6px 18px -6px rgba(37, 99, 235, 0.8); }
+.bench__tab.is-active .bench__tab-icon { color: #fff; background: var(--brand-deep); box-shadow: 0 6px 18px -6px rgba(30, 63, 184, 0.8); }
 .bench__tab-text { grid-area: text; display: grid; }
 .bench__tab-name { font-family: var(--font-sans); font-size: var(--fs-md); font-weight: 700; line-height: 1.2; }
 .bench__tab-purpose { font-size: var(--fs-xs); color: var(--text-3); }
@@ -124,7 +124,7 @@
   opacity: 0;
   transition: opacity var(--dur);
 }
-.tile:hover { border-color: var(--accent-line); transform: translateY(-3px); box-shadow: 0 18px 40px -26px rgba(37, 99, 235, 0.6); }
+.tile:hover { border-color: var(--accent-line); transform: translateY(-3px); box-shadow: 0 18px 40px -26px rgba(30, 63, 184, 0.6); }
 .tile:hover::after { opacity: 1; }
 .tile__mono {
   display: grid;

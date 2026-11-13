@@ -112,7 +112,7 @@ export function IdBadge({ s, name }) {
               </span>
               <span className="badge__motto">{s.motto}</span>
               <span className="badge__palette">
-                {['#0B0B0B', '#2563EB', '#3B82F6', '#38BDF8', '#F5F4F1'].map((c) => (
+                {['#0A0A0C', '#0D1838', '#1E3FB8', '#3B5BDB', '#C6F24E'].map((c) => (
                   <i key={c} style={{ background: c }} />
                 ))}
               </span>

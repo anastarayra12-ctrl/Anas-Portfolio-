@@ -93,9 +93,9 @@
   justify-content: center;
   gap: 0.9rem;
   text-align: center;
-  color: #F5F4F1;
-  background: linear-gradient(160deg, #1a3fae, #0b0b0b 70%);
-  border: 1px solid rgba(59, 130, 246, 0.45);
+  color: #F3F2EE;
+  background: linear-gradient(160deg, #1a3fae, #0A0A0C 70%);
+  border: 1px solid rgba(59, 91, 219, 0.45);
 }
 .badge--still .badge__swing { animation: none; }
 .badge--still .badge__card { transition: none; }
@@ -189,8 +189,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, rgba(245, 244, 241, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(245, 244, 241, 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(243, 242, 238, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(243, 242, 238, 0.06) 1px, transparent 1px);
   background-size: 22px 22px;
   -webkit-mask-image: radial-gradient(circle at 50% 40%, #000, transparent 75%);
   mask-image: radial-gradient(circle at 50% 40%, #000, transparent 75%);
@@ -202,8 +202,8 @@
   width: 4.5rem;
   height: 4.5rem;
   border-radius: 50%;
-  background: #0b0b0b;
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.4);
+  background: #0A0A0C;
+  box-shadow: 0 0 0 1px rgba(59, 91, 219, 0.5), 0 0 40px rgba(59, 91, 219, 0.4);
 }
 .badge__back-title { position: relative; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
 :root[lang='ar'] .badge__back-title { font-family: 'Lalezar', sans-serif; font-weight: 400; letter-spacing: 0; }
@@ -211,13 +211,13 @@
 .badge__field--back {
   padding: 0.5rem 0.8rem;
   border-radius: 0.8rem;
-  background: rgba(245, 244, 241, 0.06);
-  border: 1px solid rgba(245, 244, 241, 0.1);
+  background: rgba(243, 242, 238, 0.06);
+  border: 1px solid rgba(243, 242, 238, 0.1);
 }
-.badge__field--back .badge__k { color: #7dd3fc; }
-.badge__motto { position: relative; font-size: 0.78rem; font-weight: 600; color: rgba(245, 244, 241, 0.75); }
+.badge__field--back .badge__k { color: #C6F24E; }
+.badge__motto { position: relative; font-size: 0.78rem; font-weight: 600; color: rgba(243, 242, 238, 0.75); }
 .badge__palette { position: relative; display: flex; gap: 0.3rem; }
-.badge__palette i { width: 0.85rem; height: 0.85rem; border-radius: 50%; box-shadow: 0 0 0 1px rgba(245, 244, 241, 0.3); }
+.badge__palette i { width: 0.85rem; height: 0.85rem; border-radius: 50%; box-shadow: 0 0 0 1px rgba(243, 242, 238, 0.3); }
 
 .badge__hint {
   display: inline-flex;
@@ -228,4 +228,4 @@
   color: var(--text-3);
 }
 
-:root[data-theme='light'] .badge__face { --badge-shadow: 0 34px 70px -34px rgba(11, 11, 11, 0.4); }
+:root[data-theme='light'] .badge__face { --badge-shadow: 0 34px 70px -34px rgba(10, 10, 12, 0.4); }

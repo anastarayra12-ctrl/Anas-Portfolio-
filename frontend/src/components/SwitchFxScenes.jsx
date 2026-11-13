@@ -19,8 +19,8 @@ import { useLayoutEffect, useRef } from 'react';
  */
 
 const THEMES = {
-  dark: { bg: '#0B0B0B', text: '#F5F4F1', muted: 'rgba(245,244,241,0.55)', grid: 'rgba(245,244,241,0.06)', panel: '#141518' },
-  light: { bg: '#F5F4F1', text: '#0B0B0B', muted: 'rgba(11,11,11,0.55)', grid: 'rgba(11,11,11,0.07)', panel: '#FFFFFF' },
+  dark: { bg: '#0A0A0C', text: '#F3F2EE', muted: 'rgba(243, 242, 238,0.55)', grid: 'rgba(243, 242, 238,0.06)', panel: '#141518' },
+  light: { bg: '#F3F2EE', text: '#0A0A0C', muted: 'rgba(10, 10, 12,0.55)', grid: 'rgba(10, 10, 12,0.07)', panel: '#FFFFFF' },
 };
 
 const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
