@@ -19,7 +19,7 @@ export const maintenanceConfig = {
   },
   contact: {
     whatsapp: 'https://wa.me/962796851497',
-    email: 'anastarayra12@gmail.com',
+    email: 'anas.tarayra.work@gmail.com',
     linkedin: 'https://www.linkedin.com/in/anastarayra12',
     github: 'https://github.com/anastarayra12-ctrl',
   },

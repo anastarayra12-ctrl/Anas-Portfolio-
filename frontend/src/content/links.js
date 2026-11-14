@@ -3,7 +3,7 @@
  * Change a link here and it updates everywhere on the site.
  */
 export const links = {
-  email: 'anastarayra12@gmail.com',
+  email: 'anas.tarayra.work@gmail.com',
   phone: '+962796851497',
   phoneDisplay: '+962 79 685 1497',
   whatsapp: 'https://wa.me/962796851497',
