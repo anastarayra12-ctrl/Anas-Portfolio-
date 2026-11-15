@@ -21,6 +21,7 @@ npm run lint      # oxlint
 | Any text, in either language | `src/content/en.js` · `src/content/ar.js` |
 | A project (text, links, colours, tech) | `src/content/projects.js` — screenshots in `public/projects/<id>-desktop|detail|mobile.webp` |
 | Skills, tools, certificates | `src/content/skills.js` — certificate images in `public/courses/` |
+| The UI/UX case study | `src/content/design.js` — screens cut from the design board in `public/design/soun/` |
 | Email, phone, social links, CV file | `src/content/links.js` — the CV itself is `public/Anas_AL-Tarayra-CV.pdf` |
 | Colours, fonts, spacing, radius, motion | `src/styles/tokens.css` (brand tokens, dark + light themes) |
 | Buttons, labels, section header, tags | `src/styles/base.css` |
@@ -31,13 +32,15 @@ npm run lint      # oxlint
 
 ```
 src/
-├── content/        all copy and data (en, ar, projects, skills, links)
+├── content/        all copy and data (en, ar, projects, design, skills, links)
 ├── sections/       one folder per page section
 │   ├── hero/       Hero + ProcessMark (the interactive brand mark)
 │   ├── about/      About + IdBadge (3D flip card)
 │   ├── skills/     "What I Use" — tools tied to their certificates
 │   ├── projects/   "What I've Built" — ProjectStage (3D scroll, desktop),
 │   │               ProjectList (mobile / reduced motion), ProjectDialog, ProjectDevice
+│   ├── design/     "What I've Designed" — UI/UX case study: screens (desktop / mobile /
+│   │               components), full-size lightbox, booking journey, foundations
 │   ├── journey/    "How I Got Here"
 │   └── contact/    "Let's Build Something" — every contact channel, no form
 ├── components/

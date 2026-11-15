@@ -38,6 +38,8 @@ p { text-wrap: pretty; }
 ::selection { background: var(--selection); color: var(--text); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--r-xs); }
 main:focus { outline: none; }
+/* body's overflow is handed to the viewport, so the wrapper does the horizontal clipping */
+.site { overflow-x: clip; }
 
 /* The Arabic display face has a single weight — never fake-bold it */
 :root[lang='ar'] h1,

@@ -14,6 +14,7 @@ import { Hero } from './sections/hero/Hero';
 import { About } from './sections/about/About';
 import { Skills } from './sections/skills/Skills';
 import { Projects } from './sections/projects/Projects';
+import { Design } from './sections/design/Design';
 import { Journey } from './sections/journey/Journey';
 import { Contact } from './sections/contact/Contact';
 
@@ -59,6 +60,7 @@ function Site() {
           <About />
           <Skills />
           <Projects />
+          <Design />
           <Journey />
           <Contact />
         </main>

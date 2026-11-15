@@ -21,6 +21,8 @@ export function ProjectDialog({ project, lang, labels, newTab, onClose }) {
       document.documentElement.classList.remove('has-dialog');
       if (dialog.open) dialog.close();
       opener?.focus?.({ preventScroll: true });
+      // a locked page can be nudged sideways in RTL while the dialog is open — undo it
+      if (window.scrollX) window.scrollTo({ left: 0, top: window.scrollY, behavior: 'instant' });
     };
   }, []);
 

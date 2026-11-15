@@ -4,7 +4,7 @@
   margin-inline: auto;
   bottom: max(0.75rem, env(safe-area-inset-bottom));
   z-index: var(--z-nav);
-  width: min(calc(100% - 1.5rem), 34rem);
+  width: min(calc(100% - 1.5rem), 38rem);
   padding: 0.3125rem;
   border: var(--hairline) solid var(--line-strong);
   border-radius: 1.6rem;
@@ -14,7 +14,7 @@
   backdrop-filter: saturate(150%) blur(18px);
 }
 
-.dock__list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.125rem; }
+.dock__list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.125rem; }
 
 .dock__link {
   position: relative;
@@ -100,7 +100,7 @@
   .dock__link:hover .dock__icon { transform: none; }
 }
 
-/* Very small phones: icons only, so all five sections fit */
+/* Very small phones: icons only, so all six sections fit */
 @media (max-width: 24rem) {
   .dock__label { display: none; }
   .dock__link { padding-inline: 0.85rem; }

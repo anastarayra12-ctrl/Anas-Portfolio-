@@ -7,6 +7,16 @@ Each release is a git tag (`v1.0.0`, `v1.1.0`, …) on `main`.
 - **MINOR** — a new section, project or feature
 - **PATCH** — fixes and copy edits
 
+## v1.1.0 — 2026-11-15
+
+- New section "What I've Designed": the UI/UX case study of Soun (صون), a car-care booking
+  design in Arabic (RTL) — 12 desktop and 10 mobile screens, component sheets, a full-size
+  viewer, the booking journey and the design foundations, all taken from the design board
+- Dock now has six sections; section numbers updated
+- CV: projects listed with a short description each, and working LinkedIn / GitHub / portfolio links
+- Email changed to anas.tarayra.work@gmail.com
+- Fix: the page could shift a few pixels sideways on phones (body overflow was handed to the viewport)
+
 ## v1.0.0 — 2026-11-13
 
 First official release: full redesign of the site and the brand identity v3.0 "Deep Blue".
