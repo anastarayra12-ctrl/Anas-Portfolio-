@@ -26,7 +26,6 @@ const en = {
     about: 'About',
     skills: 'Toolkit',
     projects: 'Work',
-    design: 'Design',
     journey: 'Journey',
     contact: 'Contact',
   },
@@ -146,7 +145,7 @@ const en = {
     index: '03',
     kicker: 'Selected work',
     title: 'What I’ve Built',
-    intro: 'Four live websites. Scroll through them in 3D, open any project for the full story, or visit it live.',
+    intro: 'Four live websites and a UI/UX case study. Scroll through the sites in 3D, open any project for the full story, or visit it live.',
     labels: {
       details: 'View project details',
       visit: 'Visit Live Website',
@@ -168,10 +167,8 @@ const en = {
     },
   },
   design: {
-    index: '04',
-    kicker: 'UI/UX design',
-    title: 'What I’ve Designed',
-    intro: 'A full UI/UX case study — designed screen by screen, from the first page to every state of the booking flow.',
+    label: 'UI/UX case study',
+    intro: 'Beyond the live websites: a complete UI/UX design, made screen by screen — from the first page to every state of the booking flow.',
     board: 'View the full board',
     screensTitle: 'The screens',
     tabs: { desktop: 'Desktop', mobile: 'Mobile', kit: 'Components' },
@@ -191,7 +188,7 @@ const en = {
     boardAlt: 'The complete design board of',
   },
   journey: {
-    index: '05',
+    index: '04',
     kicker: 'Journey',
     title: 'How I Got Here',
     intro: 'From an engineering foundation to live products — each step added a new layer to how I design and build.',
@@ -249,7 +246,7 @@ const en = {
     ],
   },
   contact: {
-    index: '06',
+    index: '05',
     kicker: 'Contact',
     title: 'Let’s Build Something',
     intro: 'Have a project, an internship or a collaboration in mind? Pick the channel you prefer — every one of them reaches me directly.',

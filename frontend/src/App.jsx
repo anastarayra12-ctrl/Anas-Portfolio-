@@ -14,9 +14,9 @@ import { Hero } from './sections/hero/Hero';
 import { About } from './sections/about/About';
 import { Skills } from './sections/skills/Skills';
 import { Projects } from './sections/projects/Projects';
-import { Design } from './sections/design/Design';
 import { Journey } from './sections/journey/Journey';
 import { Contact } from './sections/contact/Contact';
+import { useHashScroll } from './hooks/useHashScroll';
 
 const loadMotionFeatures = () => import('./lib/motionFeatures').then((mod) => mod.default);
 
@@ -45,6 +45,7 @@ function Site() {
   const [ready, setReady] = useState(() => !splash);
   const onLeave = useCallback(() => setReady(true), []);
   const onDone = useCallback(() => setSplash(false), []);
+  useHashScroll();
   return (
     <IntroContext.Provider value={ready}>
       {splash && <Splash onLeave={onLeave} onDone={onDone} />}
@@ -60,7 +61,6 @@ function Site() {
           <About />
           <Skills />
           <Projects />
-          <Design />
           <Journey />
           <Contact />
         </main>

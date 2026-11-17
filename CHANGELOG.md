@@ -7,6 +7,12 @@ Each release is a git tag (`v1.0.0`, `v1.1.0`, …) on `main`.
 - **MINOR** — a new section, project or feature
 - **PATCH** — fixes and copy edits
 
+## v1.1.1 — 2026-11-17
+
+- The Soun UI/UX case study is now part of "What I've Built" (after the four live websites)
+  instead of a section of its own; the dock is back to five sections
+- Fix: links to a section (`/#design`, `/#contact`, …) now open at that section
+
 ## v1.1.0 — 2026-11-15
 
 - New section "What I've Designed": the UI/UX case study of Soun (صون), a car-care booking

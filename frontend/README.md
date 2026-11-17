@@ -39,8 +39,8 @@ src/
 │   ├── skills/     "What I Use" — tools tied to their certificates
 │   ├── projects/   "What I've Built" — ProjectStage (3D scroll, desktop),
 │   │               ProjectList (mobile / reduced motion), ProjectDialog, ProjectDevice
-│   ├── design/     "What I've Designed" — UI/UX case study: screens (desktop / mobile /
-│   │               components), full-size lightbox, booking journey, foundations
+│   ├── design/     CaseStudy — the UI/UX case study shown inside "What I've Built":
+│   │               screens (desktop / mobile / components), lightbox, journey, foundations
 │   ├── journey/    "How I Got Here"
 │   └── contact/    "Let's Build Something" — every contact channel, no form
 ├── components/
@@ -50,7 +50,7 @@ src/
 │   ├── brand/      BrandMark (the logo, coloured by --mark-* tokens)
 │   └── ui/         Reveal, SectionHead, Magnetic, brand icons
 ├── context/        Theme, Language and Intro providers
-├── hooks/          useActiveSection, useMediaQuery
+├── hooks/          useActiveSection, useMediaQuery, useHashScroll
 ├── lib/            prefs (saved theme/language), switchFx bridge, analytics, helpers
 ├── maintenance/    optional 3D maintenance screen (Three.js, loaded only when enabled)
 └── styles/         tokens.css, base.css

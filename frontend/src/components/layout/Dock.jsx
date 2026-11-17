@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { m, useReducedMotion } from 'framer-motion';
-import { UserRound, Layers, LayoutGrid, PenTool, Route, MessageSquareText } from 'lucide-react';
+import { UserRound, Layers, LayoutGrid, Route, MessageSquareText } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { sectionIds } from '../../content';
 import './Dock.css';
 
-const icons = { about: UserRound, skills: Layers, projects: LayoutGrid, design: PenTool, journey: Route, contact: MessageSquareText };
+const icons = { about: UserRound, skills: Layers, projects: LayoutGrid, journey: Route, contact: MessageSquareText };
 
 /**
- * Floating section dock — the only place the six sections are navigated from.
+ * Floating section dock — the only place the five sections are navigated from.
  * Tracks the section in view, supports arrow / Home / End keys (RTL-aware).
  * It stays out of the hero (which has its own actions) so it never covers the
  * hero CTAs, and slides in as soon as the visitor heads into the content.

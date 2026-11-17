@@ -3,7 +3,6 @@ import { Maximize2 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { caseStudy } from '../../content';
 import { track } from '../../lib/analytics';
-import { SectionHead } from '../../components/ui/SectionHead';
 import { Reveal } from '../../components/ui/Reveal';
 import { DesignScreens } from './DesignScreens';
 import { DesignFlow } from './DesignFlow';
@@ -11,11 +10,12 @@ import { DesignLightbox } from './DesignLightbox';
 import './Design.css';
 
 /**
- * "What I've Designed" — a UI/UX case study presented from its design board:
- * intro + key numbers, every screen (desktop / mobile / components) with a
- * full-size viewer, the booking journey and the design foundations.
+ * The UI/UX case study inside "What I've Built" (after the live websites),
+ * presented from its design board: intro + key numbers, every screen
+ * (desktop / mobile / components) with a full-size viewer, the booking
+ * journey and the design foundations. Anchor: #design.
  */
-export function Design() {
+export function CaseStudy({ index }) {
   const { t, lang } = useLanguage();
   const w = t.design;
   const cs = caseStudy;
@@ -32,9 +32,15 @@ export function Design() {
   const boardItem = [{ src: cs.board, w: cs.boardSize.w, h: cs.boardSize.h, caption: c.title, wide: true }];
 
   return (
-    <section className="section design" id="design" aria-labelledby="design-title">
+    <div className="design" id="design">
       <div className="container">
-        <SectionHead id="design" index={w.index} kicker={w.kicker} title={w.title} intro={w.intro} count="01" />
+        <Reveal as="header" className="cs-head">
+          <p className="label">
+            <span className="label__index">{index}</span>
+            <span>{w.label}</span>
+          </p>
+          <p className="cs-head__intro">{w.intro}</p>
+        </Reveal>
 
         <article className="cs" aria-labelledby="cs-title">
           <div className="cs__intro">
@@ -43,9 +49,6 @@ export function Design() {
                 <span className="cs__logo">
                   <img src={cs.logo} alt={c.name} width="189" height="63" loading="lazy" decoding="async" />
                 </span>
-                <p className="label">
-                  <span className="label__index">{c.category}</span>
-                </p>
               </div>
               <h3 className="cs__title" id="cs-title">
                 {c.title}
@@ -108,6 +111,6 @@ export function Design() {
       </div>
 
       {box && <DesignLightbox items={box.items} start={box.index} labels={w} onClose={closeBox} />}
-    </section>
+    </div>
   );
 }

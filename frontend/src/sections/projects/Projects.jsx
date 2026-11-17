@@ -8,6 +8,7 @@ import { SectionHead } from '../../components/ui/SectionHead';
 import { ProjectStage } from './ProjectStage';
 import { ProjectList } from './ProjectList';
 import { ProjectDialog } from './ProjectDialog';
+import { CaseStudy } from '../design/Design';
 import './Projects.css';
 
 const HASH = '#projects/';
@@ -20,6 +21,7 @@ const idFromHash = () => {
  * "What I've Built". Large screens get the 3D scroll stage; phones, tablets in
  * portrait and reduced-motion visitors get a lighter list with the same content.
  * Each project opens a detail dialog with its own shareable URL (#projects/<id>).
+ * After the live websites comes the UI/UX case study (#design).
  */
 export function Projects() {
   const { t, lang } = useLanguage();
@@ -46,7 +48,7 @@ export function Projects() {
   }, []);
 
   const project = projects.find((p) => p.id === openId);
-  const count = `${String(projects.length).padStart(2, '0')}`;
+  const count = String(projects.length + 1).padStart(2, '0'); // live websites + the case study
 
   return (
     <section className="section projects" id="projects" aria-labelledby="projects-title">
@@ -59,6 +61,8 @@ export function Projects() {
       ) : (
         <ProjectList list={projects} lang={lang} labels={w.labels} newTab={t.a11y.newTab} onOpen={open} />
       )}
+
+      <CaseStudy index={count} />
 
       {project && <ProjectDialog key={project.id} project={project} lang={lang} labels={w.labels} newTab={t.a11y.newTab} onClose={close} />}
     </section>

@@ -19,7 +19,7 @@ export { skillGroups, certificates, learningNow } from './skills';
 export { caseStudy } from './design';
 
 /** Page order = dock order. */
-export const sectionIds = ['about', 'skills', 'projects', 'design', 'journey', 'contact'];
+export const sectionIds = ['about', 'skills', 'projects', 'journey', 'contact'];
 
 /** Process nodes of the brand mark (logo geometry → meaning). */
 export const processIds = ['idea', 'design', 'build', 'product'];
